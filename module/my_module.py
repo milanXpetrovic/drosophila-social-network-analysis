@@ -8,23 +8,14 @@ import numpy as np
 import pandas as pd 
 import networkx as nx
 
-from matplotlib import cm
+import scipy.stats
+from statistics import mean
 import matplotlib.pyplot as plt
 
-from statistics import mean, stdev
-import scipy
-# try:
-#     import modin.pandas as pd
-
-# except ImportError:
-#     import pandas as pd  
 
 import logging 
 logging.basicConfig(format="%(levelname)s:%(message)s", level=logging.DEBUG)
 
-
-def print_foo():
-    print('radi')
 
 def natural_sort(l): 
     convert = lambda text: int(text) if text.isdigit() else text.lower() 
@@ -121,7 +112,6 @@ def check_data(path):
     return valid_data
         
 
-
 def round_coordinates(df, decimal_places=0):
     ## zaokruzivanje vrijednosti koordinata x i y na 0 decimala
     df = df.round({'pos_x': decimal_places, 'pos_y': decimal_places})
@@ -163,8 +153,7 @@ def find_pop_mins(path):
         
     return min(pop_min_x), min(pop_min_y)
     
-        
-    
+         
 def inspect_population_coordinates(path, pop_name):
     """ Draws scatter plot of x and y coordinates in population.
     This function is used to inspect validity of trackings if all coordinates 
@@ -195,36 +184,8 @@ def inspect_population_coordinates(path, pop_name):
     plt.show()
 
 
-
-def foo(df_list, value):
-    """
-    Parameters
-    ----------
-    df_list : TYPE
-        List of dataframes
-    value : TYPE
-        value to extract from dataframe.
-
-    Returns
-    -------
-    df : DataFrame
-        DESCRIPTION.
-    """
-        
-    df_final = pd.DataFrame()
-    for df in df_list:
-        if value not in df.columns:
-            raise ValueError('given value not found in dataframe column')
-        
-        df = df[value]
-        df_final = pd.concat([df_final, df], axis=1)
-    
-    columns = ['ori_fly_' + str(i) for i in range(0,len(df_final.columns))]
-    df_final.columns = columns
-    return df_final
-
 # =============================================================================
-""" PATH DESCRIPTIVE AND FEATTURE CREATING FUNCTIONS """
+""" TRAJECTORY DESCRIPTIVE AND FEATTURE CREATING FUNCTIONS """
 # =============================================================================
 def get_acc_in_path(vel_list):
     list_of_acc = []
@@ -306,7 +267,6 @@ def min_max_normalization_df(df):
 # =============================================================================
 """ POPULATION ANALYSIS, BETWEEN DISTANCES, NETWORK CONSTRUCTION"""
 # =============================================================================
-
 def distances_between_all_flies(files):
     """
     Input
@@ -362,7 +322,6 @@ def dist_flie_to_others(fly_name):
     df_fly_dist = 0
 
     return df_fly_dist
-
 
     
 def add_edges_to_undirected_g(G, df,
@@ -452,7 +411,6 @@ def dynamics_of_network_graph(G, df, DISTANCE_BETWEEN_FLIES,
     return G
 
 
-
 def calculate_Qmax(G, mod_nodes):
 	r"""returns maximum modularity possible given the network partition"""
 	Lt= sum([G.degree(node) for node in list(G.nodes)])
@@ -476,6 +434,7 @@ def calculate_avg_wd(G, partition, n_nodes):
 		wdlist.append(wd) 
 		
 	return sum(wdlist)/(1.*n_nodes)
+
 
 def calculate_strength(g, weight_value):
     graph_freq = {}
@@ -621,7 +580,6 @@ def graph_global_measures(g, pop_name):
     return df
 
 
-
 def order_columns(df):
     coc_columns = [col for col in df if col.startswith('COC')]
     ctrl_columns = [col for col in df if col.startswith('CTRL')]
@@ -641,6 +599,7 @@ def order_columns(df):
     df = pd.concat([df, df_ctrl, df_coc], axis=1)
     
     return df
+
 
 def make_random_graph(number_of_nodes, number_of_edges):
     G = nx.Graph()
@@ -687,6 +646,7 @@ def make_random_graph(number_of_nodes, number_of_edges):
             # created_edges +=1       
             
     return G
+
 
 def generate_random_multigraph(g):
     edges = list(g.edges(data=True))
@@ -758,358 +718,21 @@ def create_n_samples_of_random_graph(g, pop_name, n_samples, FPS):
     return df
 
 
-def compare_measures(experiments_dict):
-    """
-
-    :param g:
-    :param exp_name:
-    :return:
-    """
-    #strength
-    d={}
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)    
-        strength = get_strengtgs_dict(g, 'duration')
-        d.update({exp_name[0:-4] : strength})
-    draw_duration_box_plot(d, 'Strength distribution, weight=duration')
+def remove_nodes_with_degree_less_than(G, degree):
+   
+    remove = [node for node, node_degree in dict(G.degree()).items() if node_degree < degree]
+    G.remove_nodes_from(remove)
     
-    d={}
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)    
-        strength = get_strengtgs_dict(g, 'count')
-        d.update({exp_name[0:-4] : strength})
-    draw_box_plot(d, 'Strength distribution, weight=count')
+    return G
     
-    d={}
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)    
-        strength = get_strengtgs_dict(g, 'frequency')
-        d.update({exp_name[0:-4] : strength})
-    draw_box_plot(d, 'strength distribution, w frequency')
-    
-    d={}
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)    
-        strength = get_strengtgs_dict(g, 'averaging')
-        d.update({exp_name[0:-4] : strength})
-    draw_box_plot(d, 'strength distribution, w average')
-       
-    # Degree centrality
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)    
-        degree_centrality = list(nx.degree_centrality(g).values())
-        d.update({exp_name[0:-4] : degree_centrality})
-    draw_box_plot(d, 'Degree centrality')
-
-    # eigenvalue centrality.
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)    
-        eigenvector_centrality = list(nx.eigenvector_centrality(g).values())
-        d.update({exp_name[0:-4] : eigenvector_centrality})
-    draw_box_plot(d, 'eigenvector_centrality')
-
-    # Closeness centrality
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path) 
-        closeness_centrality = list(nx.closeness_centrality(g).values())
-        d.update({exp_name[0:-4] : closeness_centrality})
-    draw_box_plot(d, 'Closeness centrality')
-
-    # Betweenness centrality
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path) 
-        betweenness_centrality = list(nx.betweenness_centrality(g, weight=None).values())
-        d.update({exp_name[0:-4] : betweenness_centrality})
-    draw_box_plot(d, 'betweenness_centrality')
-
-    # Betweenness centrality WEIGHTED
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path) 
-        betweenness_centrality_w = list(nx.betweenness_centrality(g,weight='duration').values())
-        d.update({exp_name[0:-4] : betweenness_centrality_w})
-    draw_box_plot(d, 'betweenness_centrality_w_duration')
-    
-    # Betweenness centrality WEIGHTED
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path) 
-        betweenness_centrality_w = list(nx.betweenness_centrality(g,weight='count').values())
-        d.update({exp_name[0:-4] : betweenness_centrality_w})
-    draw_box_plot(d, 'betweenness_centrality_w_count')
-    
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path) 
-        betweenness_centrality_w = list(nx.betweenness_centrality(g,weight='frequency').values())
-        d.update({exp_name[0:-4] : betweenness_centrality_w})
-    draw_box_plot(d, 'betweenness_centrality_w_frequency')
-    
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path) 
-        betweenness_centrality_w = list(nx.betweenness_centrality(g,weight='averaging').values())
-        d.update({exp_name[0:-4] : betweenness_centrality_w})
-    draw_box_plot(d, 'betweenness_centrality_w_average')
-    
-
-    # Information centrality
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)
-        gc = max(nx.connected_component_subgraphs(g), key=len)
-        information_centrality = list(nx.information_centrality(gc).values())
-        d.update({exp_name[0:-4] : information_centrality})
-    draw_box_plot(d, 'Information centrality')
-
-    # Page rank
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)
-        page_rank = list(nx.pagerank(g, alpha=0.9).values())
-        d.update({exp_name[0:-4] : page_rank})
-    draw_box_plot(d, 'page_rank')
-    
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)
-        clustering_coeff_w = list(nx.clustering(g, weight='duration').values())
-        d.update({exp_name[0:-4] : clustering_coeff_w})
-    draw_box_plot(d, 'Clustering coefficient,  weight=duration')
-    
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)
-        clustering_coeff_w = list(nx.clustering(g, weight='count').values())
-        d.update({exp_name[0:-4] : clustering_coeff_w})
-    draw_box_plot(d, 'clustering coefficient  w count')
-    
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)
-        clustering_coeff_w = list(nx.clustering(g, weight='frequency').values())
-        d.update({exp_name[0:-4] : clustering_coeff_w})
-    draw_box_plot(d, 'clustering coefficient  w frequency')
-    
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)
-        clustering_coeff_w = list(nx.clustering(g, weight='averaging').values())
-        d.update({exp_name[0:-4] : clustering_coeff_w})
-    draw_box_plot(d, 'clustering coeff w average')
-    
-    
-def compare_measures_remove_single(experiments_dict):
-    """
-    :param g:
-    :param exp_name:
-    :return:
-    """
-    #strength
-    d={}
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)    
-        remove = [node for node,degree in dict(g.degree()).items() if degree < 1]
-        g.remove_nodes_from(remove)
-                
-        strength = get_strengtgs_dict(g, 'duration')
-        d.update({exp_name[0:-4] : strength})
-    draw_duration_box_plot(d, 'Strength distribution, weight=duration')
-    
-    d={}
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)
-        remove = [node for node,degree in dict(g.degree()).items() if degree < 1]
-        g.remove_nodes_from(remove)
-        
-        strength = get_strengtgs_dict(g, 'count')
-        d.update({exp_name[0:-4] : strength})
-    draw_box_plot(d, 'strength distribution, weight=count')
-    
-    d={}
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path) 
-        remove = [node for node,degree in dict(g.degree()).items() if degree < 1]
-        g.remove_nodes_from(remove)
-        
-        strength = get_strengtgs_dict(g, 'frequency')
-        d.update({exp_name[0:-4] : strength})
-    draw_box_plot(d, 'Strength distribution, w frequency')
-    
-    d={}
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path) 
-        remove = [node for node,degree in dict(g.degree()).items() if degree < 1]
-        g.remove_nodes_from(remove)
-        
-        strength = get_strengtgs_dict(g, 'averaging')
-        d.update({exp_name[0:-4] : strength})
-    draw_box_plot(d, 'Strength distribution, w average')
-    
-    
-    # Degree centrality
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)    
-        remove = [node for node,degree in dict(g.degree()).items() if degree < 1]
-        g.remove_nodes_from(remove)
-        
-        degree_centrality = list(nx.degree_centrality(g).values())
-        d.update({exp_name[0:-4] : degree_centrality})
-    draw_box_plot(d, 'Degree centrality')
-
-    # eigenvalue centrality.
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)    
-        remove = [node for node,degree in dict(g.degree()).items() if degree < 1]
-        g.remove_nodes_from(remove)
-        
-        eigenvector_centrality = list(nx.eigenvector_centrality(g).values())
-        d.update({exp_name[0:-4] : eigenvector_centrality})
-    draw_box_plot(d, 'eigenvector_centrality')
-
-    # Closeness centrality
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)
-        remove = [node for node,degree in dict(g.degree()).items() if degree < 1]
-        g.remove_nodes_from(remove)
-        
-        closeness_centrality = list(nx.closeness_centrality(g).values())
-        d.update({exp_name[0:-4] : closeness_centrality})
-    draw_box_plot(d, 'Closeness centrality')
-
-    # Betweenness centrality
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path) 
-        remove = [node for node,degree in dict(g.degree()).items() if degree < 1]
-        g.remove_nodes_from(remove)
-        
-        betweenness_centrality = list(nx.betweenness_centrality(g, weight=None).values())
-        d.update({exp_name[0:-4] : betweenness_centrality})
-    draw_box_plot(d, 'betweenness_centrality')
-
-    # Betweenness centrality WEIGHTED
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path) 
-        remove = [node for node,degree in dict(g.degree()).items() if degree < 1]
-        g.remove_nodes_from(remove)
-        
-        
-        betweenness_centrality_w = list(nx.betweenness_centrality(g,weight='duration').values())
-        d.update({exp_name[0:-4] : betweenness_centrality_w})
-    draw_box_plot(d, 'betweenness_centrality_w_duration')
-    
-    # Betweenness centrality WEIGHTED
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)
-        remove = [node for node,degree in dict(g.degree()).items() if degree < 1]
-        g.remove_nodes_from(remove)
-        
-        betweenness_centrality_w = list(nx.betweenness_centrality(g,weight='count').values())
-        d.update({exp_name[0:-4] : betweenness_centrality_w})
-    draw_box_plot(d, 'betweenness_centrality_w_count')
-    
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path) 
-        remove = [node for node,degree in dict(g.degree()).items() if degree < 1]
-        g.remove_nodes_from(remove)
-        
-        betweenness_centrality_w = list(nx.betweenness_centrality(g,weight='frequency').values())
-        d.update({exp_name[0:-4] : betweenness_centrality_w})
-    draw_box_plot(d, 'betweenness_centrality_w_frequency')
-    
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path) 
-        remove = [node for node,degree in dict(g.degree()).items() if degree < 1]
-        g.remove_nodes_from(remove)
-        
-        
-        betweenness_centrality_w = list(nx.betweenness_centrality(g,weight='averaging').values())
-        d.update({exp_name[0:-4] : betweenness_centrality_w})
-    draw_box_plot(d, 'betweenness_centrality_w_average')
-    
-
-    # Information centrality
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)
-        remove = [node for node,degree in dict(g.degree()).items() if degree < 1]
-        g.remove_nodes_from(remove)
-        gc = max(nx.connected_component_subgraphs(g), key=len)
-        information_centrality = list(nx.information_centrality(gc).values())
-        d.update({exp_name[0:-4] : information_centrality})
-    draw_box_plot(d, 'Information centrality')
-
-
-    # Page rank
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)
-        remove = [node for node,degree in dict(g.degree()).items() if degree < 1]
-        g.remove_nodes_from(remove)
-        
-        page_rank = list(nx.pagerank(g, alpha=0.9).values())
-        d.update({exp_name[0:-4] : page_rank})
-    draw_box_plot(d, 'page_rank')
-    
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)
-        remove = [node for node,degree in dict(g.degree()).items() if degree < 1]
-        g.remove_nodes_from(remove)
-        clustering_coeff_w = list(nx.clustering(g, weight='duration').values())
-        d.update({exp_name[0:-4] : clustering_coeff_w})
-    draw_box_plot(d, 'Clustering coefficient, weight=duration')
-    
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)
-        remove = [node for node,degree in dict(g.degree()).items() if degree < 1]
-        g.remove_nodes_from(remove)
-        
-        
-        clustering_coeff_w = list(nx.clustering(g, weight='count').values())
-        d.update({exp_name[0:-4] : clustering_coeff_w})
-    draw_box_plot(d, 'Clustering coefficient, weight=count')
-    
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)
-        remove = [node for node,degree in dict(g.degree()).items() if degree < 1]
-        g.remove_nodes_from(remove)
-        
-        clustering_coeff_w = list(nx.clustering(g, weight='frequency').values())
-        d.update({exp_name[0:-4] : clustering_coeff_w})
-    draw_box_plot(d, 'clustering coeff w frequency')
-    
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)
-        remove = [node for node,degree in dict(g.degree()).items() if degree < 1]
-        g.remove_nodes_from(remove)
-        
-        clustering_coeff_w = list(nx.clustering(g, weight='averaging').values())
-        d.update({exp_name[0:-4] : clustering_coeff_w})
-    draw_box_plot(d, 'clustering coeff w average')
-
 
 def get_x_labels(my_dict_keys):
+    
     my_dict_keys = list(my_dict_keys)
     coc_count = 1
     ctrl_count = 1
-    
     new_values = []
+    
     for item in my_dict_keys:
         if item.startswith('CTRL'):
             new_values.append('CTRL_'+str(ctrl_count))
@@ -1121,600 +744,112 @@ def get_x_labels(my_dict_keys):
             
     return new_values
 
+
 def get_strengtgs_dict(g, weight_value):
+    
     nodes = list(g.nodes)
-    strength_list = []
+    strength_d = {}
+    
     for node in nodes:
         edges = list(g.edges(node, data=True))
-        freq = 0
+        freq = float(0)
+        
         for edge in edges:
             (edge_a, edge_b, data) = edge
             freq += data[weight_value]
-        #graph_freq.update({int(node):freq})
-        strength_list.append(freq)
+
+        strength_d.update({int(node):freq})
+    
     #ave_strength_value = mean(graph_freq[k] for k in graph_freq)
-    return strength_list
+
+    return strength_d
 
 
 def draw_box_plot(dictionary, graph_title):
-    # #def get_strength_distribution(d, weight_type):
-    # my_dict = dictionary
-    # #title = 'strength distribution, weight = duration'
-    # # for key, value in zip(keys, values):
-    # #     my_dict.update({key: value})
+
+    labels, data = [*zip(*d.items())]
+    labels = [label for label in labels]
+    data = [list(d.values()) for d in data]
+         
+    fig = plt.figure(figsize=(9,6))
+    _ = plt.boxplot(data)
     
-    # fig, ax = plt.subplots()
-    # fig.set_size_inches(8, 6)
-    # ax.boxplot(my_dict.values())
-    
-    # # x_labels = get_x_labels(my_dict.keys())
-    # x_labels = ['CTRL', 'COC']
-    # ax.set_xticklabels(x_labels) #, rotation=90
-    
-    # # ctrls = {k: v for k, v in my_dict.items() if k.startswith('CTRL')}
-    # # average_ctrl = mean([mean(e) for e in ctrls.values()])
-    
-    # # cocs = {k: v for k, v in my_dict.items() if k.startswith('COC')}
-    # # average_coc= mean([mean(e) for e in cocs.values()])
-    
-    # # plt.yscale('log')
-    
-    # # plt.axhline(y=average_ctrl, color='blue',
-    # #             label='Mean CTRL='+str(round(average_ctrl, 2)))
-    
-    # # plt.axhline(y=average_coc, color='red',
-    # #             label='Mean COC=' + str(round(average_coc, 2)))
-    
-    # plt.axvspan(1.5, 2.5, alpha=0.05, color='red', label='COC pop')
-        
-    # plt.xlabel("Populations")
-    # plt.ylabel("Value")
-    
-    # name = '../3_output/local_measures_distribution_total/'+graph_title+'.png'
-    
-    # plt.title(graph_title)
-    # plt.legend()
-    # plt.tight_layout()
-    # plt.savefig(name, dpi=350)
-    # plt.show()
-    # plt.cla()
-    # plt.clf()
-    # plt.close()
-    
-    df = dictionary
-    
-    group = 'group'
-    column = 'data'
-    grouped = df.groupby(group)
-    
-    names, vals, xs = [], [] ,[]
-    
-    for i, (name, subdf) in enumerate(grouped):
-        names.append(name)
-        vals.append(subdf[column].tolist())
-        xs.append(np.random.normal(i+1, 0.04, subdf.shape[0]))
-    
-    plt.boxplot(vals, labels=names)
-    ngroup = len(vals)
-    clevels = np.linspace(0., 1., ngroup)
-    
-    for x, val, clevel in zip(xs, vals, clevels):
-        plt.scatter(x, val, c=cm.prism(clevel), alpha=0.2)
-    
-    plt.xlabel("Populations")
-    plt.ylabel("Value")
-    
-    name = '../3_output/local_measures_distribution_total/'+graph_title+'.eps'
-    
-    plt.title(graph_title)
-    plt.legend()
-    plt.tight_layout()
-    plt.savefig(name, dpi=350)
-    plt.show()
-    plt.cla()
-    plt.clf()
-    plt.close()
+    return fig
     
 
-
-def draw_duration_box_plot(df, graph_title):
-    #def get_strength_distribution(d, weight_type):
-    group = 'group'
-    column = 'data'
-    grouped = df.groupby(group)
+def group_values(multiple_dicts):
     
-    names, vals, xs = [], [] ,[]
+    d = {}
     
-    for i, (name, subdf) in enumerate(grouped):
-        names.append(name)
-        vals.append(subdf[column].tolist())
-        xs.append(np.random.normal(i+1, 0.04, subdf.shape[0]))
-    
-    plt.boxplot(vals, labels=names)
-    ngroup = len(vals)
-    clevels = np.linspace(0., 1., ngroup)
-    
-    for x, val, clevel in zip(xs, vals, clevels):
-        plt.scatter(x, val, c=cm.prism(clevel), alpha=0.2)
-    
-    plt.xlabel("Populations")
-    plt.ylabel("Value")
-    
-    name = '../3_output/local_measures_distribution_total/'+graph_title+'.eps'
-    
-    plt.title(graph_title)
-    plt.legend()
-    plt.tight_layout()
-    plt.savefig(name, dpi=350)
-    plt.show()
-    plt.cla()
-    plt.clf()
-    plt.close()
-
-
-def together_values(d):
     coc_values = []
     ctrl_values = []
     
-    for key, values in d.items():
-        if key.startswith('COC'):
-            coc_values = coc_values + values
-        else:
-            ctrl_values = ctrl_values + values
+    for pop_name, values in multiple_dicts.items():     
+        
+        for fly_label, value in values.items():
+            
+            if pop_name.startswith('COC'):
+                
+                coc_values.append(value)
+        
+            else:
+                ctrl_values.append(value)
+            
+    d.update({'COC': coc_values})
+    d.update({'CTRL': ctrl_values})
     
-    ctrl_labels = ['CTRL'] * len(ctrl_values)
-    coc_labels = ['COC'] * len(coc_values)
-    
-    
-    
-    res_d = {'data': ctrl_values+coc_values,
-             'group':ctrl_labels+coc_labels }
-    
-    df = pd.DataFrame(res_d)
-    return df
+    return d
 
-def together_measeures_coc_ctrl_distribution(experiments_dict):
+
+def network_measures_distribution():
+
+    graph_functions = [
+        ('Degree centrality', lambda g: nx.degree_centrality(g)),
+        ('Eigenvector centrality', lambda g: nx.eigenvector_centrality(g)),
+        ('Closeness centrality', lambda g: nx.closeness_centrality(g)),
+        ('Information centrality', lambda g: nx.information_centrality(max(nx.connected_component_subgraphs(g), key=len))),
+        ('Page rank', lambda g: nx.pagerank(g, alpha=0.9)),
+        ('Strength distribution, weight=duration', lambda g: get_strengtgs_dict(g, 'duration')), 
+        ('Strength distribution, weight=count', lambda g: get_strengtgs_dict(g, 'count')),
+        ('Strength distribution, weighy=frequency', lambda g: get_strengtgs_dict(g, 'frequency')),
+        ('Strength distribution, weight=average', lambda g: get_strengtgs_dict(g, 'averaging')),
+        ('Betweenness centrality weight=None', lambda g: nx.betweenness_centrality(g, weight=None)),
+        ('Betweenness centrality weight=duration', lambda g: nx.betweenness_centrality(g, weight='duration')),
+        ('Betweenness centrality weight=count', lambda g: nx.betweenness_centrality(g, weight='count')),
+        ('Betweenness centrality weight=frequency', lambda g: nx.betweenness_centrality(g, weight='frequency')),
+        ('Betweenness centrality weight=averaging', lambda g: nx.betweenness_centrality(g, weight='averaging')),
+        ('Clustering coefficient weight=duration', lambda g: nx.clustering(g, weight='duration')),
+        ('Clustering coefficient weight=count', lambda g: nx.clustering(g, weight='count')),
+        ('Clustering coefficient weight=frequency', lambda g: nx.clustering(g, weight='frequency')),
+        ('Clustering coefficient weight=averaging', lambda g: nx.clustering(g, weight='averaging'))
+        ]
+
+    return graph_functions
+
+
+def stat_test(d):
     """
     :param g:
     :param exp_name:
     :return:
-    """
-    #strength
-    d={}
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)    
-        strength = get_strengtgs_dict(g, 'duration')
-        d.update({exp_name[0:-4] : strength})
+    """    
+    
+    stat_test_results = {}
+
+    for measure_name, dict_of_values in d.items():
+        ctrl = dict_of_values['CTRL']
+        coc = dict_of_values['COC']
         
-    d = together_values(d)
-    draw_duration_box_plot(d, 'Strength distribution, weight=duration')
+        t_statistic, p_value = scipy.stats.ttest_ind(ctrl, coc)
     
-    d={}
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)    
-        strength = get_strengtgs_dict(g, 'count')
-        d.update({exp_name[0:-4] : strength})
+        stat_test_results.update( {measure_name: [t_statistic, p_value]})
+    
+
+    df_res = pd.DataFrame.from_dict(stat_test_results, orient='index',
+                                    columns=['t_statistic', 'p_value'])
         
-    d = together_values(d)
-    draw_box_plot(d, 'Strength distribution, weight=count')
-    
-    d={}
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)    
-        strength = get_strengtgs_dict(g, 'frequency')
-        d.update({exp_name[0:-4] : strength})
-    
-    d = together_values(d)
-    draw_box_plot(d, 'strength distribution, w frequency')
-    
-    d={}
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)    
-        strength = get_strengtgs_dict(g, 'averaging')
-        d.update({exp_name[0:-4] : strength})
-    
-    d = together_values(d)
-    draw_box_plot(d, 'strength distribution, w average')
-       
-    # Degree centrality
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)    
-        degree_centrality = list(nx.degree_centrality(g).values())
-        d.update({exp_name[0:-4] : degree_centrality})
-    
-    d = together_values(d)
-    draw_box_plot(d, 'Degree centrality')
+    return df_res
 
-    # eigenvalue centrality.
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)    
-        eigenvector_centrality = list(nx.eigenvector_centrality(g).values())
-        d.update({exp_name[0:-4] : eigenvector_centrality})
-    d = together_values(d)
-    draw_box_plot(d, 'eigenvector_centrality')
-
-    # Closeness centrality
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path) 
-        closeness_centrality = list(nx.closeness_centrality(g).values())
-        d.update({exp_name[0:-4] : closeness_centrality})
-    d = together_values(d)
-    draw_box_plot(d, 'Closeness centrality')
-
-    # Betweenness centrality
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path) 
-        betweenness_centrality = list(nx.betweenness_centrality(g, weight=None).values())
-        d.update({exp_name[0:-4] : betweenness_centrality})
-    d = together_values(d)
-    draw_box_plot(d, 'betweenness_centrality')
-
-    # Betweenness centrality WEIGHTED
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path) 
-        betweenness_centrality_w = list(nx.betweenness_centrality(g,weight='duration').values())
-        d.update({exp_name[0:-4] : betweenness_centrality_w})
-    d = together_values(d)
-    draw_box_plot(d, 'betweenness_centrality_w_duration')
-    
-    # Betweenness centrality WEIGHTED
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path) 
-        betweenness_centrality_w = list(nx.betweenness_centrality(g,weight='count').values())
-        d.update({exp_name[0:-4] : betweenness_centrality_w})
-    d = together_values(d)
-    draw_box_plot(d, 'betweenness_centrality_w_count')
-    
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path) 
-        betweenness_centrality_w = list(nx.betweenness_centrality(g,weight='frequency').values())
-        d.update({exp_name[0:-4] : betweenness_centrality_w})
-    d = together_values(d)
-    draw_box_plot(d, 'betweenness_centrality_w_frequency')
-    
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path) 
-        betweenness_centrality_w = list(nx.betweenness_centrality(g,weight='averaging').values())
-        d.update({exp_name[0:-4] : betweenness_centrality_w})
-    d = together_values(d)
-    draw_box_plot(d, 'betweenness_centrality_w_average')
-    
-
-    # Information centrality
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)
-        gc = max(nx.connected_component_subgraphs(g), key=len)
-        information_centrality = list(nx.information_centrality(gc).values())
-        d.update({exp_name[0:-4] : information_centrality})
-    d = together_values(d)
-    draw_box_plot(d, 'Information centrality')
-
-    # Page rank
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)
-        page_rank = list(nx.pagerank(g, alpha=0.9).values())
-        d.update({exp_name[0:-4] : page_rank})
-    d = together_values(d)
-    draw_box_plot(d, 'page_rank')
-    
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)
-        clustering_coeff_w = list(nx.clustering(g, weight='duration').values())
-        d.update({exp_name[0:-4] : clustering_coeff_w})
-    d = together_values(d)
-    draw_box_plot(d, 'Clustering coefficient,  weight=duration')
-    
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)
-        clustering_coeff_w = list(nx.clustering(g, weight='count').values())
-        d.update({exp_name[0:-4] : clustering_coeff_w})
-    d = together_values(d)
-    draw_box_plot(d, 'clustering coefficient  w count')
-    
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)
-        clustering_coeff_w = list(nx.clustering(g, weight='frequency').values())
-        d.update({exp_name[0:-4] : clustering_coeff_w})
-    d = together_values(d)
-    draw_box_plot(d, 'clustering coefficient  w frequency')
-    
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)
-        clustering_coeff_w = list(nx.clustering(g, weight='averaging').values())
-        d.update({exp_name[0:-4] : clustering_coeff_w})
-    d = together_values(d)
-    draw_box_plot(d, 'clustering coeff w average')
-
-
-
-
-def stat_test(experiments_dict):
-    """
-    :param g:
-    :param exp_name:
-    :return:
-    """
-
-    
-    
-    df_final = pd.DataFrame()
-    #strength
-    # d={}
-    # for exp_name, path in experiments_dict.items():         
-    #     g = nx.read_gml(path)    
-    #     strength = get_strengtgs_dict(g, 'duration')
-    #     d.update({exp_name[0:-4] : strength})
-        
-    # d = together_values(d)
-    # draw_duration_box_plot(d, 'Strength distribution, weight=duration')
-    
-    d={}
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)    
-        strength = get_strengtgs_dict(g, 'count')
-        d.update({exp_name[0:-4] : strength})
-        
-    df = together_values(d)
-    ctrl = df.loc[df['group'] == 'CTRL'].data
-    coc = df.loc[df['group'] == 'COC'].data
-    t_statistic, p_value = scipy.stats.ttest_ind(ctrl, coc)
-    
-    name = 'Strength distribution, weight=count'
-    
-    data = { name: [t_statistic, p_value]}
-    
-    df_res = pd.DataFrame.from_dict(data, orient='index',
-                                    columns=['t_statistic', 'p_value'])
-    
-    df_final = pd.concat([df_final, df_res], axis=0)
-    
-     
-    d={}
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)    
-        strength = get_strengtgs_dict(g, 'frequency')
-        d.update({exp_name[0:-4] : strength})
-    
-    df = together_values(d)
-    ctrl = df.loc[df['group'] == 'CTRL'].data
-    coc = df.loc[df['group'] == 'COC'].data
-    t_statistic, p_value = scipy.stats.ttest_ind(ctrl, coc)
-    
-    name = 'strength distribution, w frequency'
-    data = { name: [t_statistic, p_value]}
-    
-    df_res = pd.DataFrame.from_dict(data, orient='index',
-                                    columns=['t_statistic', 'p_value'])
-    
-    df_final = pd.concat([df_final, df_res], axis=0)
-    
-
-    d={}
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)    
-        strength = get_strengtgs_dict(g, 'averaging')
-        d.update({exp_name[0:-4] : strength})
-    
-    df = together_values(d)
-    ctrl = df.loc[df['group'] == 'CTRL'].data
-    coc = df.loc[df['group'] == 'COC'].data
-    t_statistic, p_value = scipy.stats.ttest_ind(ctrl, coc)
-    
-    name = 'strength distribution, w average'
-    data = { name: [t_statistic, p_value]}
-    
-    df_res = pd.DataFrame.from_dict(data, orient='index',
-                                    columns=['t_statistic', 'p_value'])
-    
-    df_final = pd.concat([df_final, df_res], axis=0)
-
-       
-    # # Degree centrality
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)    
-        degree_centrality = list(nx.degree_centrality(g).values())
-        d.update({exp_name[0:-4] : degree_centrality})
-    
-    df = together_values(d)
-    ctrl = df.loc[df['group'] == 'CTRL'].data
-    coc = df.loc[df['group'] == 'COC'].data
-    t_statistic, p_value = scipy.stats.ttest_ind(ctrl, coc)
-    
-    name = 'Degree centrality'
-    data = { name: [t_statistic, p_value]}
-    
-    df_res = pd.DataFrame.from_dict(data, orient='index',
-                                    columns=['t_statistic', 'p_value'])
-    
-    df_final = pd.concat([df_final, df_res], axis=0)
-
-
-
-    # # eigenvalue centrality.
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)    
-        eigenvector_centrality = list(nx.eigenvector_centrality(g).values())
-        d.update({exp_name[0:-4] : eigenvector_centrality})
-    
-    df = together_values(d)
-    ctrl = df.loc[df['group'] == 'CTRL'].data
-    coc = df.loc[df['group'] == 'COC'].data
-    t_statistic, p_value = scipy.stats.ttest_ind(ctrl, coc)
-    
-    name = 'eigenvector_centrality'
-    data = { name: [t_statistic, p_value]}
-    
-    df_res = pd.DataFrame.from_dict(data, orient='index',
-                                    columns=['t_statistic', 'p_value'])
-    
-    df_final = pd.concat([df_final, df_res], axis=0)
-    
-
-    # # Closeness centrality
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path) 
-        closeness_centrality = list(nx.closeness_centrality(g).values())
-        d.update({exp_name[0:-4] : closeness_centrality})
-    df = together_values(d)
-    ctrl = df.loc[df['group'] == 'CTRL'].data
-    coc = df.loc[df['group'] == 'COC'].data
-    t_statistic, p_value = scipy.stats.ttest_ind(ctrl, coc)
-    
-    name = 'Closeness centrality'
-    data = { name: [t_statistic, p_value]}
-    
-    df_res = pd.DataFrame.from_dict(data, orient='index',
-                                    columns=['t_statistic', 'p_value'])
-    
-    df_final = pd.concat([df_final, df_res], axis=0)
-
-    # # Betweenness centrality
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path) 
-        betweenness_centrality = list(nx.betweenness_centrality(g, weight=None).values())
-        d.update({exp_name[0:-4] : betweenness_centrality})
-    df = together_values(d)
-    ctrl = df.loc[df['group'] == 'CTRL'].data
-    coc = df.loc[df['group'] == 'COC'].data
-    t_statistic, p_value = scipy.stats.ttest_ind(ctrl, coc)
-    
-    name = 'Betweenness_centrality'
-    data = { name: [t_statistic, p_value]}
-    
-    df_res = pd.DataFrame.from_dict(data, orient='index',
-                                    columns=['t_statistic', 'p_value'])
-    
-    df_final = pd.concat([df_final, df_res], axis=0)
-
-
-    # # Betweenness centrality WEIGHTED
-    # d = {}  
-    # for exp_name, path in experiments_dict.items():         
-    #     g = nx.read_gml(path) 
-    #     betweenness_centrality_w = list(nx.betweenness_centrality(g,weight='duration').values())
-    #     d.update({exp_name[0:-4] : betweenness_centrality_w})
-    # d = together_values(d)
-    # draw_box_plot(d, 'betweenness_centrality_w_duration')
-    
-    # # Betweenness centrality WEIGHTED
-    # d = {}  
-    # for exp_name, path in experiments_dict.items():         
-    #     g = nx.read_gml(path) 
-    #     betweenness_centrality_w = list(nx.betweenness_centrality(g,weight='count').values())
-    #     d.update({exp_name[0:-4] : betweenness_centrality_w})
-    # d = together_values(d)
-    # draw_box_plot(d, 'betweenness_centrality_w_count')
-    
-    # d = {}  
-    # for exp_name, path in experiments_dict.items():         
-    #     g = nx.read_gml(path) 
-    #     betweenness_centrality_w = list(nx.betweenness_centrality(g,weight='frequency').values())
-    #     d.update({exp_name[0:-4] : betweenness_centrality_w})
-    # d = together_values(d)
-    # draw_box_plot(d, 'betweenness_centrality_w_frequency')
-    
-    # d = {}  
-    # for exp_name, path in experiments_dict.items():         
-    #     g = nx.read_gml(path) 
-    #     betweenness_centrality_w = list(nx.betweenness_centrality(g,weight='averaging').values())
-    #     d.update({exp_name[0:-4] : betweenness_centrality_w})
-    # d = together_values(d)
-    # draw_box_plot(d, 'betweenness_centrality_w_average')
-    
-
-    # # Information centrality
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)
-        gc = max(nx.connected_component_subgraphs(g), key=len)
-        information_centrality = list(nx.information_centrality(gc).values())
-        d.update({exp_name[0:-4] : information_centrality})
-        
-    df = together_values(d)
-    ctrl = df.loc[df['group'] == 'CTRL'].data
-    coc = df.loc[df['group'] == 'COC'].data
-    t_statistic, p_value = scipy.stats.ttest_ind(ctrl, coc)
-    
-    name = 'Information centrality'
-    data = { name: [t_statistic, p_value]}
-    
-    df_res = pd.DataFrame.from_dict(data, orient='index',
-                                    columns=['t_statistic', 'p_value'])
-    
-    df_final = pd.concat([df_final, df_res], axis=0)
-
-
-    # # Page rank
-    # d = {}  
-    # for exp_name, path in experiments_dict.items():         
-    #     g = nx.read_gml(path)
-    #     page_rank = list(nx.pagerank(g, alpha=0.9).values())
-    #     d.update({exp_name[0:-4] : page_rank})
-    # d = together_values(d)
-    # draw_box_plot(d, 'page_rank')
-    
-    d = {}  
-    for exp_name, path in experiments_dict.items():         
-        g = nx.read_gml(path)
-        clustering_coeff_w = list(nx.clustering(g, weight='duration').values())
-        d.update({exp_name[0:-4] : clustering_coeff_w})
-    df = together_values(d)
-    ctrl = df.loc[df['group'] == 'CTRL'].data
-    coc = df.loc[df['group'] == 'COC'].data
-    t_statistic, p_value = scipy.stats.ttest_ind(ctrl, coc)
-    
-    name = 'Clustering coefficient,  weight=duration'
-    data = { name: [t_statistic, p_value]}
-    
-    df_res = pd.DataFrame.from_dict(data, orient='index',
-                                    columns=['t_statistic', 'p_value'])
-    
-    df_final = pd.concat([df_final, df_res], axis=0)
-    
-    return df_final
-    # draw_box_plot(d, 'Clustering coefficient,  weight=duration')
-    
-    # d = {}  
-    # for exp_name, path in experiments_dict.items():         
-    #     g = nx.read_gml(path)
-    #     clustering_coeff_w = list(nx.clustering(g, weight='count').values())
-    #     d.update({exp_name[0:-4] : clustering_coeff_w})
-    # d = together_values(d)
-    # draw_box_plot(d, 'clustering coefficient  w count')
-    
-    # d = {}  
-    # for exp_name, path in experiments_dict.items():         
-    #     g = nx.read_gml(path)
-    #     clustering_coeff_w = list(nx.clustering(g, weight='frequency').values())
-    #     d.update({exp_name[0:-4] : clustering_coeff_w})
-    # d = together_values(d)
-    # draw_box_plot(d, 'clustering coefficient  w frequency')
-    
-    # d = {}  
-    # for exp_name, path in experiments_dict.items():         
-    #     g = nx.read_gml(path)
-    #     clustering_coeff_w = list(nx.clustering(g, weight='averaging').values())
-    #     d.update({exp_name[0:-4] : clustering_coeff_w})
-    # d = together_values(d)
-    # draw_box_plot(d, 'clustering coeff w average')
     
 
 
