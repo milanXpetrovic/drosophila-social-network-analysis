@@ -162,26 +162,19 @@ def graph_global_measures(g, pop_name):
     
     ave_strength_count = calculate_strength(g, 'count') 
     ave_strength_duration= calculate_strength(g, 'duration')
-    ##ave_strength_duration= calculate_strength(g, 'duration')
     
     edges_ave = total_edges / total_nodes
     network_density = nx.density(g)
     
-    # Measures of range
-    # gcc = sorted(nx.connected_component(g), key=len, reverse=True)
-    # gc = g.subgraph(gcc[0])
     gc = list(max(nx.connected_components(g), key=len))
     gc = g.subgraph(gc)
 
     spl = nx.average_shortest_path_length(gc)
     diameter = nx.diameter(gc, e=None)
     
-    # Number of edges separating the focal node from other nodes of interest
     reach = nx.global_reaching_centrality(g, weight=None, normalized=True)
     global_efficiency = nx.global_efficiency(g)
     
-    ##########################################################################
-    # mjere grupiranja 
     clustering_coeff = nx.clustering(g)
     average_cl_coeff_unweighted = mean(clustering_coeff[k] for k in clustering_coeff)
     clustering_coeff_w_count = nx.clustering(g, weight='count')
@@ -201,7 +194,6 @@ def graph_global_measures(g, pop_name):
     betweenness_c_w_duration = nx.betweenness_centrality(g, weight='duration')
     average_betw_c_w_duration = mean(betweenness_c_w_duration[k] for k in betweenness_c_w_duration)
     
-    
     closeness_centrality_unweighted = nx.closeness_centrality(g)
     ave_closeness_cent_unw = mean(closeness_centrality_unweighted[k] for k in closeness_centrality_unweighted)
     closeness_c_w_count = nx.closeness_centrality(g,distance='count')
@@ -209,14 +201,11 @@ def graph_global_measures(g, pop_name):
     closeness_c_w_duration = nx.closeness_centrality(g,distance='duration')
     ave_closeness_c_w_duration = mean(closeness_c_w_duration[k] for k in closeness_c_w_duration)
      
-    
     standard_deviation_degree =round(np.std(deg_list))
     degree_heterogeneity = standard_deviation_degree/average_degree
     degree_assortativity = nx.degree_assortativity_coefficient(g)
     
-    #mjere za komponente
     ncc = nx.number_connected_components(g)
-    # bggest component size
     gcc = sorted(nx.connected_components(g), key=len, reverse=True)
     bcs = len(g.subgraph(gcc[0]))
     
@@ -298,69 +287,7 @@ def order_columns(df):
     
     return df
 
-
-def make_random_graph(number_of_nodes, number_of_edges):
-    G = nx.Graph()
-    G.add_nodes_from([i for i in range(1, number_of_nodes+1)])
-    
-    while G.number_of_edges()<number_of_edges:
-        node_1, node_2 = random.sample(range(1, number_of_nodes+1), 2)
-        
-        if G.has_edge(node_1, node_2):
-            count = G[node_1][node_2]['count']
-            old_duration = G[node_1][node_2]['count']
-            new_duration = random.uniform(0.5, 600)
-            
-            if old_duration + new_duration > 600:
-                continue
-
-            
-            else:
-                G[node_1][node_2]['count'] +=1
-                G[node_1][node_2]['duration'] = old_duration + new_duration
-                
-                count = G[node_1][node_2]['count']
-                duration = G[node_1][node_2]['duration']
-                
-                G[node_1][node_2]['frequency'] = float((count/duration)/0.5)
-                G[node_1][node_2]['averaging'] = float(1/599.5)*(float(duration/count)-0.5)
-                
-                # created_edges +=1
-
-             
-        else:
-            duration = random.uniform(0.5, 600)
-            count = 1  
-            
-            frequency = float((count/duration)/0.5)
-            averaging = float(1/599.5)*(float(duration/count)-0.5)
-          
-            G.add_edge(node_1, node_2,
-                    duration=duration,
-                    count=count,
-                    frequency=frequency,
-                    averaging=averaging)
-            
-            # created_edges +=1       
-            
-    return G
-
-
-def generate_random_multigraph(g):
-    edges = list(g.edges(data=True))
-    weights = [weight.get('duration') for u, v, weight in edges]
-    random_mg = nx.MultiGraph() 
-    
-    random_mg.add_nodes_from(g.nodes())
-    
-    while random_mg.number_of_edges()< len(g.edges()):  
-        node_1, node_2 = random.sample(range(1, len(g.nodes())+1), 2)
-        weight = weights.pop(0)
-        random_mg.add_edge(node_1, node_2, duration=weight)
-        
-    return random_mg
-
-    
+   
 def convert_multigraph_to_weighted(multiGraph, FPS):
     G = nx.Graph()
     G.add_nodes_from(multiGraph.nodes())
@@ -391,29 +318,6 @@ def convert_multigraph_to_weighted(multiGraph, FPS):
                 continue
         
     return G
-
-
-def create_n_samples_of_random_graph(g, pop_name, n_samples, FPS):
-    total = pd.DataFrame()
-    for i in range(n_samples):
-        df = pd.DataFrame()
-      
-        random_multi_g = generate_random_multigraph(g)
-        random_weighted_g = convert_multigraph_to_weighted(random_multi_g, FPS)
-        
-        df = graph_global_measures(random_weighted_g, 'graph_' + str(i))
-        
-        total = pd.concat([total, df], axis=1)
-        
-    
-    graph_cols = [col for col in df if col.startswith('graph')]
-    
-    df = pd.DataFrame()
-    #df['median'] = total.loc[:, graph_cols].median(axis=1)
-    df[pop_name.replace('.gml', '') + '_mean_random'] = total.loc[:, graph_cols].mean(axis=1)
-    # df['std'] = total.loc[:, graph_cols].std(axis=1)
-    
-    return df
 
 
 def remove_nodes_with_degree_less_than(G, degree):

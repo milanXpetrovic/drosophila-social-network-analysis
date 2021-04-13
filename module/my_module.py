@@ -12,22 +12,11 @@ import scipy.stats
 from statistics import mean
 import matplotlib.pyplot as plt
 
-<<<<<<< HEAD
-=======
-from statistics import mean, stdev
-import scipy.stats
-# try:
-#     import modin.pandas as pd
-
-# except ImportError:
-#     import pandas as pd  
->>>>>>> 40797b622ca6c06b97ef04200e07cf31123e1d8d
 
 import logging 
 logging.basicConfig(format="%(levelname)s:%(message)s", level=logging.DEBUG)
 
 
-<<<<<<< HEAD
 def natural_sort(l): 
     convert = lambda text: int(text) if text.isdigit() else text.lower() 
     alphanum_key = lambda key: [ convert(c) for c in re.split('([0-9]+)', key)] 
@@ -837,8 +826,6 @@ def network_measures_distribution():
 
     return graph_functions
 
-=======
->>>>>>> 40797b622ca6c06b97ef04200e07cf31123e1d8d
 
 def stat_test(d):
     """
