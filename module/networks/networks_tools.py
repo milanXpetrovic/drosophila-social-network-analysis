@@ -541,6 +541,79 @@ def community_stats():
     Returns:
         [type]: [description]
     """
+    #! FIX THIS 
+    #TODO: convert code to function
+    
+    # import os
+    # import networkx as nx
+    # import networkx.algorithms.community as nxcom
+    # from matplotlib import pyplot as plt
+    # import community
+    # import pandas as pd
+
+    # # get reproducible results
+    # import random
+    # from numpy import random as nprand
+    # random.seed(123)
+    # nprand.seed(123)
+
+    # import package_functions as hf
+
+    # DATA_PATH = '../2_pipeline/1_0_undirected_singleedge_graph/out/'
+    # SAVE_PATH = '../3_output/'
+
+    # experiments = hf.load_files_from_folder(DATA_PATH, file_format='.gml')
+        
+    # total = pd.DataFrame()
+
+    # # It uses the louvain method described in Fast unfolding of communities in large networks
+    # for pop_name, path in experiments.items():
+
+    #     G = nx.read_gml(path)
+    #     #first compute the best partition
+    #     partition = community.best_partition(G, weight='count')
+        
+    #     size = float(len(set(partition.values())))
+
+    #     count = 0.
+    #     communities = []
+    #     for com in set(partition.values()) :
+    #         count = count + 1.
+    #         list_nodes = [nodes for nodes in partition.keys()
+    #                                     if partition[nodes] == com]
+    #         communities.append(list_nodes)
+        
+    #     communities.sort(key=len, reverse=True)
+        
+    #     single_element_comm = 0
+    #     for com in communities:
+    #         if(len(com) == 1):
+    #             single_element_comm +=1
+        
+    #     all_comm_len = [len(com) for com in communities]
+    #     all_comm_len_no_sing = [len(com) for com in communities if len(com) > 1] 
+    #     ave_comm_size_no_sing = sum(all_comm_len_no_sing)/len(all_comm_len_no_sing)
+        
+    #     d = {'numb_of_communities: ': len(communities),
+    #         'numb_sing_elem_comm:': single_element_comm,
+    #         'comm_without_single:': len(communities)-single_element_comm,
+    #         'biggest_community:': len(communities[0]),
+    #         'second_biggest_community:': len(communities[1]),
+    #         'ave_comm_size_no_sing:':ave_comm_size_no_sing}
+        
+    #     df = pd.DataFrame(d, index=[pop_name])
+    #     df = df.T
+    #     total = pd.concat([total,df], axis=1)
+    
+        
+    # total = hf.order_columns(total)
+    # total.to_csv(SAVE_PATH+'comm_count_louvian.csv')
+   
+
+
+
+
+
     pass
 
 
