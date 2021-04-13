@@ -26,7 +26,19 @@ def add_edges_to_undirected_g(G, df,
                               DISTANCE_BETWEEN_FLIES,
                               TOUCH_DURATION_FRAMES,
                               FPS):
-    
+    """[summary]
+
+    Args:
+        G ([type]): [description]
+        df ([type]): [description]
+        DISTANCE_BETWEEN_FLIES ([type]): [description]
+        TOUCH_DURATION_FRAMES ([type]): [description]
+        FPS ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
+
     for column in df.columns:
         df_ = df[column] 
 
@@ -65,7 +77,19 @@ def add_edges_to_undirected_g(G, df,
 
 def add_multiedges_to_undirected_g(G, df, DISTANCE_BETWEEN_FLIES,
                                    TOUCH_DURATION_FRAMES):
-    
+    """[summary]
+
+    Args:
+        G ([type]): [description]
+        df ([type]): [description]
+        DISTANCE_BETWEEN_FLIES ([type]): [description]
+        TOUCH_DURATION_FRAMES ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
+
+
     for column in df.columns:
         df_ = df[column] 
         df_ = df_[df_ <= DISTANCE_BETWEEN_FLIES+1]
@@ -91,7 +115,18 @@ def add_multiedges_to_undirected_g(G, df, DISTANCE_BETWEEN_FLIES,
 
 def dynamics_of_network_graph(G, df, DISTANCE_BETWEEN_FLIES,
                               TOUCH_DURATION_FRAMES):
-    
+    """[summary]
+
+    Args:
+        G ([type]): [description]
+        df ([type]): [description]
+        DISTANCE_BETWEEN_FLIES ([type]): [description]
+        TOUCH_DURATION_FRAMES ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
+
     for column in df.columns:
         df_ = df[column] 
         df_ = df_[df_ <= DISTANCE_BETWEEN_FLIES+1]
@@ -110,7 +145,16 @@ def dynamics_of_network_graph(G, df, DISTANCE_BETWEEN_FLIES,
 
 
 def calculate_Qmax(G, mod_nodes):
-	r"""returns maximum modularity possible given the network partition"""
+    """Returns maximum modularity possible given the network partition
+
+    Args:
+        G ([type]): [description]
+        mod_nodes ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
+	
 	Lt= sum([G.degree(node) for node in list(G.nodes)])
 	total  =0
 	
@@ -122,7 +166,17 @@ def calculate_Qmax(G, mod_nodes):
 
 
 def calculate_avg_wd(G, partition, n_nodes):
-	r"""returns average within-module degree"""
+    """ Returns average within-module degree 
+
+    Args:
+        G ([type]): [description]
+        partition ([type]): [description]
+        n_nodes ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
+
 	wdlist = []
 	for node1 in list(G.nodes):
 		nbrs = G.neighbors(node1)
@@ -135,6 +189,16 @@ def calculate_avg_wd(G, partition, n_nodes):
 
 
 def calculate_strength(g, weight_value):
+    """[summary]
+
+    Args:
+        g ([type]): [description]
+        weight_value ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
+
     graph_freq = {}
     nodes = list(g.nodes)
     for node in nodes:
@@ -151,9 +215,214 @@ def calculate_strength(g, weight_value):
     
     return ave_strength_value
 
+
+def order_columns(df):
+    """[summary]
+
+    Args:
+        df ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
+
+    coc_columns = [col for col in df if col.startswith('COC')]
+    ctrl_columns = [col for col in df if col.startswith('CTRL')]
+    
+    df_coc = df[coc_columns]
+    df_ctrl = df[ctrl_columns]
+    
+    df = pd.DataFrame()
+    df['median_COC'] = df_coc.loc[:, :].median(axis=1)
+    df['mean_COC'] = df_coc.loc[:, :].mean(axis=1)
+    df['std_COC'] = df_coc.loc[:, :].sem(axis=1)
+    
+    df['median_CTRL'] = df_ctrl.loc[:, :].median(axis=1)
+    df['mean-CTRL'] = df_ctrl.loc[:, :].mean(axis=1)
+    df['std_CTRL'] = df_ctrl.loc[:, :].sem(axis=1)
+    
+    df = pd.concat([df, df_ctrl, df_coc], axis=1)
+    
+    return df
+
+   
+def convert_multigraph_to_weighted(multiGraph, FPS):
+    """
+    Args:
+        multiGraph ([type]): [description]
+        FPS ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
+
+    G = nx.Graph()
+    G.add_nodes_from(multiGraph.nodes())
+    
+    for u,v,data in multiGraph.edges(data=True):
+        if G.has_edge(u,v):
+            G[u][v]['duration'] += data['duration']
+            G[u][v]['count'] +=1 
+            
+            duration = G[u][v]['duration']
+            count = G[u][v]['count']
+            frequency=float((count/duration)/0.5)
+            averaging=float(1/599.5)*(float(duration/count)-0.5)
+    
+        else:
+            if data['duration'] > 0:
+                duration=float(data['duration']/FPS)
+                count=1
+                frequency=float((count/duration)/0.5)
+                averaging=float(1/599.5)*(float(duration/count)-0.5)
+                
+                G.add_edge(u, v,
+                           duration=duration,
+                           count=count,
+                           frequency=frequency,
+                           averaging=averaging)
+            else:
+                continue
+        
+    return G
+
+
+def remove_nodes_with_degree_less_than(G, degree):
+    """[summary]
+
+    Args:
+        G ([type]): [description]
+        degree ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
+   
+    remove = [node for node, node_degree in dict(G.degree()).items() if node_degree < degree]
+    G.remove_nodes_from(remove)
+    
+    return G
+    
+
+def get_x_labels(my_dict_keys):
+    """[summary]
+
+    Args:
+        my_dict_keys ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
+    
+    my_dict_keys = list(my_dict_keys)
+    coc_count = 1
+    ctrl_count = 1
+    new_values = []
+    
+    for item in my_dict_keys:
+        if item.startswith('CTRL'):
+            new_values.append('CTRL_'+str(ctrl_count))
+            ctrl_count += 1
+            
+        else:
+            new_values.append('COC_'+str(coc_count))
+            coc_count += 1
+            
+    return new_values
+
+
+def get_strengtgs_dict(g, weight_value):
+    """[summary]
+
+    Args:
+        g ([type]): [description]
+        weight_value ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
+    
+    nodes = list(g.nodes)
+    strength_d = {}
+    
+    for node in nodes:
+        edges = list(g.edges(node, data=True))
+        freq = float(0)
+        
+        for edge in edges:
+            (edge_a, edge_b, data) = edge
+            freq += data[weight_value]
+
+        strength_d.update({int(node):freq})
+    
+    #ave_strength_value = mean(graph_freq[k] for k in graph_freq)
+
+    return strength_d
+
+
+def draw_box_plot(dictionary, graph_title):
+    """[summary]
+
+    Args:
+        dictionary ([type]): [description]
+        graph_title ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
+
+    labels, data = [*zip(*d.items())]
+    labels = [label for label in labels]
+    data = [list(d.values()) for d in data]
+         
+    fig = plt.figure(figsize=(9,6))
+    _ = plt.boxplot(data)
+    
+    return fig
+    
+
+def group_values(multiple_dicts):
+    """[summary]
+
+    Args:
+        multiple_dicts ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
+    
+    d = {}
+    
+    coc_values = []
+    ctrl_values = []
+    
+    for pop_name, values in multiple_dicts.items():     
+        
+        for fly_label, value in values.items():
+            
+            if pop_name.startswith('COC'):
+                
+                coc_values.append(value)
+        
+            else:
+                ctrl_values.append(value)
+            
+    d.update({'COC': coc_values})
+    d.update({'CTRL': ctrl_values})
+    
+    return d
+
     
 def graph_global_measures(g, pop_name):
-    """ """
+    """
+    Args:
+        g ([type]): [description]
+        pop_name ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
+
     # osnovne mjere
     total_nodes = len(g.nodes())
     total_edges = len(list(g.edges()))
@@ -267,144 +536,13 @@ def graph_global_measures(g, pop_name):
     return df
 
 
-def order_columns(df):
-    coc_columns = [col for col in df if col.startswith('COC')]
-    ctrl_columns = [col for col in df if col.startswith('CTRL')]
-    
-    df_coc = df[coc_columns]
-    df_ctrl = df[ctrl_columns]
-    
-    df = pd.DataFrame()
-    df['median_COC'] = df_coc.loc[:, :].median(axis=1)
-    df['mean_COC'] = df_coc.loc[:, :].mean(axis=1)
-    df['std_COC'] = df_coc.loc[:, :].sem(axis=1)
-    
-    df['median_CTRL'] = df_ctrl.loc[:, :].median(axis=1)
-    df['mean-CTRL'] = df_ctrl.loc[:, :].mean(axis=1)
-    df['std_CTRL'] = df_ctrl.loc[:, :].sem(axis=1)
-    
-    df = pd.concat([df, df_ctrl, df_coc], axis=1)
-    
-    return df
-
-   
-def convert_multigraph_to_weighted(multiGraph, FPS):
-    G = nx.Graph()
-    G.add_nodes_from(multiGraph.nodes())
-    
-    for u,v,data in multiGraph.edges(data=True):
-        if G.has_edge(u,v):
-            G[u][v]['duration'] += data['duration']
-            G[u][v]['count'] +=1 
-            
-            duration = G[u][v]['duration']
-            count = G[u][v]['count']
-            frequency=float((count/duration)/0.5)
-            averaging=float(1/599.5)*(float(duration/count)-0.5)
-    
-        else:
-            if data['duration'] > 0:
-                duration=float(data['duration']/FPS)
-                count=1
-                frequency=float((count/duration)/0.5)
-                averaging=float(1/599.5)*(float(duration/count)-0.5)
-                
-                G.add_edge(u, v,
-                           duration=duration,
-                           count=count,
-                           frequency=frequency,
-                           averaging=averaging)
-            else:
-                continue
-        
-    return G
-
-
-def remove_nodes_with_degree_less_than(G, degree):
-   
-    remove = [node for node, node_degree in dict(G.degree()).items() if node_degree < degree]
-    G.remove_nodes_from(remove)
-    
-    return G
-    
-
-def get_x_labels(my_dict_keys):
-    
-    my_dict_keys = list(my_dict_keys)
-    coc_count = 1
-    ctrl_count = 1
-    new_values = []
-    
-    for item in my_dict_keys:
-        if item.startswith('CTRL'):
-            new_values.append('CTRL_'+str(ctrl_count))
-            ctrl_count += 1
-            
-        else:
-            new_values.append('COC_'+str(coc_count))
-            coc_count += 1
-            
-    return new_values
-
-
-def get_strengtgs_dict(g, weight_value):
-    
-    nodes = list(g.nodes)
-    strength_d = {}
-    
-    for node in nodes:
-        edges = list(g.edges(node, data=True))
-        freq = float(0)
-        
-        for edge in edges:
-            (edge_a, edge_b, data) = edge
-            freq += data[weight_value]
-
-        strength_d.update({int(node):freq})
-    
-    #ave_strength_value = mean(graph_freq[k] for k in graph_freq)
-
-    return strength_d
-
-
-def draw_box_plot(dictionary, graph_title):
-
-    labels, data = [*zip(*d.items())]
-    labels = [label for label in labels]
-    data = [list(d.values()) for d in data]
-         
-    fig = plt.figure(figsize=(9,6))
-    _ = plt.boxplot(data)
-    
-    return fig
-    
-
-def group_values(multiple_dicts):
-    
-    d = {}
-    
-    coc_values = []
-    ctrl_values = []
-    
-    for pop_name, values in multiple_dicts.items():     
-        
-        for fly_label, value in values.items():
-            
-            if pop_name.startswith('COC'):
-                
-                coc_values.append(value)
-        
-            else:
-                ctrl_values.append(value)
-            
-    d.update({'COC': coc_values})
-    d.update({'CTRL': ctrl_values})
-    
-    return d
-
-
 def network_measures_distribution():
+    """[summary]
 
+    Returns:
+        [type]: [description]
+    """
+    
     graph_functions = [
         ('Degree centrality', lambda g: nx.degree_centrality(g)),
         ('Eigenvector centrality', lambda g: nx.eigenvector_centrality(g)),
