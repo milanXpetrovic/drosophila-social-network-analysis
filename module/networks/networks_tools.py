@@ -535,6 +535,14 @@ def graph_global_measures(g, pop_name):
     
     return df
 
+def community_stats():
+    """Calculate mid level measures in network.
+
+    Returns:
+        [type]: [description]
+    """
+    pass
+
 
 def network_measures_distribution():
     """[summary]
@@ -542,7 +550,7 @@ def network_measures_distribution():
     Returns:
         [type]: [description]
     """
-    
+
     graph_functions = [
         ('Degree centrality', lambda g: nx.degree_centrality(g)),
         ('Eigenvector centrality', lambda g: nx.eigenvector_centrality(g)),
