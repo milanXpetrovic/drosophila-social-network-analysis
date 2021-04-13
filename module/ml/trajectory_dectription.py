@@ -126,5 +126,5 @@ def min_max_normalization_df(df):
     """
 
     """
-    
+
     return (df-df.min())/(df.max()-df.min())
