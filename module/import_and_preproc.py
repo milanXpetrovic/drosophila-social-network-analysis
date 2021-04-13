@@ -15,47 +15,69 @@ from statistics import mean, stdev
 import scipy.stats
 
 
-def natural_sort(l): 
-    convert = lambda text: int(text) if text.isdigit() else text.lower() 
-    alphanum_key = lambda key: [ convert(c) for c in re.split('([0-9]+)', key)] 
-    
-    return sorted(l, key = alphanum_key)
-
-
 def load_multiple_folders(path):
-    ## import foldera sa vise foldera unutar kojih su csv podaci 
+    """Load multiple directories from directory. 
+    Takes as imput path to directory, and returns path to all directories
+    inside them, if there is any.
+
+    Args:
+        path (string): Path to the directory location
+
+    Returns:
+        dictionary: key=directory name, value=path to directory
+    """
+
     if not os.listdir(path):
         sys.exit('Directory is empty')
     
-    experiments = {}
+    d = {}
     # r=root, d=directories, f = files
-    for r, d, f in os.walk(path):
-        for folder in d:
-            experiments.update({folder : os.path.join(r, folder)})
+    for root, directories, files in os.walk(path):
+        for folder in directories:
+            d.update({folder : os.path.join(r, folder)})
          
-    return experiments       
+    return d       
  
 
 def load_files_from_folder(path, file_format='.csv'):
-    ## import folder sa csvomima
+    """Loads paths of files inside of directory with specific file format. 
+
+    Args:
+        path (str): path to directory
+        file_format (str, optional): File format. Defaults to '.csv'.
+
+    Returns:
+        dict: key=file name, value=path to file
+    """
+
     if not os.listdir(path):
-        sys.exit('Directory is empty')
+        sys.exit('Directory is empty, or files with given file format not found.')
     
-    files_dict= {}
+    d= {}
         
-    for r, d, f in os.walk(path):
-        f = natural_sort(f)
-        for file in f:
+    for root, directories, files in os.walk(path):
+        files = natural_sort(files)
+        for file in files:
             if file_format in file:
-                files_dict.update({file : os.path.join(r, file)})
+                d.update({file : os.path.join(root, file)})
                 
-    return files_dict
+    return d
 
 
 def load_dfs_to_list(path, min_x, min_y, file_format='.csv'):
     """Takes folder with individuals and returns list of dataframes for each
     individual.
+
+    Args:
+        path (str): [description]
+        min_x (float): [description]
+        min_y (float): [description]
+        file_format (str, optional): Defaults to '.csv'.
+
+    Returns:
+        list: list of pandas dataframes
     """
+
     if not os.listdir(path):
         sys.exit('Directory is empty')
         
@@ -78,8 +100,18 @@ def load_dfs_to_list(path, min_x, min_y, file_format='.csv'):
     return df_list
 
 
+
 def check_data(path):
-    
+    """Check if input trajectory data contains
+     the columns required within the function.
+
+    Args:
+        path (str): path to file
+
+    Returns:
+        bool: value of data validity
+    """
+
     columns = ['pos x', 'pos y', 'ori', 'major axis len', 'minor axis len',
         'body area', 'fg area', 'img contrast', 'min fg dist', 'wing l x',
         'wing l y', 'wing r x', 'wing r y', 'wing l ang', 'wing l len',
@@ -108,7 +140,16 @@ def check_data(path):
         
 
 def round_coordinates(df, decimal_places=0):
-    ## zaokruzivanje vrijednosti koordinata x i y na 0 decimala
+    """Round values in 'pos_x' 'pos_y' columns, by default, values are rounded on 0 decimals.
+
+    Args:
+        df (pandas Dataframe): Pandas dataframe with values
+        decimal_places (int, optional): Number of decimal places. Defaults to 0.
+
+    Returns:
+        [type]: [description]
+    """
+
     df = df.round({'pos_x': decimal_places, 'pos_y': decimal_places})
     
     return df
