@@ -15,6 +15,15 @@ from statistics import mean, stdev
 import scipy.stats
 
 def get_acc_in_path(vel_list):
+    """[summary]
+
+    Args:
+        vel_list ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
+
     list_of_acc = []
 
     while len(vel_list) > 1:        
@@ -25,8 +34,17 @@ def get_acc_in_path(vel_list):
 
 
 def descriptor(list_of_values, value_name):
-    ## returns dictionary of statistical values descriptors
+    """ #returns dictionary of statistical values descriptors
     #list_of_values = np.array(list_of_values)
+
+    Args:
+        list_of_values ([type]): [description]
+        value_name ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
+
     
     min_ = min(list_of_values)
     max_ = max(list_of_values)
@@ -53,7 +71,16 @@ def descriptor(list_of_values, value_name):
 
 
 def get_path_values(df, window_size):
-    """ PATH VALUES BASED ON STEP LENGTH"""
+    """ PATH VALUES BASED ON STEP LENGTH
+
+    Args:
+        df ([type]): [description]
+        window_size ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
+
     df['step'] = np.sqrt(np.square(df['pos_x'].diff()) +
                          np.square(df['pos_y'].diff()))
     
@@ -71,6 +98,16 @@ def get_path_values(df, window_size):
 
     
 def df_descriptor(df, value, window_size):
+    """[summary]
+
+    Args:
+        df ([type]): [description]
+        value ([type]): [description]
+        window_size ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
     
     df[value + '_min'] = df[value].rolling(window_size).min()
     df[value + '_max'] = df[value].rolling(window_size).max()
@@ -86,5 +123,8 @@ def df_descriptor(df, value, window_size):
     
 
 def min_max_normalization_df(df):
+    """
+
+    """
     
     return (df-df.min())/(df.max()-df.min())
