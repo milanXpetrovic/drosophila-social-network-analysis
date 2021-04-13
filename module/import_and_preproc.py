@@ -1,9 +1,12 @@
+# pylint: disable=unused-variable
+# pylint: enable=too-many-lines
+
 import os
 import re
 import sys
 import random
 
-import community
+#import community
 import numpy as np
 import pandas as pd 
 import networkx as nx
@@ -13,6 +16,21 @@ import matplotlib.pyplot as plt
 
 from statistics import mean, stdev
 import scipy.stats
+
+def natural_sort(l):
+    """[summary]
+
+    Args:
+        l ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
+
+    convert = lambda text: int(text) if text.isdigit() else text.lower() 
+    alphanum_key = lambda key: [ convert(c) for c in re.split('([0-9]+)', key)] 
+    
+    return sorted(l, key = alphanum_key)
 
 
 def load_multiple_folders(path):
@@ -31,10 +49,9 @@ def load_multiple_folders(path):
         sys.exit('Directory is empty')
     
     d = {}
-    # r=root, d=directories, f = files
-    for root, directories, files in os.walk(path):
+    for _, directories, root in os.walk(path):
         for folder in directories:
-            d.update({folder : os.path.join(r, folder)})
+            d.update({folder : os.path.join(root, folder)})
          
     return d       
  
@@ -54,9 +71,9 @@ def load_files_from_folder(path, file_format='.csv'):
         sys.exit('Directory is empty, or files with given file format not found.')
     
     d= {}
-        
     for root, directories, files in os.walk(path):
         files = natural_sort(files)
+
         for file in files:
             if file_format in file:
                 d.update({file : os.path.join(root, file)})
@@ -82,9 +99,10 @@ def load_dfs_to_list(path, min_x, min_y, file_format='.csv'):
         sys.exit('Directory is empty')
         
     files_dict= {}
-        
+
     for r, d, f in os.walk(path):
         f = natural_sort(f)
+
         for file in f:
             if file_format in file:
                 files_dict.update({file : os.path.join(r, file)})
@@ -140,14 +158,14 @@ def check_data(path):
         
 
 def round_coordinates(df, decimal_places=0):
-    """Round values in 'pos_x' 'pos_y' columns, by default, values are rounded on 0 decimals.
+    """Round values in 'pos_x' and 'pos_y' columns, by default, values are rounded on 0 decimals.
 
     Args:
         df (pandas Dataframe): Pandas dataframe with values
         decimal_places (int, optional): Number of decimal places. Defaults to 0.
 
     Returns:
-        [type]: [description]
+        panadas DAtaframe: dataframe with rounded values in 'pos_x' 'pos_y'
     """
 
     df = df.round({'pos_x': decimal_places, 'pos_y': decimal_places})
@@ -156,6 +174,18 @@ def round_coordinates(df, decimal_places=0):
 
 
 def prepproc(df, min_x, min_y):
+    #! FIX THIS 
+    """Preproc data
+
+    Args:
+        df (pandas Dataframe): [description]
+        min_x (float): [description]
+        min_y (float): [description]
+
+    Returns:
+        pandas Dataframe: 
+    """
+
     ## fill nan values 
     #df = df.where(df.notnull(), other=(df.fillna(method='ffill')+df.fillna(method='bfill'))/2)
     df = df.fillna(method='ffill')
@@ -177,11 +207,23 @@ def prepproc(df, min_x, min_y):
 
 
 def find_pop_mins(path):
+    """Returns minimum value of x and y coordinates found in population.
+    This values are used to optimize values ​​within the population. The reason
+    for this is tracking, which in some cases does not record coordinate
+    values ​​starting from 0. 
+
+    Args:
+        path (str): path to directory that contains
+
+    Returns:
+        float: the smallest value of the x and y coordinates.
+    """
+
     fly_dict = load_files_from_folder(path)
     
     pop_min_x = []
     pop_min_y = []
-    for fly_name, path in fly_dict.items(): 
+    for _, path in fly_dict.items(): 
     
         df = pd.read_csv(path, index_col=0)
         pop_min_x.append(min(df['pos x']))
@@ -191,10 +233,15 @@ def find_pop_mins(path):
     
          
 def inspect_population_coordinates(path, pop_name):
-    """ Draws scatter plot of x and y coordinates in population.
+    """Draws scatter plot of x and y coordinates in population.
     This function is used to inspect validity of trackings if all coordinates 
     are inside of the arena.
+
+    Args:
+        path (str): [description]
+        pop_name (str): [description]
     """
+
     x_pop_all = pd.Series()
     y_pop_all = pd.Series()
     fly_dict= load_files_from_folder(path)
@@ -221,14 +268,13 @@ def inspect_population_coordinates(path, pop_name):
 
 
 def distances_between_all_flies(files):
-    """
-    Input
-    -----
-    List of dataframes
+    """Dataframe of all distances between flies.
 
-    Returns
-    -------
-    Dataframe of all distances between flies.
+    Args:
+        files ([type]): [description]
+
+    Returns:
+        pandas Dataframe: [description]
     """
 
     final_df = pd.DataFrame()
