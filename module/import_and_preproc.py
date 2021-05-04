@@ -17,6 +17,143 @@ import matplotlib.pyplot as plt
 from statistics import mean, stdev
 import scipy.stats
 
+
+def group_values(multiple_dicts):
+    """[summary]
+
+    Args:
+        multiple_dicts ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
+
+    d = {}
+    coc_values = []
+    ctrl_values = []
+    for pop_name, values in multiple_dicts.items():
+
+        for _, value in values.items():
+            if pop_name.startswith('COC'):
+                coc_values.append(value)
+
+            else:
+                ctrl_values.append(value)
+
+    d.update({'COC': coc_values})
+    d.update({'CTRL': ctrl_values})
+
+    return d
+
+
+def order_columns(df):
+    """[summary]
+
+    Args:
+        df ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
+
+    coc_columns = [col for col in df if col.startswith('COC')]
+    ctrl_columns = [col for col in df if col.startswith('CTRL')]
+
+    df_coc = df[coc_columns]
+    df_ctrl = df[ctrl_columns]
+
+    df = pd.DataFrame()
+    df['median_COC'] = df_coc.loc[:, :].median(axis=1)
+    df['mean_COC'] = df_coc.loc[:, :].mean(axis=1)
+    df['std_COC'] = df_coc.loc[:, :].sem(axis=1)
+
+    df['median_CTRL'] = df_ctrl.loc[:, :].median(axis=1)
+    df['mean-CTRL'] = df_ctrl.loc[:, :].mean(axis=1)
+    df['std_CTRL'] = df_ctrl.loc[:, :].sem(axis=1)
+
+    df = pd.concat([df, df_ctrl, df_coc], axis=1)
+
+    return df
+    
+
+def draw_box_plot(d, graph_title, path, counter):
+    """Plots boxplot of value distribution from dictionary of dictionaries.
+    
+    Args:
+        dictionary ([dict]): [description]
+        graph_title ([string]): [description]
+
+    Returns:
+        [type]: [description]
+    """
+    
+    plt.rcParams['font.sans-serif'] = "Arial"
+    plt.rcParams['font.family'] = "sans-serif"
+    plt.rc('font', size=8)
+    plt.rc('axes', titlesize=10)
+        
+    width_height_in = (5, 3.5)
+    fig = plt.figure(figsize=width_height_in, dpi=300)
+    
+    # plt.title(graph_title)
+    # plt.ylabel("measure")
+        
+    labels, data = [*zip(*d.items())]
+    labels = [label for label in labels]
+    
+    data = [list(d.values()) for d in data]
+    boxplot = plt.boxplot(data, patch_artist=True, zorder=1)
+    
+    coc_count=1
+    ctrl_count = 1
+    xticks_labels = []
+    for label in labels:
+        if label.startswith('COC'):
+            xticks_labels.append('COC ' + str(coc_count))
+            coc_count+=1
+            
+        else:
+            xticks_labels.append('CTRL ' + str(ctrl_count))
+            ctrl_count+=1     
+            
+    num = list(range(1, len(xticks_labels)+1))      
+    plt.xticks(num, xticks_labels, rotation=90)
+    
+    # plt.axvspan(0.5, 11.5, alpha=0.05, color='red')
+    ctrl_vals = []
+    coc_vals = []
+    
+    for key, values in d.items():
+        if key.startswith('COC'):
+            
+            coc_vals = coc_vals + list(values.values())
+
+        else:
+            ctrl_vals = ctrl_vals + list(values.values())     
+    
+    
+    average_bsl = mean(ctrl_vals)
+    average_coc = mean(coc_vals)
+    
+    colors = ['pink']*11 + ['lightgreen']*9
+    for item, color in zip(boxplot['boxes'], colors):
+        item.set_facecolor(color)
+        
+    plt.axhline(y=average_bsl, linewidth=1, color='green', label='Mean CTRL', zorder=2)
+    plt.axhline(y=average_coc, linewidth=1, color='red', label='Mean COC', zorder=2)
+    
+    plt.legend()
+    plt.tight_layout()
+               
+    name = path + "Fig" + str(counter) +'.png' 
+    plt.savefig(name, dpi=400, format='png')
+    
+    name = path + "Fig" + str(counter) +'.eps' 
+    plt.savefig(name, dpi=400, format='eps')
+    
+    return fig
+
+
 def natural_sort(l):
     """[summary]
 

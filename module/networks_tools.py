@@ -18,6 +18,7 @@ import scipy.stats
 import logging
 logging.basicConfig(format="%(levelname)s:%(message)s", level=logging.DEBUG)
 
+
 def add_edges_to_undirected_g(G, df,
                               DISTANCE_BETWEEN_FLIES,
                               TOUCH_DURATION_FRAMES,
@@ -213,36 +214,6 @@ def calculate_strength(g, weight_value):
     return ave_strength_value
 
 
-def order_columns(df):
-    """[summary]
-
-    Args:
-        df ([type]): [description]
-
-    Returns:
-        [type]: [description]
-    """
-
-    coc_columns = [col for col in df if col.startswith('COC')]
-    ctrl_columns = [col for col in df if col.startswith('CTRL')]
-
-    df_coc = df[coc_columns]
-    df_ctrl = df[ctrl_columns]
-
-    df = pd.DataFrame()
-    df['median_COC'] = df_coc.loc[:, :].median(axis=1)
-    df['mean_COC'] = df_coc.loc[:, :].mean(axis=1)
-    df['std_COC'] = df_coc.loc[:, :].sem(axis=1)
-
-    df['median_CTRL'] = df_ctrl.loc[:, :].median(axis=1)
-    df['mean-CTRL'] = df_ctrl.loc[:, :].mean(axis=1)
-    df['std_CTRL'] = df_ctrl.loc[:, :].sem(axis=1)
-
-    df = pd.concat([df, df_ctrl, df_coc], axis=1)
-
-    return df
-
-
 def convert_multigraph_to_weighted(multiGraph, FPS):
     """
     Args:
@@ -355,55 +326,6 @@ def get_strengtgs_dict(g, weight_value):
     #ave_strength_value = mean(graph_freq[k] for k in graph_freq)
 
     return strength_d
-
-
-def draw_box_plot(d, graph_title):
-    """[summary]
-
-    Args:
-        dictionary ([type]): [description]
-        graph_title ([type]): [description]
-
-    Returns:
-        [type]: [description]
-    """
-
-    labels, data = [*zip(*d.items())]
-    labels = [label for label in labels]
-    data = [list(d.values()) for d in data]
-
-    fig = plt.figure(figsize=(9,6))
-    _ = plt.boxplot(data)
-
-    return fig
-
-
-def group_values(multiple_dicts):
-    """[summary]
-
-    Args:
-        multiple_dicts ([type]): [description]
-
-    Returns:
-        [type]: [description]
-    """
-
-    d = {}
-    coc_values = []
-    ctrl_values = []
-    for pop_name, values in multiple_dicts.items():
-
-        for _, value in values.items():
-            if pop_name.startswith('COC'):
-                coc_values.append(value)
-
-            else:
-                ctrl_values.append(value)
-
-    d.update({'COC': coc_values})
-    d.update({'CTRL': ctrl_values})
-
-    return d
 
 
 def graph_global_measures(g, pop_name):
@@ -583,10 +505,11 @@ def comm_stats(experiments, weight='count'):
 
 
 def network_measures_distribution():
-    """[summary]
+    """Return list of tuples. Each tuple consists of two values.
+    First one is string name of the funciton and second is function. 
 
     Returns:
-        [type]: [description]
+        list: list of tuples
     """
 
     graph_functions = [
