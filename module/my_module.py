@@ -462,9 +462,9 @@ def graph_global_measures(g, pop_name):
     deg_list = [g.degree(node) for node in list(g.nodes)]
     average_degree = np.mean(deg_list)
     
-    ave_strength_count = calculate_strength(g, 'count') 
-    ave_strength_duration= calculate_strength(g, 'duration')
-    ##ave_strength_duration= calculate_strength(g, 'duration')
+    ## ave_strength_count = calculate_strength(g, 'weight') 
+    ## ave_strength_duration= calculate_strength(g, 'duration')
+    ## ave_strength_duration= calculate_strength(g, 'duration')
     
     edges_ave = total_edges / total_nodes
     network_density = nx.density(g)
@@ -472,15 +472,16 @@ def graph_global_measures(g, pop_name):
     # Measures of range
     # gcc = sorted(nx.connected_component(g), key=len, reverse=True)
     # gc = g.subgraph(gcc[0])
-    gc = list(max(nx.connected_components(g), key=len))
-    gc = g.subgraph(gc)
+    # gc = list(max(nx.connected_components(g), key=len))
+    # gc = g.subgraph(gc)
 
-    spl = nx.average_shortest_path_length(gc)
-    diameter = nx.diameter(gc, e=None)
+    # spl = nx.average_shortest_path_length(gc)
+    # diameter = nx.diameter(gc, e=None)
     
     # Number of edges separating the focal node from other nodes of interest
     reach = nx.global_reaching_centrality(g, weight=None, normalized=True)
-    global_efficiency = nx.global_efficiency(g)
+    
+    # global_efficiency = nx.global_efficiency(g)
     
     ##########################################################################
     # mjere grupiranja 
@@ -517,10 +518,10 @@ def graph_global_measures(g, pop_name):
     degree_assortativity = nx.degree_assortativity_coefficient(g)
     
     #mjere za komponente
-    ncc = nx.number_connected_components(g)
-    # bggest component size
-    gcc = sorted(nx.connected_components(g), key=len, reverse=True)
-    bcs = len(g.subgraph(gcc[0]))
+    # ncc = nx.number_connected_components(g)
+    # # bggest component size
+    # gcc = sorted(nx.connected_components(g), key=len, reverse=True)
+    # bcs = len(g.subgraph(gcc[0]))
     
     partition = community.best_partition(g)
     

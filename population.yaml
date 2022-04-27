@@ -58,3 +58,25 @@ graph_measures:
     local:
 
 
+"""
+0_1_get_path_features
+0_2_distances_between_flies_matrix
+
+1_0_undirected_singleedge_graph
+1_1_undirected_multiedge_graph
+1_2_dynamics_of_network
+
+1_3_1_create_random_networks
+1_3_2_create_random_networks 
+
+2_0_get_graph_measures_table
+2_1_get_fly_distance_traveled
+2_2_community_stats
+
+3_1_distance_traveled_plots
+3_2_population_retention_heatmap
+3_3_network_measure_distribution_plot
+3_4_information_centrality
+
+4_0_statistic_tests
+"""
