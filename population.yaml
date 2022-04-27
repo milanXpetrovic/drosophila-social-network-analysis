@@ -1,36 +1,35 @@
 
-edges_timestamps_graph(raw_data): 
-4 x n_of_edges array
-edge = source target start end 
 
-RETURNS edge_list
+START(0)
+load_config():
 
+
+PREPROC(1)
+preproc_data(raw_data):
+inspec_raw_data():
+
+
+PROC(2)
+get_social_interactions():
+get_adjacency_matrix():
+get_edge_list_with_timestamps(raw_data): 
 get_path_features(raw_data): 
-duration x features -for each individual
-duration x features x n_of_individuals  -for population
 
-RETURNS individual_features_array, population_features_array
 
-distance_traveled(raw_data/results):
-duration x n_of_individuals
-total = row - sum for population
-RETURNS 
+TABLE_RESULTS(3)
+static_graph_measures():
+    global_graph_measures(G): 
+    community_graph_measures(G):
+    individual_graph_measures(G):
 
+
+PLOT_RESULTS_REPORT(4)
 retention_heatmap(raw_data): 
-2d array
-RETURNS retention_array
-
-global_graph_measures(G): 
-Column/row n_of_measures
-RETURNS global_graph_measures
-
-individual_graph_measures(G):
-2d array n_of_measures x n_of_individuals
-RETURNS individual_graph_measures
-
+distance_traveled(raw_data/results):
 measures_correlation(result_table):
-len_of_result_table x len_of_result_table
-RETURNS measures_correlation_matrix
+path_features_ethogram():
+count_of_interactions_in_time():
+
 
 
 
