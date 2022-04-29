@@ -39,8 +39,25 @@ def natural_sort(l):
 
 
 def load_multiple_folders(path):
-    
+    """
     ## import foldera sa vise foldera unutar kojih su csv podaci 
+    Returns files with given type from folder. If no files are found SystemExit 
+    is raised and the script stops running.
+    
+    Parameters
+    ----------
+    path : str
+        variable description
+
+    file_format : str
+
+    Returns
+    -------
+    variable : type
+        variable description
+
+    """
+    
     if not os.listdir(path):
         sys.exit('Directory is empty')
     
