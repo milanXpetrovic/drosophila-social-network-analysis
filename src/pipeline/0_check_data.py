@@ -1,7 +1,12 @@
 ## TO START ENTER PATH OR POPULATION ID
+#%%
 
-load_path_from_yaml()
+def load_path_from_yaml()
 
+
+
+
+#%%
 check_if_dir_is_empty()
 
 load_paths_to_individuals()

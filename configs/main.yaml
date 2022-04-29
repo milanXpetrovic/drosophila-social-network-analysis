@@ -1,0 +1,2 @@
+PATH = '/home/milky/my_module/data/raw/'
+FILE_TYPE = '.csv'
