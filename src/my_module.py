@@ -12,209 +12,26 @@ import scipy.stats
 from statistics import mean
 import matplotlib.pyplot as plt
 
-
-
 import logging 
 logging.basicConfig(format="%(levelname)s:%(message)s", level=logging.DEBUG)
 
 
-def draw_box_plot(d, graph_title, counter):
-    """[summary]
-
-    Args:
-        dictionary ([type]): [description]
-        graph_title ([type]): [description]
-
-    Returns:
-        [type]: [description]
-    """
-    
-
-
-    plt.rcParams['font.sans-serif'] = "Arial"
-    plt.rcParams['font.family'] = "sans-serif"
-    plt.rc('font', size=8)
-    plt.rc('axes', titlesize=10)
-        
-    width_height_in = (5, 3.5)
-    fig = plt.figure(figsize=width_height_in, dpi=300)
-    
-    #plt.title(graph_title)
-    # plt.ylabel("measure")
-        
-        
-    labels, data = [*zip(*d.items())]
-    
-    labels = [label for label in labels]
-    
-    data = [list(d.values()) for d in data]
-    boxplot = plt.boxplot(data, patch_artist=True, zorder=1)
-    
-
-    coc_count=1
-    ctrl_count = 1
-    
-    xticks_labels = []
-    for label in labels:
-        if label.startswith('COC'):
-            xticks_labels.append('COC ' + str(coc_count))
-            coc_count+=1
-            
-        else:
-            xticks_labels.append('CTRL ' + str(ctrl_count))
-            ctrl_count+=1     
-            
-    num = list(range(1, len(xticks_labels)+1))      
-    plt.xticks(num, xticks_labels, rotation=90)
-    
-    
-    # plt.axvspan(0.5, 11.5, alpha=0.05, color='red')
-    ctrl_vals = []
-    coc_vals = []
-    
-    for key, values in d.items():
-        if key.startswith('COC'):
-            
-            coc_vals = coc_vals + list(values.values())
-
-        else:
-            ctrl_vals = ctrl_vals + list(values.values())     
-    
-    
-    average_bsl = mean(ctrl_vals)
-    
-    average_coc = mean(coc_vals)
-    
-    # print(len(data[0:11]))
-    
-    # print(len(data[11:]))
-
-
-    
-    
-    # fill with colors
-    colors = ['pink']*11 + ['lightgreen']*9
-    
-    for item, color in zip(boxplot['boxes'], colors):
-        # plt.setp(boxplot[item], facecolor='pink')
-        item.set_facecolor(color)
-        
-    plt.axhline(y=average_bsl, linewidth=1, color='green', label='Mean CTRL', zorder=2)
-    plt.axhline(y=average_coc, linewidth=1, color='red', label='Mean COC', zorder=2)
-    
-    plt.legend()
-    
-    plt.tight_layout()
-            
-    path = r'C:\Users\icecream\Desktop\plosclanak\pkg\pipeline\3_output\local_measures_distribution/'
-    
-    name = path + "Fig" + str(counter) +'.png' 
-    plt.savefig(name, dpi=400, format='png')
-    
-    name = path + "Fig" + str(counter) +'.eps' 
-    plt.savefig(name, dpi=400, format='eps')
-    
-    return fig
-
-
-
-
-
-# plt.rcParams['font.sans-serif'] = "Arial"
-# plt.rcParams['font.family'] = "sans-serif"
-# plt.rc('font', size=8)
-# plt.rc('axes', titlesize=10)
-    
-# width_height_in = (5, 3)
-# fig = plt.figure(figsize=width_height_in, dpi=450)
-
-# # plt.title(graph_title)
-
-# labels, data = [*zip(*d.items())]
-# plt.boxplot(data)
-    
-
-# plt.xticks(num, labels)
-# ctrl1, 1,2, 3 itd dodati na xplot
-# mean linije pustiti
-# na y os dodati measure value
-# dodati legendu 
-
-# range_num = list(range(1, len(labels)))
-# plt.xticks(range_num, xticks_labels, rotation=90) # rotation=90
-
-
-
-# path = r'C:\Users\icecream\Desktop\plosclanak\pkg\pipeline\3_output\local_measures_distribution/'
-
-# name = path + graph_title +'.png' #+'.eps'
-# plt.savefig(name, dpi=400, format='png')
-
-# return fig
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-def group_values(multiple_dicts):
-    """[summary]
-
-    Args:
-        multiple_dicts ([type]): [description]
-
-    Returns:
-        [type]: [description]
-    """
-
-    d = {}
-    coc_values = []
-    ctrl_values = []
-    for pop_name, values in multiple_dicts.items():
-
-        for _, value in values.items():
-            if pop_name.startswith('COC'):
-                coc_values.append(value)
-
-            else:
-                ctrl_values.append(value)
-
-    d.update({'COC': coc_values})
-    d.update({'CTRL': ctrl_values})
-
-    return d
-
-
-
 def natural_sort(l): 
+    """
+    Description
+
+    Parameters
+    ----------
+    variable : type
+        variable description
+
+    Returns
+    -------
+    variable : type
+        variable description
+
+    """
+
     convert = lambda text: int(text) if text.isdigit() else text.lower() 
     alphanum_key = lambda key: [ convert(c) for c in re.split('([0-9]+)', key)] 
     
@@ -222,6 +39,7 @@ def natural_sort(l):
 
 
 def load_multiple_folders(path):
+    
     ## import foldera sa vise foldera unutar kojih su csv podaci 
     if not os.listdir(path):
         sys.exit('Directory is empty')
@@ -235,26 +53,55 @@ def load_multiple_folders(path):
     return experiments       
  
 
-def load_files_from_folder(path, file_format='.csv'):
-    ## import folder sa csvomima
+def load_files_from_folder(path, file_format):
+    """
+    Returns files with given type from folder. If no files are found SystemExit 
+    is raised and the script stops running.
+    
+    Parameters
+    ----------
+    path : str
+        variable description
+
+    file_format : str
+
+    Returns
+    -------
+    variable : type
+        variable description
+
+    """
     if not os.listdir(path):
         sys.exit('Directory is empty')
     
-    files_dict= {}
+    found_files= {}
         
     for r, d, f in os.walk(path):
         f = natural_sort(f)
         for file in f:
             if file_format in file:
-                files_dict.update({file : os.path.join(r, file)})
+                found_files.update({file : os.path.join(r, file)})
                 
-    return files_dict
+    return found_files
 
 
 def load_dfs_to_list(path, min_x, min_y, file_format='.csv'):
-    """Takes folder with individuals and returns list of dataframes for each
-    individual.
     """
+    Takes folder with individuals and returns list of dataframes for each
+    individual.
+    
+    Parameters
+    ----------
+    variable : type
+        variable description
+
+    Returns
+    -------
+    variable : type
+        variable description
+
+    """
+
     if not os.listdir(path):
         sys.exit('Directory is empty')
         
@@ -275,6 +122,16 @@ def load_dfs_to_list(path, min_x, min_y, file_format='.csv'):
         df_list.append(df)
     
     return df_list
+
+
+
+
+
+
+
+
+
+
 
 
 # =============================================================================
@@ -1079,3 +936,144 @@ def stat_test(d):
     
 #     plt.title(pop_name)
 #     plt.savefig('/home/milky/dm/results/' + str(pop_name)  + '.png')
+
+
+
+
+
+
+
+def draw_box_plot(d, graph_title, counter):
+    """[summary]
+
+    Args:
+        dictionary ([type]): [description]
+        graph_title ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
+
+    plt.rcParams['font.sans-serif'] = "Arial"
+    plt.rcParams['font.family'] = "sans-serif"
+    plt.rc('font', size=8)
+    plt.rc('axes', titlesize=10)
+        
+    width_height_in = (5, 3.5)
+    fig = plt.figure(figsize=width_height_in, dpi=300)
+               
+    labels, data = [*zip(*d.items())]
+    labels = [label for label in labels]
+    
+    data = [list(d.values()) for d in data]
+    boxplot = plt.boxplot(data, patch_artist=True, zorder=1)
+    
+    coc_count=1
+    ctrl_count = 1
+    
+    xticks_labels = []
+    for label in labels:
+        if label.startswith('COC'):
+            xticks_labels.append('COC ' + str(coc_count))
+            coc_count+=1
+            
+        else:
+            xticks_labels.append('CTRL ' + str(ctrl_count))
+            ctrl_count+=1     
+            
+    num = list(range(1, len(xticks_labels)+1))      
+    plt.xticks(num, xticks_labels, rotation=90)
+    
+    ctrl_vals = []
+    coc_vals = []
+    
+    for key, values in d.items():
+        if key.startswith('COC'):
+            
+            coc_vals = coc_vals + list(values.values())
+
+        else:
+            ctrl_vals = ctrl_vals + list(values.values())     
+    
+    
+    average_bsl = mean(ctrl_vals)
+    average_coc = mean(coc_vals)
+    
+    colors = ['pink']*11 + ['lightgreen']*9
+    
+    for item, color in zip(boxplot['boxes'], colors):
+        item.set_facecolor(color)
+        
+    plt.axhline(y=average_bsl, linewidth=1, color='green', label='Mean CTRL', zorder=2)
+    plt.axhline(y=average_coc, linewidth=1, color='red', label='Mean COC', zorder=2)
+    
+    plt.legend()
+    plt.tight_layout()
+            
+    path = r'C:\Users\icecream\Desktop\plosclanak\pkg\pipeline\3_output\local_measures_distribution/'
+    
+    name = path + "Fig" + str(counter) +'.png' 
+    plt.savefig(name, dpi=400, format='png')
+    
+    name = path + "Fig" + str(counter) +'.eps' 
+    plt.savefig(name, dpi=400, format='eps')
+    
+    # plt.rcParams['font.sans-serif'] = "Arial"
+    # plt.rcParams['font.family'] = "sans-serif"
+    # plt.rc('font', size=8)
+    # plt.rc('axes', titlesize=10)
+        
+    # width_height_in = (5, 3)
+    # fig = plt.figure(figsize=width_height_in, dpi=450)
+    # # plt.title(graph_title)
+    # labels, data = [*zip(*d.items())]
+    # plt.boxplot(data)
+
+    # plt.xticks(num, labels)
+    # ctrl1, 1,2, 3 itd dodati na xplot
+    # mean linije pustiti
+    # na y os dodati measure value
+    # dodati legendu 
+
+    # range_num = list(range(1, len(labels)))
+    # plt.xticks(range_num, xticks_labels, rotation=90) # rotation=90
+
+    # path = r'C:\Users\icecream\Desktop\plosclanak\pkg\pipeline\3_output\local_measures_distribution/'
+    # name = path + graph_title +'.png' #+'.eps'
+    # plt.savefig(name, dpi=400, format='png')
+    # return fig
+
+    return fig
+
+
+def group_values(multiple_dicts):
+    """[summary]
+
+    Args:
+        multiple_dicts ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
+
+    d = {}
+    coc_values = []
+    ctrl_values = []
+    for pop_name, values in multiple_dicts.items():
+
+        for _, value in values.items():
+            if pop_name.startswith('COC'):
+                coc_values.append(value)
+
+            else:
+                ctrl_values.append(value)
+
+    d.update({'COC': coc_values})
+    d.update({'CTRL': ctrl_values})
+
+    return d
+
+
+
+
+
