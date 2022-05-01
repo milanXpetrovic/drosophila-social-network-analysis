@@ -18,18 +18,10 @@ logging.basicConfig(format="%(levelname)s:%(message)s", level=logging.DEBUG)
 
 def natural_sort(l):
     """
-    Description
+    Naturaly sort list of strings and return sorted.
 
-    Parameters
-    ----------
-    variable : type
-        variable description
-
-    Returns
-    -------
-    variable : type
-        variable description
-
+    Input: ['file_1', 'file_10', 'file_11', ..., 'file_2', 'file_20', 'file_21']
+    Output: ['file_1', file_2, ..., 'file_10', 'file_11', ..., 'file_20', 'file_21']
     """
 
     def convert(text): return int(text) if text.isdigit() else text.lower()
@@ -41,7 +33,7 @@ def natural_sort(l):
 
 def load_multiple_folders(path):
     """
-    ## import foldera sa vise foldera unutar kojih su csv podaci 
+    Import foldera sa vise foldera unutar kojih su csv podaci 
     Returns files with given type from folder. If no files are found SystemExit 
     is raised and the script stops running.
 
@@ -85,10 +77,10 @@ def load_files_from_folder(path, file_format):
 
     Returns
     -------
-    variable : type
+    found_files : dict
         variable description
-
     """
+
     if not os.listdir(path):
         sys.exit('Directory is empty')
 
@@ -190,16 +182,17 @@ def round_coordinates(df, decimal_places=0):
 
 
 def prepproc(df, min_x, min_y):
-    """AI is creating summary for prepproc
+    """_summary_
 
     Args:
-        df ([type]): [description]
-        min_x ([type]): [description]
-        min_y ([type]): [description]
+        df (_type_): _description_
+        min_x (_type_): _description_
+        min_y (_type_): _description_
 
     Returns:
-        [type]: [description]
+        _type_: _description_
     """
+
     # fill nan values
     #df = df.where(df.notnull(), other=(df.fillna(method='ffill')+df.fillna(method='bfill'))/2)
     df = df.fillna(method='ffill')
@@ -221,6 +214,14 @@ def prepproc(df, min_x, min_y):
 
 
 def find_pop_mins(path):
+    """
+
+    Args:
+        path ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
     fly_dict = load_files_from_folder(path)
 
     pop_min_x = []
