@@ -55,7 +55,7 @@ def load_multiple_folders(path):
         sys.exit('Directory is empty')
 
     experiments = {}
-    # r=root, d=directories, f = files
+
     for r, d, f in os.walk(path):
         for folder in d:
             experiments.update({folder: os.path.join(r, folder)})
@@ -64,33 +64,18 @@ def load_multiple_folders(path):
 
 
 def load_files_from_folder(path, file_format):
-    """
-    Returns files with given type from folder. If no files are found SystemExit 
-    is raised and the script stops running.
-
-    Parameters
-    ----------
-    path : str
-        variable description
-
-    file_format : str
-
-    Returns
-    -------
-    found_files : dict
-        variable description
-    """
+    """Returns a dictionary (file name: path) of found files with given file type from folder. If no files are found SystemExit is raised and the script stops running. Returns a found_files dictionary."""
 
     if not os.listdir(path):
-        sys.exit('Directory is empty')
+        sys.exit('File at location {} is empty'.format(path))
 
     found_files = {}
 
-    for r, d, f in os.walk(path):
-        sorted_files = natural_sort(f)
-        for file in f:
-            if file_format in sorted_files:
-                found_files.update({file: os.path.join(r, file)})
+    for root, _, files in os.walk(path):
+        sorted_files = natural_sort(files)
+        for file in sorted_files:
+            if file_format in file:
+                found_files.update({file: os.path.join(root, file)})
             else:
                 sys.exit('File format: {} not found in {}'.format(
                     file_format, path))
