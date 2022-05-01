@@ -18,7 +18,7 @@ logging.basicConfig(format="%(levelname)s:%(message)s", level=logging.DEBUG)
 
 def natural_sort(l):
     """
-    Naturaly sort list of strings and return sorted.
+    Naturaly sort list of strings and return naturlay sorted list of strings.
 
     Input: ['file_1', 'file_10', 'file_11', ..., 'file_2', 'file_20', 'file_21']
     Output: ['file_1', file_2, ..., 'file_10', 'file_11', ..., 'file_20', 'file_21']
@@ -32,39 +32,22 @@ def natural_sort(l):
 
 
 def load_multiple_folders(path):
-    """
-    Import foldera sa vise foldera unutar kojih su csv podaci 
-    Returns files with given type from folder. If no files are found SystemExit 
-    is raised and the script stops running.
-
-    Parameters
-    ----------
-    path : str
-        variable description
-
-    file_format : str
-
-    Returns
-    -------
-    variable : type
-        variable description
-
-    """
+    """ Reads folder from given path that contains one or more folders and returns dictionary (folder_name:path). If folder is empty, SystemExit is raised and the script stops running."""
 
     if not os.listdir(path):
-        sys.exit('Directory is empty')
+        sys.exit('File at location {} is empty'.format(path))
 
-    experiments = {}
+    found_folders = {}
 
-    for r, d, f in os.walk(path):
-        for folder in d:
-            experiments.update({folder: os.path.join(r, folder)})
+    for root, documents, _ in os.walk(path):
+        for folder in documents:
+            found_folders.update({folder: os.path.join(root, folder)})
 
-    return experiments
+    return found_folders
 
 
-def load_files_from_folder(path, file_format):
-    """Returns a dictionary (file name: path) of found files with given file type from folder. If no files are found SystemExit is raised and the script stops running. Returns a found_files dictionary."""
+def load_files_from_folder(path, file_extension):
+    """Returns a found_files dictionary (file name: path) of found files with given file_extension from folder. If no files are found SystemExit is raised and the script stops running."""
 
     if not os.listdir(path):
         sys.exit('File at location {} is empty'.format(path))
@@ -74,63 +57,19 @@ def load_files_from_folder(path, file_format):
     for root, _, files in os.walk(path):
         sorted_files = natural_sort(files)
         for file in sorted_files:
-            if file_format in file:
+            if file_extension in file:
                 found_files.update({file: os.path.join(root, file)})
             else:
                 sys.exit('File format: {} not found in {}'.format(
-                    file_format, path))
+                    file_extension, path))
 
     return found_files
 
 
-def load_dfs_to_list(path, min_x, min_y, file_format='.csv'):
-    """
-    Takes folder with individuals and returns list of dataframes for each
-    individual.
-
-    Parameters
-    ----------
-    variable : type
-        variable description
-
-    Returns
-    -------
-    variable : type
-        variable description
-
-    """
-
-    if not os.listdir(path):
-        sys.exit('Directory is empty')
-
-    files_dict = {}
-
-    for r, d, f in os.walk(path):
-        f = natural_sort(f)
-        for file in f:
-            if file_format in file:
-                files_dict.update({file: os.path.join(r, file)})
-
-    df_list = []
-    for fly_name, fly_path in files_dict.items():
-        df = pd.read_csv(fly_path, index_col=0)
-        df = prepproc(df, min_x, min_y)
-        df = round_coordinates(df, decimal_places=0)
-        df = df[['pos_x', 'pos_y']]
-        df_list.append(df)
-
-    return df_list
-
-
 def check_data(path):
-    """AI is creating summary for check_data
-
-    Args:
-        path ([type]): [description]
-
-    Returns:
-        [type]: [description]
+    """ Checks if the data contains columns with given names. 
     """
+    
 
     columns = ['pos x', 'pos y', 'ori', 'major axis len', 'minor axis len',
                'body area', 'fg area', 'img contrast', 'min fg dist', 'wing l x',
