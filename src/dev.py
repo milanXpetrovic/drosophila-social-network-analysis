@@ -34,9 +34,15 @@ for file_name, file_path in files_to_check.items():
     if len(file_to_check) >= config['video_fps'] * config['video_length_sec'] + 1:
         valid_rows_len = True
 
-## KADA NEMA VRIJEDNOSTI PISE 'inf'
+## KADA NEMA VRIJEDNOSTI PISE 'inf' U .CSV PODACIMA 
 
 #%%
+df = df.loc[df['column_name'] == some_value]
+
+#%%
+
+df.replace('-', np.nan)
+
 for column in df.columns.tolist():
     print(column)
     print(df[column].isnull().values.any())
