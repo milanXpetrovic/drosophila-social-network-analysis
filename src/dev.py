@@ -15,25 +15,28 @@ CONFIG = '../configs/main.yaml'
 
 with open(CONFIG) as f:
     config = yaml.load(f, Loader=SafeLoader)
-    raw_data_path = config['raw_data_path']
-    file_extension = config['file_extension']
-    validation_columns = config['validation_columns']
 
 
-def check_if_valid_columns(raw_data_path, file_extension, validation_columns):
-    """Returns True if all files from folder contain given validation columns."""
+files_to_check = mm.load_files_from_folder(
+    config['raw_data_path'], config['file_extension'])
 
-    valid_data = False
-    valid_files_count = 0
-    files_to_check = mm.load_files_from_folder(raw_data_path, file_extension)
+needed_rows_len = config['video_fps'] * config['video_length_sec'] + 1
 
-    for file_name, file_path in files_to_check.items():
-        columns_in_file = pd.read_csv(file_path, nrows=1).columns.tolist()
 
-        if columns_in_file == validation_columns:
-            valid_files_count += 1
+for file_name, file_path in files_to_check.items():
+    file_to_check = pd.read_csv(file_path)
 
-    if len(files_to_check) == valid_files_count:
-        valid_data = True
+    columns_in_file = files_to_check.columns.tolist()
 
-    return valid_data
+    if columns_in_file == config['validation_columns']:
+        valid_columns = True
+
+    if len(file_to_check) >= config['video_fps'] * config['video_length_sec'] + 1:
+        valid_rows_len = True
+
+## KADA NEMA VRIJEDNOSTI PISE 'inf'
+
+#%%
+for column in df.columns.tolist():
+    print(column)
+    print(df[column].isnull().values.any())

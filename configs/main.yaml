@@ -1,4 +1,6 @@
 ---
+video_fps: 24
+video_length_sec: 600
 raw_data_path: '../data/raw/25_03_2021'
 file_extension: '.csv'
 

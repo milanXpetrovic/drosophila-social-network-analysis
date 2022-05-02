@@ -23,7 +23,9 @@ check_nans()
 Check nan valuse in specific columns if exists.
 """
 
-check_if_enoug_rows()
+valid_rows_length = check_if_enoug_rows()
+
+
 """
 check if there is Fps * seconds or fps*minutes*60 rows in data files
 """
