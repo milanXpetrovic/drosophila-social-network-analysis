@@ -1,2 +1,10 @@
-PATH = '/home/milky/my_module/data/raw/'
-FILE_TYPE = '.csv'
+---
+raw_data_path: '../data/raw/25_03_2021'
+file_extension: '.csv'
+
+validation_columns: ['frame', 'ACCELERATION#pcentroid (cm/s2)', 'ACCELERATION#wcentroid (cm/s2)', 'ANGLE', 'ANGULAR_A#centroid', 'ANGULAR_V#centroid', 'AX', 'AY', 'BORDER_DISTANCE#pcentroid (cm)', 'MIDLINE_OFFSET', 'SPEED#wcentroid (cm/s)', 'SPEED#pcentroid (cm/s)', 'SPEED (cm/s)', 'VX (cm/s)', 'VY (cm/s)', 'X#wcentroid (cm)', 'X (cm)', 'Y#wcentroid (cm)', 'Y (cm)', 'frame.1', 'midline_length', 'midline_x', 'midline_y', 'missing', 'normalized_midline', 'num_pixels', 'segment_length', 'time', 'timestamp']
+
+
+
+
+...

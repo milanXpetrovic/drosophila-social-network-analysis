@@ -3,7 +3,7 @@ import re
 import sys
 import random
 
-import community
+# import community
 import numpy as np
 import pandas as pd
 import networkx as nx
@@ -66,33 +66,20 @@ def load_files_from_folder(path, file_extension):
     return found_files
 
 
-def check_data(path):
-    """ Checks if the data contains columns with given names. 
-    """
-    
-
-    columns = ['pos x', 'pos y', 'ori', 'major axis len', 'minor axis len',
-               'body area', 'fg area', 'img contrast', 'min fg dist', 'wing l x',
-               'wing l y', 'wing r x', 'wing r y', 'wing l ang', 'wing l len',
-               'wing r ang', 'wing r len', 'leg 1 x', 'leg 1 y', 'leg 2 x', 'leg 2 y',
-               'leg 3 x', 'leg 3 y', 'leg 4 x', 'leg 4 y', 'leg 5 x', 'leg 5 y',
-               'leg 6 x', 'leg 6 y', 'leg 1 ang', 'leg 2 ang', 'leg 3 ang',
-               'leg 4 ang', 'leg 5 ang', 'leg 6 ang', 'vel', 'ang_vel', 'min_wing_ang',
-               'max_wing_ang', 'mean_wing_length', 'axis_ratio', 'fg_body_ratio',
-               'contrast', 'dist_to_wall']
+def check_if_valid_columns(raw_data_path, file_extension, validation_columns):
+    """Returns True if all files from folder contain given validation columns."""
 
     valid_data = False
-    fly_dict = load_files_from_folder(path)
     valid_files_count = 0
+    files_to_check = mm.load_files_from_folder(raw_data_path, file_extension)
 
-    for fly_name, path in fly_dict.items():
-        df = pd.read_csv(path, index_col=0)
-        df_columns = list(df.columns)
+    for file_name, file_path in files_to_check.items():
+        columns_in_file = pd.read_csv(file_path, nrows=1).columns.tolist()
 
-        if df_columns == columns:
+        if columns_in_file == validation_columns:
             valid_files_count += 1
 
-    if len(fly_dict) == valid_files_count:
+    if len(files_to_check) == valid_files_count:
         valid_data = True
 
     return valid_data
