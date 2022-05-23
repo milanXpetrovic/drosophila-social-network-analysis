@@ -66,29 +66,27 @@ def load_files_from_folder(path, file_extension):
     return found_files
 
 
-def check_if_valid_columns(raw_data_path, file_extension, validation_columns):
-    """Returns True if all files from folder contain given validation columns."""
+def check_if_valid_rows_and_columns(raw_data_path, file_extension, validation_columns,
+                           video_fps, video_length_sec):
+    """Returns True if all files from folder contain given validation columns and
+    more or equal number of rows that counts as the product of fps and the length
+     of the video in seconds."""
 
     valid_columns = False
     valid_files_count = 0
-    files_to_check = mm.load_files_from_folder(raw_data_path, file_extension)
+    files_to_check = load_files_from_folder(raw_data_path, file_extension)
 
     for file_name, file_path in files_to_check.items():
-        columns_in_file = pd.read_csv(file_path, nrows=1).columns.tolist()
+        df = pd.read_csv(file_path)
+        columns_in_file = df.columns.tolist()
 
-        if columns_in_file == validation_columns:
+        if columns_in_file == validation_columns and len(df) >= video_fps * video_length_sec:
             valid_files_count += 1
 
     if len(files_to_check) == valid_files_count:
         valid_columns = True
 
     return valid_columns
-
-
-
-
-
-
 
 
 def round_coordinates(df, decimal_places=0):

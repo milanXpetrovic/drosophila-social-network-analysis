@@ -1,41 +1,30 @@
 # TO START ENTER PATH OR POPULATION ID
 # %%
 import yaml
+import sys
+
+sys.path.append('/home/milanpetrovic/my_module/src')
+
 import my_module as mm
 
 
-CONFIG = '../configs/main.yaml'
-
+CONFIG = '/home/milanpetrovic/my_module/configs/main.yaml'
 
 with open(CONFIG) as f:
-    config = yaml.load(f, Loader=SafeLoader)
+    config = yaml.safe_load(f)
 
 
-load_path_from_yaml()
+# check_nans()
 
 
-check_if_dir_is_empty()
-
-load_paths_to_individuals()
-
-check_nans()
-"""
-Check nan valuse in specific columns if exists.
-"""
-
-valid_rows_length = check_if_enoug_rows()
+valid_rows_and_columns = mm.check_if_valid_rows_and_columns(
+    config['raw_data_path'], config['file_extension'],
+    config['validation_columns'], config['video_fps'],
+    config['video_length_sec'])
 
 
-"""
-check if there is Fps * seconds or fps*minutes*60 rows in data files
-"""
-
-valid_columns = mm.check_if_valid_columns(
-    config['raw_data_path'], config['file_extension'], config['validation_columns'])
-
-
-main()
-"""
-In yaml sets value of valid data to TRUE if all above foos work
-"""
-RETURNS valid_data = True
+# main()
+# """
+# In yaml sets value of valid data to TRUE if all above foos work
+# """
+# RETURNS valid_data = True
