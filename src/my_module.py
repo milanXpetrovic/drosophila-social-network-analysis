@@ -89,6 +89,14 @@ def check_if_valid_rows_and_columns(raw_data_path, file_extension, validation_co
     return valid_columns
 
 
+def interpolate_inf_values(df, interpolation_method='linear'):
+    """replace np.inf with np.nan values and fill with linear interpolation"""
+    df.replace([np.inf, -np.inf], np.nan, inplace=True)
+    df.interpolate(method=interpolation_method, axis=0)
+
+    return df
+
+
 def round_coordinates(df, decimal_places=0):
     # zaokruzivanje vrijednosti koordinata x i y na 0 decimala
     df = df.round({'pos_x': decimal_places, 'pos_y': decimal_places})
