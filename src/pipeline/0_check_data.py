@@ -1,6 +1,6 @@
-import my_module as mm
 import yaml
 import sys
+import my_module as mm
 
 sys.path.append('/home/milanpetrovic/my_module/src')
 
