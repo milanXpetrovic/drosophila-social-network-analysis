@@ -1,12 +1,9 @@
 ---
 video_fps: 24
 video_length_sec: 600
-raw_data_path: '/home/milanpetrovic/my_module/data/raw/test_data'
+pop_name: '25_03_2022'
+raw_data_path: '/home/milanpetrovic/my_module/data/raw/'
 file_extension: '.csv'
 
 validation_columns: ['frame', 'ACCELERATION#pcentroid (cm/s2)', 'ACCELERATION#wcentroid (cm/s2)', 'ANGLE', 'ANGULAR_A#centroid', 'ANGULAR_V#centroid', 'AX', 'AY', 'BORDER_DISTANCE#pcentroid (cm)', 'MIDLINE_OFFSET', 'SPEED#wcentroid (cm/s)', 'SPEED#pcentroid (cm/s)', 'SPEED (cm/s)', 'VX (cm/s)', 'VY (cm/s)', 'X#wcentroid (cm)', 'X (cm)', 'Y#wcentroid (cm)', 'Y (cm)', 'frame.1', 'midline_length', 'midline_x', 'midline_y', 'missing', 'normalized_midline', 'num_pixels', 'segment_length', 'time', 'timestamp']
-
-
-
-
 ...
