@@ -1,0 +1,8 @@
+RAW_DATA: '../data/raw'
+EXPERIMENT_DURATION: 600 #seconds
+FPS: 24
+
+crreate_files: '../data/0_0_preproc_data'
+
+# path fetures config
+WINDOW_SIZE: 24
