@@ -34,6 +34,6 @@ Just import 'my_module.py' from './src' and create your own data processing pipe
 
 ## Data
 
-Currently it is possible to test the functionality of the module using tracking data from Drosophila melanogaster.
+Currently, it is possible to test the functionality of the module using tracking data from Drosophila melanogaster. All data are freely available for further analysis and testing.
 
 Each folder is a population, the folder name is structured as `<treatment or baseline>_<date>_<time>'. Within each folder (population) are tracking files of individuals. They are in .csv format and contain the x and y position coordinates for each image for each individual frame from tracked video.
