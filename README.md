@@ -1,6 +1,6 @@
 # My module: Toolkit for trajectory data processing,network construction and analysis
 
-[![License](https://img.shields.io/badge/license-BSD--3%20Clause-green)](https://github.com/milanXpetrovic/my_module/blob/main/LICENSE)
+[![License](https://img.shields.io/badge/license-BSD--3%20Clause-green)](https://github.com/milanXpetrovic/my_module/blob/main/LICENSE.md)
 
 
 ## TO DO:
