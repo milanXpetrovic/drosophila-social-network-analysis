@@ -3,34 +3,37 @@
 [![License](https://img.shields.io/badge/license-BSD--3%20Clause-green)](https://github.com/milanXpetrovic/my_module/blob/main/LICENSE.md)
 
 
-Purpose of this Python module is to create toolkit for analysing tracking data. Analysis is from the data collected by monitoring the participants in that system, i.e. individuals. 
+The purpose of this Python module is to create a toolkit for analysing tracking data. The analysis is done using the data collected by monitoring the participants in given system, i.e. individuals. 
 
 The project is open-source and aims to create research tools. If you are interested in development, feel free to contact us.
 
-Currently the module is being tested on data created by monitoring the rosophila melanogaster populations and social interaction networks are being created.
+Currently, the module is being tested on data obtained by monitoring Dosophila melanogaster populations and social interaction networks are being created from track data.
 
 ## Module components
-- Data loading, validity checking and preprocessing functions
-- Path descriptors and ML features creating functions
-- Population analysis, distances between elements from trajectory
+- Functions for loading, validating, and preprocessing data.
+- Functions for creating trajectory descriptors and ML features.
+- Population analysis, distances between elements from the trajectory
 - Complex network construction
 - Complex network analysis
 
+## List of submodules
 
-## List of sub-modules
+- Toolkit: functions for data manipulation, organising and reading the contents of a large number of folders and files in them or the files themselves.
+Another option is to check the validity of the data or the missing records and the possibility to clean or correct them.
 
-- Toolkit: Functions for data manipulation, organizing and reading the
-contents of a large number of folders and files within them or the files themselves.
-Another option is to check the validity of the data, or the missing records, 
-then the possibility of cleaning or fixing them.
+- ML: functions for data transformation (e.g. extracting statistical values, smoothing data, etc.) and creating forms for processing and transforming data for implementing machine learning.
 
-- Ml: functionalities for data transformation (eg extracting statistical values,
-smoothing data, etc.) and creating forms that for process and transform data 
-for implementation of machine learning.
+- Networks: analysing individuals within a biologically complex system.
+Interpreting data in terms of complex networks and representing data through graphs is enabled. And the second part of the submodule contains functions for analysis and calculations over the created graphs.
 
-- Networks: Analysis of individuals within a biologically complex systems.
-Interpretation of data in the form of complex networks and the presentation
-of data through graphs will be enabled. And the second part of the sub-module
-contains functions for analysis and calculations over the created graphs.
-In the last part of this module, there would be machine learning functions on graphs.
+The last part of this module provides functions for machine learning on graphs (currently being developed).
 
+## How to use it
+
+Just import 'my_module.py' from './src' and create your own data processing pipeline from its functions.
+
+## Data
+
+Currently it is possible to test the functionality of the module using tracking data from Drosophila melanogaster.
+
+Each folder is a population, the folder name is structured as `<treatment or baseline>_<date>_<time>'. Within each folder (population) are tracking files of individuals. They are in .csv format and contain the x and y position coordinates for each image for each individual frame from tracked video.
