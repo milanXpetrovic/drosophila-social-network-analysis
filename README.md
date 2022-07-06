@@ -3,17 +3,19 @@
 [![License](https://img.shields.io/badge/license-BSD--3%20Clause-green)](https://github.com/milanXpetrovic/my_module/blob/main/LICENSE.md)
 
 
-"""
-Python module
-Purpose of this Python module is to create toolkit for analysing data from
-complex systems. Analysis is from the data collected by monitoring the participants
-in that system, i.e. individuals. 
+Purpose of this Python module is to create toolkit for analysing tracking data. Analysis is from the data collected by monitoring the participants in that system, i.e. individuals. 
 
-The project is open-source and aims to create research tools.
-If you are interested in development, feel free to contact us.
+The project is open-source and aims to create research tools. If you are interested in development, feel free to contact us.
 
-Currently the module is being tested on data created by monitoring the biological
-system (drosophila melanogaster populations) and social interaction networks are being created.
+Currently the module is being tested on data created by monitoring the rosophila melanogaster populations and social interaction networks are being created.
+
+*Components of this module are:*
+- Data loading, validity checking and preprocessing functions
+- Path descriptors and ML features creating functions
+- Population analysis, distances between elements from trajectory
+- Complex network construction
+- Complex network analysis
+
 
 LIST OF SUB-MODULES:
 
@@ -32,11 +34,3 @@ of data through graphs will be enabled. And the second part of the sub-module
 contains functions for analysis and calculations over the created graphs.
 In the last part of this module, there would be machine learning functions on graphs.
 
-"""
-
-*Components of this module are:*
-- Data loading, validity checking and preprocessing functions
-- Path descriptors and ML features creating functions
-- Population analysis, distances between elements from trajectory
-- Complex network construction
-- Complex network analysis
