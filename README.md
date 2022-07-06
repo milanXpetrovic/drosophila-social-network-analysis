@@ -9,7 +9,7 @@ The project is open-source and aims to create research tools. If you are interes
 
 Currently the module is being tested on data created by monitoring the rosophila melanogaster populations and social interaction networks are being created.
 
-*Components of this module are:*
+## Module components
 - Data loading, validity checking and preprocessing functions
 - Path descriptors and ML features creating functions
 - Population analysis, distances between elements from trajectory
@@ -17,7 +17,7 @@ Currently the module is being tested on data created by monitoring the rosophila
 - Complex network analysis
 
 
-LIST OF SUB-MODULES:
+## List of sub-modules
 
 - Toolkit: Functions for data manipulation, organizing and reading the
 contents of a large number of folders and files within them or the files themselves.
