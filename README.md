@@ -30,7 +30,7 @@ The last part of this module provides functions for machine learning on graphs (
 
 ## How to use it
 
-Just import 'my_module.py' from './src' and create your own data processing pipeline from its functions.
+Just import `my_module.py` from `./src` and create your own data processing pipeline from its functions.
 
 ## Data
 
