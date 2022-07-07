@@ -26,7 +26,7 @@ Another option is to check the validity of the data or the missing records and t
 - Networks: analysing individuals within a biologically complex system.
 Interpreting data in terms of complex networks and representing data through graphs is enabled. And the second part of the submodule contains functions for analysis and calculations over the created graphs.
 
-The last part of this module provides functions for machine learning on graphs (currently being developed).
+- The last part of this module provides functions for machine learning on graphs (currently being developed).
 
 ## How to use it
 
