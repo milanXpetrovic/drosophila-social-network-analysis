@@ -151,47 +151,6 @@ def check_data(path):
     return valid_data
 
 
-def round_coordinates(df, decimal_places=0):
-    ## zaokruzivanje vrijednosti koordinata x i y na 0 decimala
-    df = df.round({"pos_x": decimal_places, "pos_y": decimal_places})
-
-    return df
-
-
-def prepproc(df, min_x, min_y):
-    ## fill nan values
-    # df = df.where(df.notnull(), other=(df.fillna(method='ffill')+df.fillna(method='bfill'))/2)
-    df = df.fillna(method="ffill")
-    df.columns = df.columns.str.replace(" ", "_")
-
-    df["pos_x"] = df.pos_x.subtract(min_x)
-    df["pos_y"] = df.pos_y.subtract(min_y)
-
-    ## provjera podataka ako su nan, ciscenje i popunjavanje praznih
-    # if df['pos_x'].isnull().values.any() or df['pos_y'].isnull().values.any():
-    #     raise TypeError("Nan value found!")
-    # else:
-    #     ## oduzimanje najmanje vrijednosti od svih vrijednosti u stupcu
-    #     df['pos_x'] = df.pos_x.subtract(min(df['pos_x']))
-    #     df['pos_y'] = df.pos_y.subtract(min(df['pos_y']))
-    # df['ori'] = np.rad2deg(df['ori'])
-
-    return df
-
-
-def find_pop_mins(path):
-    fly_dict = load_files_from_folder(path)
-
-    pop_min_x = []
-    pop_min_y = []
-    for fly_name, path in fly_dict.items():
-        df = pd.read_csv(path, index_col=0)
-        pop_min_x.append(min(df["pos x"]))
-        pop_min_y.append(min(df["pos y"]))
-
-    return min(pop_min_x), min(pop_min_y)
-
-
 def inspect_population_coordinates(path, pop_name):
     """Draws scatter plot of x and y coordinates in population.
     This function is used to inspect validity of trackings if all coordinates
@@ -307,42 +266,6 @@ def min_max_normalization_df(df):
 
 
 # =============================================================================
-def distances_between_all_flies(files):
-    """
-    Input
-    -----
-    List of dataframes
-
-    Returns
-    -------
-    Dataframe of all distances between flies.
-    """
-
-    final_df = pd.DataFrame()
-    for i in range(len(files)):
-        df1 = files[i]
-
-        next_flie = i + 1
-
-        if next_flie <= len(files):
-            for j in range(next_flie, len(files)):
-                df2 = files[j]
-
-                df = pd.concat(
-                    [df1["pos_x"], df1["pos_y"], df2["pos_x"], df2["pos_y"]], axis=1
-                )
-
-                df.columns = ["pos_x1", "pos_y1", "pos_x2", "pos_y2"]
-
-                df["x_axis_dif"] = (df["pos_x1"] - df["pos_x2"]).abs()
-                df["y_axis_dif"] = (df["pos_y1"] - df["pos_y2"]).abs()
-
-                name = str(i + 1) + " " + str(j + 1)
-                final_df[name] = np.sqrt(
-                    np.square(df["x_axis_dif"]) + np.square(df["y_axis_dif"])
-                )
-
-    return final_df
 
 
 def dist_flie_to_others(fly_name):
@@ -363,51 +286,6 @@ def dist_flie_to_others(fly_name):
     df_fly_dist = 0
 
     return df_fly_dist
-
-
-def add_edges_to_undirected_g(
-    G, df, DISTANCE_BETWEEN_FLIES, TOUCH_DURATION_FRAMES, FPS
-):
-    for column in df.columns:
-        df_ = df[column]
-
-        df_ = df_[df_ <= DISTANCE_BETWEEN_FLIES + 1]
-
-        clear_list_of_df = [
-            d
-            for _, d in df_.groupby(df_.index - np.arange(len(df_)))
-            if len(d) >= TOUCH_DURATION_FRAMES
-        ]
-
-        node_1, node_2 = column.split(" ")
-
-        if node_1 not in G:
-            G.add_node(node_1)
-
-        if node_2 not in G:
-            G.add_node(node_2)
-
-        count_all_interactions = len(clear_list_of_df)
-        duration_all_interactions = sum([len(series) for series in clear_list_of_df])
-
-        if count_all_interactions >= 1:
-            duration = float(duration_all_interactions / FPS)
-            count = int(count_all_interactions)
-
-            frequency = float((count / duration) / 0.5)
-
-            averaging = float(1 / 599.5) * (float(duration / count) - 0.5)
-
-            G.add_edge(
-                node_1,
-                node_2,
-                duration=duration,
-                count=count,
-                frequency=frequency,
-                averaging=averaging,
-            )
-
-    return G
 
 
 def add_multiedges_to_undirected_g(

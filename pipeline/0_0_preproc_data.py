@@ -5,15 +5,10 @@ import pandas as pd
 from src import settings
 from src.utils import fileio, data_utils
 
-
-SCRIPT_OUTPUT = os.path.join(
-    settings.OUTPUT_DIR, os.path.basename(__file__).replace(".py", "")
-)
-
-treatment = fileio.load_multiple_folders(settings.INPUT_DIR)
-
+SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, "0_0_preproc_data")
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
 
+treatment = fileio.load_multiple_folders(settings.INPUT_DIR)
 for group_name, group_path in treatment.items():
     os.makedirs(os.path.join(SCRIPT_OUTPUT, group_name), exist_ok=True)
 

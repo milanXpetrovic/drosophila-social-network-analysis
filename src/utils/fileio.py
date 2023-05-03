@@ -48,3 +48,29 @@ def load_files_from_folder(path, file_format=".csv", n_sort=False):
                 files_dict.update({file: os.path.join(r, file)})
 
     return files_dict
+
+
+def load_dfs_to_list(path, min_x, min_y, file_format=".csv"):
+    """Takes folder with individuals and returns list of dataframes for each
+    individual.
+    """
+    if not os.listdir(path):
+        sys.exit("Directory is empty")
+
+    files_dict = {}
+
+    for r, d, f in os.walk(path):
+        f = natural_sort(f)
+        for file in f:
+            if file_format in file:
+                files_dict.update({file: os.path.join(r, file)})
+
+    df_list = []
+    for fly_name, fly_path in files_dict.items():
+        df = pd.read_csv(fly_path, index_col=0)
+        df = prepproc(df, min_x, min_y)
+        df = round_coordinates(df, decimal_places=0)
+        df = df[["pos_x", "pos_y"]]
+        df_list.append(df)
+
+    return df_list
