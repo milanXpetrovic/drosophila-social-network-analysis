@@ -15,9 +15,9 @@ setup(
     description='Toolkit for trajectory data processing, network construction and analysis ',
     long_description=open('README.md').read(),
     # The project's main homepage.
-    url='https://github.com/milky-boi/my_module',
+    url='https://github.com/milanXpetrovic/my_module',
     # Author details
-    author='milky-boi',
+    author='milanXpetrovic',
     author_email='',
     # Choose your license
     #! FIX THIS
