@@ -7,7 +7,7 @@ import yaml
 from yaml.loader import SafeLoader
 
 
-CONFIG = '../configs/main.yaml'
+CONFIG = "../configs/main.yaml"
 
 
 # def check_data(path):
@@ -18,9 +18,10 @@ with open(CONFIG) as f:
 
 
 files_to_check = mm.load_files_from_folder(
-    config['raw_data_path'], config['file_extension'])
+    config["raw_data_path"], config["file_extension"]
+)
 
-needed_rows_len = config['video_fps'] * config['video_length_sec'] + 1
+needed_rows_len = config["video_fps"] * config["video_length_sec"] + 1
 
 
 for file_name, file_path in files_to_check.items():
@@ -28,20 +29,20 @@ for file_name, file_path in files_to_check.items():
 
     columns_in_file = files_to_check.columns.tolist()
 
-    if columns_in_file == config['validation_columns']:
+    if columns_in_file == config["validation_columns"]:
         valid_columns = True
 
-    if len(file_to_check) >= config['video_fps'] * config['video_length_sec'] + 1:
+    if len(file_to_check) >= config["video_fps"] * config["video_length_sec"] + 1:
         valid_rows_len = True
 
-## KADA NEMA VRIJEDNOSTI PISE 'inf' U .CSV PODACIMA 
+## KADA NEMA VRIJEDNOSTI PISE 'inf' U .CSV PODACIMA
 
-#%%
-df = df.loc[df['column_name'] == some_value]
+# %%
+df = df.loc[df["column_name"] == some_value]
 
-#%%
+# %%
 
-df.replace('-', np.nan)
+df.replace("-", np.nan)
 
 for column in df.columns.tolist():
     print(column)
