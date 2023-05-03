@@ -1,41 +1,24 @@
-rom setuptools import setup, find_packages
-# To use a consistent encoding
-# from codecs import open
 from os import path
+from setuptools import setup
 
-here = path.abspath(path.dirname(__file__))
-
-# Get the long description from the README file
-# with open('README.rst') as f:
-#     long_description = f.read()
+with open("README.md", "r") as f:
+    long_description = f.read()
 
 setup(
-    name='pygorithm',
-    version='0.0.420',
-    description='Toolkit for trajectory data processing, network construction and analysis ',
-    long_description=open('README.md').read(),
-    # The project's main homepage.
-    url='https://github.com/milanXpetrovic/my_module',
-    # Author details
-    author='milanXpetrovic',
-    author_email='',
-    # Choose your license
-    #! FIX THIS
-    license='MIT',
-    # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
+    name="drosophila-social-network-analysis",
+    version="0.0",
+    description="Toolkit for trajectory Fruit fly data processing.",
+    long_description=long_description,
+    url="https://github.com/milanXpetrovic/drosophila-social-network-analysis",
+    author="milanXpetrovic",
+    author_email="milan.petrovic@uniri.hr",
+    license="MIT",
     classifiers=[
-        # Indicate who your project is intended for
-        'Intended Audience :: ',
-        'Topic :: Data processing :: Complex networks :: Libraries',
-
-        # Pick your license as you wish (should match "license" above)
-        #! FIX THIS
-        'License :: OSI Approved :: MIT License',
-
-        # Specify the Python versions you support here. In particular, ensure
-        # that you indicate whether you support Python 2, Python 3 or both.
-
-        'Programming Language :: Python :: 3.8',
+        "Topic :: Drosophila Melanogaster",
     ],
-    packages=find_packages()
+    keywords=["trajectory", "data-analysis"],
+    package_dir={"src": "src"},
+    packages=["src", "src.utils"],
+    install_requires=["pandas>1.5"],
+    project_urls=dict(Documentation="", Source="", Issues="", Changelog=""),
 )
