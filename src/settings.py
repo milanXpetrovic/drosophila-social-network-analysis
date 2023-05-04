@@ -1,7 +1,7 @@
 import os
 
 """ 'fx', 'wt', 'dBB15', dBB14 """
-TREATMENT = "dBB15"
+TREATMENT = "dBB14"
 
 EXPERIMENT_DURATION = 600  # experiment duration time must be in seconds
 FPS = 24
