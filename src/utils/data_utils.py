@@ -7,6 +7,10 @@ import networkx as nx
 from src import settings
 from src.utils import fileio
 
+import warnings
+
+warnings.filterwarnings("ignore", message="DataFrame is highly fragmented")
+
 
 def find_group_mins(path):
     """Find the minimum x and y coordinates across all files in a folder.
@@ -102,8 +106,8 @@ def distances_between_all_flies(fly_dict):
         name = f"{fly1_key} {fly2_key}"
 
         distance = np.sqrt((df1_x - df2_x) ** 2 + (df1_y - df2_y) ** 2)
-        distance = distance / df1_major_axis_len
-        df[name] = distance
+        distance = distance / np.mean(df1_major_axis_len)
+        df[name] = np.round(distance, decimals=2)
         # new_df = pd.concat([df, np.sqrt((df1_x - df2_x) ** 2 + (df1_y - df2_y) ** 2)], axis=1)
         # df = new_df
 
@@ -151,7 +155,7 @@ def angles_between_all_flies(fly_dict):
         angle = angledifference_nd(checkang, df1_ori * 180 / np.pi)
 
         name = f"{fly1_key} {fly2_key}"
-        df[name] = angle
+        df[name] = np.round(angle, decimals=0)
 
         # new_df = pd.concat([df, np.sqrt((df1_x - df2_x) ** 2 + (df1_y - df2_y) ** 2)], axis=1)
         # df = new_df
@@ -159,7 +163,7 @@ def angles_between_all_flies(fly_dict):
     return df
 
 
-def add_edges_to_undirected_g(df_angles, df_distances):
+def create_undirected_singleedge_graph(df_angles, df_distances):
     node_list = list(
         set((" ".join(["".join(pair) for pair in list(df_angles.columns)])).split(" "))
     )
@@ -178,9 +182,8 @@ def add_edges_to_undirected_g(df_angles, df_distances):
         df = pd.concat([df_angles[angles_col], df_distances[distances_col]], axis=1)
         df.columns = ["angle", "distance"]
 
-        distance_mask = (df["distance"] >= settings.DISTANCE[0]) & (
-            df["distance"] <= settings.DISTANCE[1]
-        )
+        distance_mask = df["distance"] <= 2.0  # settings.DISTANCE[1]
+
         angle_mask = (df["angle"] >= settings.ANGLE[0]) & (
             df["angle"] <= settings.ANGLE[1]
         )
