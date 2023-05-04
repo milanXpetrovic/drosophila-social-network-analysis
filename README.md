@@ -18,5 +18,5 @@ Currently, the module is being tested on data obtained by monitoring Dosophila m
 
 ## How to use it
 
-Just run `__main__.py` from `./src` all results will be saved to ./data/results.
+Just run `__main__.py` from `./src` all results will be saved to `./data/results`
 
