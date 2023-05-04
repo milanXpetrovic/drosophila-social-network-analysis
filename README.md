@@ -16,7 +16,7 @@ Currently, the module is being tested on data obtained by monitoring Dosophila m
 - Complex network construction
 - Complex network analysis
 
-## How to use it
+## How to use?
 
-Just run `__main__.py` from `./src` all results will be saved to `./data/results`
+Run `__main__.py` from `./src` all results will be saved to `./data/results`
 
