@@ -182,7 +182,7 @@ def create_undirected_singleedge_graph(df_angles, df_distances):
         df = pd.concat([df_angles[angles_col], df_distances[distances_col]], axis=1)
         df.columns = ["angle", "distance"]
 
-        distance_mask = df["distance"] <= 2.0  # settings.DISTANCE[1]
+        distance_mask = df["distance"] <= settings.DISTANCE  # settings.DISTANCE[1]
 
         angle_mask = (df["angle"] >= settings.ANGLE[0]) & (
             df["angle"] <= settings.ANGLE[1]
