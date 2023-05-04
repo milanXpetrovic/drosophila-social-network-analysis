@@ -163,3 +163,85 @@ def graph_global_measures(g, pop_name):
     df = df.T
 
     return df
+
+
+def group_comm_stats(G, group_name, weight):
+    """Graph partitions found using Louvian algorithm."""
+    partition = community.best_partition(G, weight=weight)
+
+    communities, count = [], 0.0
+    for c in set(partition.values()):
+        count += 1.0
+        list_nodes = [n for n in partition.keys() if partition[n] == c]
+        communities.append(list_nodes)
+
+    communities.sort(key=len, reverse=True)
+
+    single_element_comm = len([c for c in communities if len(c) == 1])
+    all_comm_len_no_sing = [len(com) for com in communities if len(com) > 1]
+    ave_comm_size_no_sing = sum(all_comm_len_no_sing) / len(all_comm_len_no_sing)
+
+    d = {
+        "number of nodes: ": len(G.nodes()),
+        "comm_size=1 (single nodes):": single_element_comm,
+        "percentage of single nodes: ": float(single_element_comm / len(G.nodes())),
+        "number of communities: ": len(communities),
+        "comm_size>1": len(communities) - single_element_comm,
+        "biggest_community_size:": len(communities[0]),
+        "second_biggest_community:": len(communities[1]),
+        "ave_comm_size_no_sing:": ave_comm_size_no_sing,
+    }
+
+    col_name = group_name.replace(".gml", "")
+    df = pd.DataFrame(d, index=[f"{col_name} weight={weight}"])
+
+    return df.T
+
+
+def local_measures_functions():
+    """Return list of tuples. Each tuple consists of two values.
+    First one is string name of the funciton and second is function.
+
+    Returns:
+        list: list of tuples
+    """
+
+    graph_functions = [
+        ("Degree centrality", lambda g: nx.degree_centrality(g)),
+        ("Eigenvector centrality", lambda g: nx.eigenvector_centrality(g)),
+        ("Closeness centrality", lambda g: nx.closeness_centrality(g)),
+        (
+            "Strength distribution, weight=duration",
+            lambda g: calculate_strength(g, "duration"),
+        ),
+        (
+            "Strength distribution, weight=count",
+            lambda g: calculate_strength(g, "count"),
+        ),
+        (
+            "Betweenness centrality weight=None",
+            lambda g: nx.betweenness_centrality(g, weight=None),
+        ),
+        (
+            "Betweenness centrality weight=duration",
+            lambda g: nx.betweenness_centrality(g, weight="duration"),
+        ),
+        (
+            "Betweenness centrality weight=count",
+            lambda g: nx.betweenness_centrality(g, weight="count"),
+        ),
+        (
+            "Clustering coefficient weight=None",
+            lambda g: nx.clustering(g, weight=None),
+        ),
+        (
+            "Clustering coefficient weight=duration",
+            lambda g: nx.clustering(g, weight="duration"),
+        ),
+        (
+            "Clustering coefficient weight=count",
+            lambda g: nx.clustering(g, weight="count"),
+        ),
+    ]
+
+    return graph_functions
