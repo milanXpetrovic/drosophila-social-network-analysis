@@ -5,8 +5,6 @@
 [![License](https://img.shields.io/badge/license-BSD--3%20Clause-green)](https://github.com/milanXpetrovic/my_module/blob/main/LICENSE.md)
 
 
-The purpose of this Python pipeline is to create a toolkit for analysing *Drosophila melanogaster* tracking data.
-
 The project is open-source and aims to create research tools. If you are interested in development, feel free to contact us.
 
 Currently, the module is being tested on data obtained by monitoring Dosophila melanogaster populations and social interaction networks are being created from track data.
