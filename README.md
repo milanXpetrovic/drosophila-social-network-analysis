@@ -1,6 +1,6 @@
 # Drosophila social network analysis: 
 
-**Python pipeline for *Drosophila melanogaster* for social network analysis from trajectorial data**
+**Python pipeline for *Drosophila melanogaster* social network analysis from trajectorial data**
 
 [![License](https://img.shields.io/badge/license-BSD--3%20Clause-green)](https://github.com/milanXpetrovic/my_module/blob/main/LICENSE.md)
 
