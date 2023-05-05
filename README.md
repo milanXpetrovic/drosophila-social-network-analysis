@@ -1,4 +1,4 @@
-# Drosophila-SNA: 
+# Drosophila social network analysis: 
 
 **Python pipeline for *Drosophila melanogaster* for social network analysis from trajectorial data**
 
