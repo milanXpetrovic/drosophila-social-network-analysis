@@ -5,6 +5,15 @@ import subprocess
 from src import settings
 
 
+os.environ["TREATMENT"] = "fxcddd"
+
+TREATMENT = os.environ["TREATMENT"]
+
+
+vars = os.environ
+
+
+# %%
 print("-" * 20)
 print(f"working with: {settings.TREATMENT}")
 print("-" * 20)
