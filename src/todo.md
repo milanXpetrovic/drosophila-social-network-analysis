@@ -5,7 +5,6 @@
 - Create directed graphs
 - Find outlayers in movement
 
-
 # New features
 **Random networks:** 
 - [ ] 1_3_1_create_random_networks
