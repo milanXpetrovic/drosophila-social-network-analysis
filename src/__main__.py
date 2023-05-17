@@ -7,24 +7,13 @@ from src import settings
 
 from src.utils import fileio
 
-
 os.environ["TREATMENT"] = "wt"
 
 TREATMENT = os.environ["TREATMENT"]
 TREATMENT_CONFIG = os.path.join(settings.CONFIG_DIR, "trackings", f"{TREATMENT}.toml")
 
-with open(TREATMENT_CONFIG) as f:
-    treatment_config = toml.load(f)
-    ANGLE = treatment_config["ANGLE"]
-    DISTANCE = treatment_config["DISTANCE"]
-    TIME = treatment_config["TIME"]
-
-print(ANGLE)
-
-#%%
-# %%
 print("-" * 20)
-print(f"working with: {settings.TREATMENT}")
+print(f"working with: {TREATMENT}")
 print("-" * 20)
 
 scripts = [
@@ -41,10 +30,10 @@ scripts = [
 
 for script in scripts:
     script_path = os.path.join(settings.PIPELINE_DIR, script)
-    subprocess.run(["python", script_path])
+    subprocess.run(["python", script_path, TREATMENT])
 
     print(f"done with: {script}")
-    time.sleep(2)
+    time.sleep(1)
 
-print(f"done: {settings.TREATMENT}")
+print(f"done: {TREATMENT}")
 print("-" * 20)

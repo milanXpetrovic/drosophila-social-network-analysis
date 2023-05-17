@@ -1,6 +1,8 @@
 # %%
 import os
 import sys
+import toml
+
 import pandas as pd
 import networkx as nx
 
@@ -20,6 +22,14 @@ DISTANCES_DIR = os.path.join(settings.OUTPUT_DIR, TREATMENT, "0_1_distances_betw
 angles = fileio.load_files_from_folder(ANGLES_DIR)
 distances = fileio.load_files_from_folder(DISTANCES_DIR)
 
+TREATMENT_CONFIG = os.path.join(settings.CONFIG_DIR, "trackings", f"{TREATMENT}.toml")
+
+with open(TREATMENT_CONFIG) as f:
+    treatment_config = toml.load(f)
+    ANGLE = treatment_config["ANGLE"]
+    DISTANCE = treatment_config["DISTANCE"]
+    TIME = treatment_config["TIME"]
+
 for angles_tuple, distances_tuple in zip(angles.items(), distances.items()):
     angles_name, angles_path = angles_tuple
     distances_name, distances_path = distances_tuple
@@ -27,5 +37,5 @@ for angles_tuple, distances_tuple in zip(angles.items(), distances.items()):
     df_angles = pd.read_csv(angles_path, index_col=0)
     df_distances = pd.read_csv(distances_path, index_col=0)
 
-    G = data_utils.create_undirected_singleedge_graph(df_angles, df_distances)
+    G = data_utils.create_undirected_singleedge_graph(df_angles, df_distances, ANGLE, DISTANCE, TIME)
     nx.write_gml(G, os.path.join(SCRIPT_OUTPUT, angles_name.replace(".csv", ".gml")))

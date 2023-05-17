@@ -1,4 +1,5 @@
 import itertools
+from docutils import SettingsSpec
 
 import numpy as np
 import pandas as pd
@@ -163,7 +164,7 @@ def angles_between_all_flies(fly_dict):
     return df
 
 
-def create_undirected_singleedge_graph(df_angles, df_distances):
+def create_undirected_singleedge_graph(df_angles, df_distances, ANGLE, DISTANCE, TIME):
     node_list = list(
         set((" ".join(["".join(pair) for pair in list(df_angles.columns)])).split(" "))
     )
@@ -182,15 +183,15 @@ def create_undirected_singleedge_graph(df_angles, df_distances):
         df = pd.concat([df_angles[angles_col], df_distances[distances_col]], axis=1)
         df.columns = ["angle", "distance"]
 
-        distance_mask = df["distance"] <= settings.DISTANCE  # settings.DISTANCE[1]
+        distance_mask = df["distance"] <= DISTANCE  # settings.DISTANCE[1]
 
-        angle_mask = (df["angle"] >= settings.ANGLE[0]) & (
-            df["angle"] <= settings.ANGLE[1]
+        angle_mask = (df["angle"] >= ANGLE[0]) & (
+            df["angle"] <= ANGLE[1]
         )
         df = df[distance_mask & angle_mask]
 
-        min_soc_duration = settings.TIME[0] * settings.FPS
-        max_soc_duration = settings.TIME[1] * settings.FPS
+        min_soc_duration = TIME[0] * settings.FPS
+        max_soc_duration = TIME[1] * settings.FPS
 
         clear_list_of_df = [
             d
