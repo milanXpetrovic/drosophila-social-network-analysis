@@ -1,15 +1,15 @@
-# %%
 import os
 import pandas as pd
 
 from src import settings
 from src.utils import fileio, data_utils
 
+TREATMENT = 
 
-SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, "0_2_angles_between_flies_matrix")
+SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, TREATMENT, "0_2_angles_between_flies_matrix")
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
 
-INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "0_0_preproc_data")
+INPUT_DIR = os.path.join(settings.OUTPUT_DIR, TREATMENT, "0_0_preproc_data")
 
 treatment = fileio.load_multiple_folders(INPUT_DIR)
 for group_name, group_path in treatment.items():
