@@ -1,14 +1,17 @@
 import os
+import sys
 import numpy as np
 import pandas as pd
 
 from src import settings
 from src.utils import fileio, plotting
 
-INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "0_0_preproc_data")
+TREATMENT = sys.argv[1]
+
+INPUT_DIR = os.path.join(settings.OUTPUT_DIR, TREATMENT, "0_0_preproc_data")
 trials = fileio.load_multiple_folders(INPUT_DIR)
 
-SCRIPT_OUTPUT = os.path.join(settings.RESULTS_DIR, settings.TREATMENT, "heatmaps")
+SCRIPT_OUTPUT = os.path.join(settings.RESULTS_DIR, TREATMENT, "retention_heatmaps")
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
 
 pos_x_treatment, pos_y_treatment = np.array([]), np.array([])

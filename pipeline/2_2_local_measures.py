@@ -1,5 +1,6 @@
 # %%
 import os
+import sys
 import json
 import pandas as pd
 import networkx as nx
@@ -7,13 +8,14 @@ import networkx as nx
 from src import settings
 from src.utils import fileio, graph_utils
 
-INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "1_0_undirected_singleedge_graph")
+TREATMENT = sys.argv[1]
+
+INPUT_DIR = os.path.join(settings.OUTPUT_DIR, TREATMENT, "1_0_undirected_singleedge_graph")
 treatment = fileio.load_files_from_folder(INPUT_DIR, file_format=".gml")
 
-SCRIPT_OUTPUT = os.path.join(settings.RESULTS_DIR, settings.TREATMENT, "local_measures")
+SCRIPT_OUTPUT = os.path.join(settings.RESULTS_DIR, TREATMENT, "local_measures")
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
 
-## Read all graphs with nx.read_gml(path)
 graphs_d = {
     exp_name.replace(".gml", ""): nx.read_gml(path)
     for exp_name, path in treatment.items()

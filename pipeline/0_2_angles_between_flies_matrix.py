@@ -1,10 +1,10 @@
 import os
-import pandas as pd
+import sys
 
 from src import settings
 from src.utils import fileio, data_utils
 
-TREATMENT = 
+TREATMENT = sys.argv[1]
 
 SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, TREATMENT, "0_2_angles_between_flies_matrix")
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
