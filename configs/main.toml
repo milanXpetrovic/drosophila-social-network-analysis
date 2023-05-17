@@ -1,0 +1,4 @@
+
+EXPERIMENT_DURATION = 600  # experiment duration time must be in seconds
+FPS = 24
+

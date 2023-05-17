@@ -1,8 +1,5 @@
 TREATMENT = "fx"
 
-EXPERIMENT_DURATION = 600  # experiment duration time must be in seconds
-FPS = 24
-
 ANGLE = [130, 175]
 DISTANCE = 2.00
 TIME = [0.4, 1.0]
