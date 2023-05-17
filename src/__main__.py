@@ -1,18 +1,27 @@
 # %%
 import os
 import time
+import toml
 import subprocess
 from src import settings
 
+from src.utils import fileio
 
-os.environ["TREATMENT"] = "fxcddd"
+
+os.environ["TREATMENT"] = "wt"
 
 TREATMENT = os.environ["TREATMENT"]
+TREATMENT_CONFIG = os.path.join(settings.CONFIG_DIR, "trackings", f"{TREATMENT}.toml")
 
+with open(TREATMENT_CONFIG) as f:
+    treatment_config = toml.load(f)
+    ANGLE = treatment_config["ANGLE"]
+    DISTANCE = treatment_config["DISTANCE"]
+    TIME = treatment_config["TIME"]
 
-vars = os.environ
+print(ANGLE)
 
-
+#%%
 # %%
 print("-" * 20)
 print(f"working with: {settings.TREATMENT}")
