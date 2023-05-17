@@ -4,3 +4,4 @@ pandas==2.0.1
 python-louvain
 jinja2
 scipy
+toml
