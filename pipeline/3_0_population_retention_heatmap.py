@@ -6,7 +6,13 @@ import pandas as pd
 from src import settings
 from src.utils import fileio, plotting
 
-TREATMENT = sys.argv[1]
+TREATMENT = os.environ["TREATMENT"]
+
+START_TIME = int(os.environ["START_TIME"]) * 60
+END_TIME = int(os.environ["END_TIME"]) * 60
+
+START = settings.FPS * START_TIME
+END = settings.FPS * END_TIME
 
 INPUT_DIR = os.path.join(settings.OUTPUT_DIR, TREATMENT, "0_0_preproc_data")
 trials = fileio.load_multiple_folders(INPUT_DIR)
@@ -21,6 +27,7 @@ for group_name, group_path in trials.items():
     fly_dict = fileio.load_files_from_folder(group_path)
     for fly_name, fly_path in fly_dict.items():
         df = pd.read_csv(fly_path, usecols=["pos x", "pos y"])
+        df = df. iloc[START:END+1, :]
         pos_x, pos_y = df["pos x"].to_numpy(), df["pos y"].to_numpy()
         pos_x_group = np.concatenate((pos_x_group, pos_x))
         pos_y_group = np.concatenate((pos_y_group, pos_y))
@@ -33,16 +40,16 @@ for group_name, group_path in trials.items():
     plotting.plot_histogram(
         pos_x_group,
         pos_y_group,
-        f"{settings.TREATMENT}: {group_name} with gaussian filter",
+        f"{TREATMENT}: {group_name} with gaussian filter",
         save_name,
     )
 
 pos_x_treatment = pos_x_treatment[~np.isnan(pos_x_treatment)]
 pos_y_treatment = pos_y_treatment[~np.isnan(pos_y_treatment)]
-save_name = os.path.join(SCRIPT_OUTPUT, f"{settings.TREATMENT}_all")
+save_name = os.path.join(SCRIPT_OUTPUT, f"{TREATMENT}_all")
 plotting.plot_histogram(
     pos_x_treatment,
     pos_y_treatment,
-    f"{settings.TREATMENT} all groups with gaussian filter",
+    f"{TREATMENT} all groups with gaussian filter",
     save_name,
 )

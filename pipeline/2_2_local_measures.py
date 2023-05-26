@@ -8,7 +8,7 @@ import networkx as nx
 from src import settings
 from src.utils import fileio, graph_utils
 
-TREATMENT = sys.argv[1]
+TREATMENT = os.environ["TREATMENT"]
 
 INPUT_DIR = os.path.join(settings.OUTPUT_DIR, TREATMENT, "1_0_undirected_singleedge_graph")
 treatment = fileio.load_files_from_folder(INPUT_DIR, file_format=".gml")

@@ -11,7 +11,7 @@ from src import settings
 from src.utils import fileio, data_utils
 
 
-NAME = "1_0_find_edges"
+NAME = "1_0_find_interactions"
 TREATMENT = os.environ["TREATMENT"]
 
 SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, TREATMENT, NAME)

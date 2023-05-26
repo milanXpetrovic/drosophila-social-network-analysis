@@ -7,7 +7,7 @@ import pandas as pd
 from src import settings
 from src.utils import fileio, plotting
 
-TREATMENT = sys.argv[1]
+TREATMENT = os.environ["TREATMENT"]
 
 INPUT_DIR = os.path.join(settings.OUTPUT_DIR, TREATMENT, "0_0_preproc_data")
 trials = fileio.load_multiple_folders(INPUT_DIR)
