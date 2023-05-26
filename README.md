@@ -22,8 +22,10 @@ Currently, the module is being tested on data obtained by monitoring Dosophila m
 - Population analysis, distances and angles between individuals from the trajectory
 
 ## How to use?
+
 1. Add tracking data to `.data/trackings/<treatment name>`
-2. Run `__main__.py` from `./src` all results will be saved to `./data/results`
+2. Create configuration in `configs/trackings/<treatment_name>.toml` values for `angle`, `degree` and `time` which are the criteria for determining edges in networks
+3. Run `__main__.py` from `./src` all results will be saved to `./data/results`
 
 ## Join us
 The project is open-source and aims to create research tools. If you are interested in development, feel free to contact us or just fork the repo.
