@@ -18,7 +18,7 @@ def plot_histogram(x, y, title, save_name):
     plt.title(title)
 
     plt.savefig(f"{save_name}.png")
-    plt.savefig(f"{save_name}.svg", format="svg")
-    plt.savefig(f"{save_name}.eps", format="eps")
+    # plt.savefig(f"{save_name}.svg", format="svg")
+    # plt.savefig(f"{save_name}.eps", format="eps")
 
     plt.close()
