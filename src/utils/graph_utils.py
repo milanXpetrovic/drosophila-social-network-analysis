@@ -44,35 +44,34 @@ def graph_global_measures(g, pop_name):
     average_degree = np.mean(deg_list)
 
     ave_strength_count = calculate_strength(g, "count")
-    ave_strength_duration = calculate_strength(g, "duration")
+    # ave_strength_duration = calculate_strength(g, "duration")
     ##ave_strength_duration= calculate_strength(g, 'duration')
 
     edges_ave = total_edges / total_nodes
     network_density = nx.density(g)
 
     # Measures of range
-    # gcc = sorted(nx.connected_component(g), key=len, reverse=True)
-    # gc = g.subgraph(gcc[0])
-    gc = list(max(nx.connected_components(g), key=len))
-    gc = g.subgraph(gc)
+    gcc = sorted(nx.connected_components(g.to_undirected()), key=len, reverse=True)
+    gc = g.to_undirected().subgraph(gcc[0])
+    gc = list(max(nx.connected_components(g.to_undirected()), key=len))
+    gc = g.to_undirected().subgraph(gc)
 
     spl = nx.average_shortest_path_length(gc)
     diameter = nx.diameter(gc, e=None)
 
-    # Number of edges separating the focal node from other nodes of interest
     reach = nx.global_reaching_centrality(g, weight=None, normalized=True)
-    global_efficiency = nx.global_efficiency(g)
+    global_efficiency = nx.global_efficiency(g.to_undirected())
 
     ##########################################################################
-    # mjere grupiranja
+
     clustering_coeff = nx.clustering(g)
     average_cl_coeff_unweighted = np.mean([k for k in clustering_coeff.values()])
     clustering_coeff_w_count = nx.clustering(g, weight="count")
     average_cl_coeff_w_count = np.mean([k for k in clustering_coeff_w_count.values()])
-    clustering_coeff_w_duration = nx.clustering(g, weight="duration")
-    average_cl_coeff_w_duration = np.mean(
-        [k for k in clustering_coeff_w_duration.values()]
-    )
+    # clustering_coeff_w_duration = nx.clustering(g, weight="duration")
+    # average_cl_coeff_w_duration = np.mean(
+    #     [k for k in clustering_coeff_w_duration.values()]
+    # )
 
     transitivity = nx.transitivity(g)
 
@@ -83,8 +82,8 @@ def graph_global_measures(g, pop_name):
     average_betw_cent_unweighted = np.mean([k for k in betweenness_centrality.values()])
     betweenness_c_w_count = nx.betweenness_centrality(g, weight="count")
     average_betw_c_w_count = np.mean([k for k in betweenness_c_w_count.values()])
-    betweenness_c_w_duration = nx.betweenness_centrality(g, weight="duration")
-    average_betw_c_w_duration = np.mean([k for k in betweenness_c_w_duration.values()])
+    # betweenness_c_w_duration = nx.betweenness_centrality(g, weight="duration")
+    # average_betw_c_w_duration = np.mean([k for k in betweenness_c_w_duration.values()])
 
     closeness_centrality_unweighted = nx.closeness_centrality(g)
     ave_closeness_cent_unw = np.mean(
@@ -92,43 +91,58 @@ def graph_global_measures(g, pop_name):
     )
     closeness_c_w_count = nx.closeness_centrality(g, distance="count")
     ave_closeness_c_w_count = np.mean([k for k in closeness_c_w_count.values()])
-    closeness_c_w_duration = nx.closeness_centrality(g, distance="duration")
-    ave_closeness_c_w_duration = np.mean([k for k in closeness_c_w_duration.values()])
+    # closeness_c_w_duration = nx.closeness_centrality(g, distance="duration")
+    # ave_closeness_c_w_duration = np.mean([k for k in closeness_c_w_duration.values()])
 
     standard_deviation_degree = round(np.std(deg_list))
     degree_heterogeneity = standard_deviation_degree / average_degree
     degree_assortativity = nx.degree_assortativity_coefficient(g)
 
     # mjere za komponente
-    ncc = nx.number_connected_components(g)
+    ncc = nx.number_connected_components(g.to_undirected())
     # bggest component size
-    gcc = sorted(nx.connected_components(g), key=len, reverse=True)
-    bcs = len(g.subgraph(gcc[0]))
+    gcc = sorted(nx.connected_components(g.to_undirected()), key=len, reverse=True)
+    bcs = len(g.to_undirected().subgraph(gcc[0]))
 
-    partition = community.best_partition(g)
+    partition = community.best_partition(g.to_undirected())
 
-    newman_modularity = community.modularity(partition, g, weight="count")  #
+    newman_modularity = community.modularity(partition, g.to_undirected(), weight="count")  #
     modules = list(set(partition.values()))
     mod_nodes = {}
     for mod in modules:
         mod_nodes[mod] = [node for node in list(g.nodes) if partition[node] == mod]
     maximum_modularity = round(calculate_Qmax(g, mod_nodes), 4)
-    relative_modularity = round(float(newman_modularity) / maximum_modularity, 3)
+    
+    try:
+        relative_modularity = round(float(newman_modularity) / maximum_modularity, 3)
 
-    newman_modularity_D = community.modularity(partition, g, weight="duration")  #
+    except:
+        relative_modularity=0
+
+    try:
+        newman_modularity_count = community.modularity(partition, g, weight="count")  #
+    except:
+        newman_modularity_count = 0
+
+    
     modules = list(set(partition.values()))
     mod_nodes = {}
     for mod in modules:
         mod_nodes[mod] = [node for node in list(g.nodes) if partition[node] == mod]
-    maximum_modularity_D = round(calculate_Qmax(g, mod_nodes), 4)
-    relative_modularity_D = round(float(newman_modularity_D) / maximum_modularity_D, 3)
+    maximum_modularity_count = round(calculate_Qmax(g, mod_nodes), 4)
+
+    try:
+        relative_modularity_count = round(float(newman_modularity_count) / maximum_modularity_count, 3)
+    except:
+        relative_modularity_count = 0
+
 
     d = {
         "total_nodes": total_nodes,
         "total_edges": total_edges,
         "ave_degree": average_degree,
         "ave_strength_count": ave_strength_count,
-        "ave_strength_duration": ave_strength_duration,
+        # "ave_strength_duration": ave_strength_duration,
         "edges_ave": edges_ave,
         "network_density": network_density,
         "shortest_path_len": spl,
@@ -137,26 +151,26 @@ def graph_global_measures(g, pop_name):
         "global_efficiency": global_efficiency,
         "ave_cl_coeff_unweighted": average_cl_coeff_unweighted,
         "ave_cl_coeff_w_count": average_cl_coeff_w_count,
-        "ave_cl_coeff_w_duration": average_cl_coeff_w_duration,
+        # "ave_cl_coeff_w_duration": average_cl_coeff_w_duration,
         "transitivity": transitivity,
         "ave_deg_centrality": ave_deg_cent,
         "ave_betw_cent_unweighted": average_betw_cent_unweighted,
         "ave_betw_c_w_count": average_betw_c_w_count,
-        "ave_betw_c_w_duration": average_betw_c_w_duration,
+        # "ave_betw_c_w_duration": average_betw_c_w_duration,
         "ave_closseness unweighted": ave_closeness_cent_unw,
         "ave_closseness_w_count": ave_closeness_c_w_count,
-        "ave_closseness_w_duration": ave_closeness_c_w_duration,
+        # "ave_closseness_w_duration": ave_closeness_c_w_duration,
         "degree_heterogeneity": degree_heterogeneity,
         "degree_assortativity": degree_assortativity,
         "number_of_components": ncc,
-        "biggest_component size": bcs,
+        # "biggest_component size": bcs,
         "Newman_modularity_U": newman_modularity,
         "Newman_modularity": newman_modularity,
         "maximum_modularity": maximum_modularity,
         "relative_modularity": relative_modularity,
-        "Newman_modularity D": newman_modularity_D,
-        "maximum_modularity D": maximum_modularity_D,
-        "relative_modularity D": relative_modularity_D,
+        "Newman_modularity count": newman_modularity_count,
+        "maximum_modularity count": maximum_modularity_count,
+        "relative_modularity count": relative_modularity_count,
     }
 
     df = pd.DataFrame(d, index=[pop_name.replace(".gml", "")])
@@ -181,6 +195,11 @@ def group_comm_stats(G, group_name, weight):
     all_comm_len_no_sing = [len(com) for com in communities if len(com) > 1]
     ave_comm_size_no_sing = sum(all_comm_len_no_sing) / len(all_comm_len_no_sing)
 
+    if len(communities)>1:
+        second_biggest_community = len(communities[1])
+    else:
+        second_biggest_community = 0
+    
     d = {
         "number of nodes: ": len(G.nodes()),
         "comm_size=1 (single nodes):": single_element_comm,
@@ -188,7 +207,7 @@ def group_comm_stats(G, group_name, weight):
         "number of communities: ": len(communities),
         "comm_size>1": len(communities) - single_element_comm,
         "biggest_community_size:": len(communities[0]),
-        "second_biggest_community:": len(communities[1]),
+        "second_biggest_community:": second_biggest_community,
         "ave_comm_size_no_sing:": ave_comm_size_no_sing,
     }
 
