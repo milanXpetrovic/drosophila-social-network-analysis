@@ -1,4 +1,3 @@
-#%%
 import os 
 import pandas as pd
 import networkx as nx
@@ -6,8 +5,6 @@ import networkx as nx
 from src.utils import fileio
 from src import settings
 
-os.environ["TREATMENT"] = "CsCh"
-os.environ["TIME_WINDOW"] = str(30)
 
 TREATMENT = os.environ["TREATMENT"]
 INPUT_DIR = os.path.join(settings.OUTPUT_DIR, TREATMENT, "1_0_find_interactions")
@@ -29,9 +26,12 @@ for group_name, group_path in treatment.items():
     SAVE_GROUP_PATH = os.path.join(SCRIPT_OUTPUT, group_name.replace(".csv", ""))
     os.makedirs(SAVE_GROUP_PATH, exist_ok=True)
 
-    for i in range(1, df_interactions.snapshot.max()+1):
+    for i in range(1, df_interactions["snapshot"].max()+1):
         df_snapshot = df_interactions[df_interactions['snapshot']==i]
         G = nx.DiGraph()
+
+        # nodes = ['fly' + str(i) for i in range(1, 13)]
+        # G.add_nodes_from(nodes) 
 
         for _, row in df_snapshot.iterrows():
             node_1 = row['node_1']

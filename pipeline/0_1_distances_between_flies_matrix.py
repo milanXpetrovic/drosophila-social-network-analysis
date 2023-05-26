@@ -1,13 +1,13 @@
+#%%
 import os
 import sys
 
 from src import settings
 from src.utils import fileio, data_utils
 
-NAME = sys.argv[0].replace(".py", "")
-TREATMENT = sys.argv[1]
+TREATMENT = os.environ["TREATMENT"]
 
-SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, TREATMENT, NAME)
+SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, TREATMENT, "0_1_distances_between_flies_matrix")
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
 
 INPUT_DIR = os.path.join(settings.OUTPUT_DIR, TREATMENT, "0_0_preproc_data")

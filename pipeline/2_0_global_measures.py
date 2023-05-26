@@ -1,7 +1,4 @@
-#%%
 import os
-import sys
-
 import pandas as pd
 import networkx as nx
 
@@ -9,8 +6,8 @@ from src import settings
 from src.utils import fileio, graph_utils
 
 
-TREATMENT = "CsCh"
-TIME_WINDOW = 120
+TREATMENT = os.environ["TREATMENT"]
+TIME_WINDOW = int(os.environ["TIME_WINDOW"])
 
 INPUT_DIR = os.path.join(settings.OUTPUT_DIR, TREATMENT, "1_1_create_snapshots", f"{TIME_WINDOW}_sec_window")
 
@@ -32,17 +29,3 @@ for group_name, group_path in treatment.items():
     SAVE_PATH = os.path.join(SCRIPT_OUTPUT, f"{group_name}.csv")
     total = total.T
     total.to_csv(SAVE_PATH)
-
-#%%
-
-
-total = pd.DataFrame()
-for pop_name, path in treatment.items():
-    df = pd.DataFrame()
-    g = nx.read_gml(path)
-
-    df = graph_utils.graph_global_measures(g, pop_name)
-    total = pd.concat([total, df], axis=1)
-
-total.to_csv(os.path.join(SCRIPT_OUTPUT, "global_measures.csv"))
-total.to_latex(os.path.join(SCRIPT_OUTPUT, "global_measures.tex"))
