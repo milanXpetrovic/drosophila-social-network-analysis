@@ -14,8 +14,6 @@ END_TIME = int(os.environ["END_TIME"]) * 60
 START = settings.FPS * START_TIME
 END = settings.FPS * END_TIME
 
-print(END)
-
 SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, TREATMENT, "0_0_preproc_data")
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
 
