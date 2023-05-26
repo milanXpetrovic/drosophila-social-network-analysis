@@ -22,7 +22,7 @@ Currently, the module is being tested on data obtained by monitoring Dosophila m
 - Population analysis, distances and angles between individuals from the trajectory
 
 ## How to use?
-1. Add tracking data to `.data/trackings/<treatment name>/
+1. Add tracking data to `.data/trackings/<treatment name>`
 2. Run `__main__.py` from `./src` all results will be saved to `./data/results`
 
 ## Join us
