@@ -1,4 +1,4 @@
-#%%
+# %%
 import os
 import sys
 import pandas as pd
@@ -8,11 +8,8 @@ from src.utils import fileio, data_utils
 
 TREATMENT = os.environ["TREATMENT"]
 
-START_TIME = int(os.environ["START_TIME"]) * 60 
-END_TIME = int(os.environ["END_TIME"]) * 60
-
-START = settings.FPS * START_TIME
-END = settings.FPS * END_TIME
+START = int(os.environ["START_TIME"]) * 60 * settings.FPS
+END = int(os.environ["END_TIME"]) * 60 * settings.FPS
 
 SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, TREATMENT, "0_0_preproc_data")
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
@@ -28,7 +25,7 @@ for group_name, group_path in treatment.items():
 
     for fly_name, fly_path in fly_dict.items():
         df = pd.read_csv(fly_path)
-        df = df. iloc[START:END, :]
+        df = df.iloc[START:END, :]
         df = data_utils.prepproc(df, min_x, min_y)
         df = data_utils.round_coordinates(df, decimal_places=0)
 

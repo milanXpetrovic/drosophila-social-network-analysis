@@ -14,10 +14,10 @@ scripts = [
     # "1_0_find_interactions.py",
     "1_1_create_snapshots.py",
     "2_0_global_measures.py",
-    # "2_1_community_measures.py",
-    # "2_2_local_measures.py",
-    # "3_0_population_retention_heatmap.py",
-    # "3_1_distance_traveled.py",
+    "2_1_community_measures.py",
+    "2_2_local_measures.py",
+    "3_0_population_retention_heatmap.py",
+    "3_1_distance_traveled.py",
 ]
 
 START = 0
@@ -26,16 +26,18 @@ END = 30
 os.environ["START_TIME"] = str(START)
 os.environ["END_TIME"] = str(END)
 
-TIME_WINDOW = 300 #seconds
+TIME_WINDOW = 120  # seconds
 os.environ["TIME_WINDOW"] = str(TIME_WINDOW)
 
-treatments = ["CsCh"] # , "ELAV"
+treatments = ["CsCh"]  # , "ELAV"
 
 for treatment_value in treatments:
     os.environ["TREATMENT"] = treatment_value
 
     TREATMENT = os.environ["TREATMENT"]
-    TREATMENT_CONFIG = os.path.join(settings.CONFIG_DIR, "trackings", f"{TREATMENT}.toml")
+    TREATMENT_CONFIG = os.path.join(
+        settings.CONFIG_DIR, "trackings", f"{TREATMENT}.toml"
+    )
 
     print("-" * 15, f" START: {TREATMENT} ", "-" * 15)
     for script in scripts:
