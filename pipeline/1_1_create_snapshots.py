@@ -1,30 +1,25 @@
 import os
-import pandas as pd
+
 import networkx as nx
+import pandas as pd
 
-from src.utils import fileio
 from src import settings
-
+from src.utils import fileio
 
 TREATMENT = os.environ["TREATMENT"]
-INPUT_DIR = os.path.join(settings.OUTPUT_DIR, TREATMENT, "1_0_find_interactions")
+INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "1_0_find_interactions", TREATMENT)
 
 TIME_WINDOW = int(os.environ["TIME_WINDOW"])
 TIME_WINDOW_FPS = TIME_WINDOW * settings.FPS
 
-NAME = "1_1_create_snapshots"
-SCRIPT_OUTPUT = os.path.join(
-    settings.OUTPUT_DIR, TREATMENT, NAME, f"{TIME_WINDOW}_sec_window"
-)
+SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, "1_1_create_snapshots", TREATMENT, f"{TIME_WINDOW}_sec_window")
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
 
 treatment = fileio.load_files_from_folder(INPUT_DIR)
 for group_name, group_path in treatment.items():
     df_interactions = pd.read_csv(group_path, index_col=0)
     df_interactions = df_interactions.sort_values("start_of_interaction")
-    df_interactions["snapshot"] = (
-        df_interactions["start_of_interaction"] // TIME_WINDOW_FPS
-    )
+    df_interactions["snapshot"] = df_interactions["start_of_interaction"] // TIME_WINDOW_FPS
     df_interactions["snapshot"] = df_interactions["snapshot"] + 1
 
     SAVE_GROUP_PATH = os.path.join(SCRIPT_OUTPUT, group_name.replace(".csv", ""))

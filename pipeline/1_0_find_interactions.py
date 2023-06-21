@@ -1,24 +1,20 @@
-# %%
 import os
 import sys
-import toml
 
 import numpy as np
 import pandas as pd
-import networkx as nx
+import toml
 
 from src import settings
-from src.utils import fileio, data_utils
+from src.utils import fileio
 
-
-NAME = "1_0_find_interactions"
 TREATMENT = os.environ["TREATMENT"]
 
-SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, TREATMENT, NAME)
+SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, "1_0_find_interactions", TREATMENT)
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
 
-ANGLES_DIR = os.path.join(settings.OUTPUT_DIR, TREATMENT, "0_2_angles_between_flies_matrix")
-DISTANCES_DIR = os.path.join(settings.OUTPUT_DIR, TREATMENT, "0_1_distances_between_flies_matrix")
+ANGLES_DIR = os.path.join(settings.OUTPUT_DIR, "0_2_angles_between_flies_matrix", TREATMENT)
+DISTANCES_DIR = os.path.join(settings.OUTPUT_DIR, "0_1_distances_between_flies_matrix", TREATMENT)
 
 angles = fileio.load_files_from_folder(ANGLES_DIR)
 distances = fileio.load_files_from_folder(DISTANCES_DIR)
@@ -41,8 +37,8 @@ for angles_tuple, distances_tuple in zip(angles.items(), distances.items()):
     df_angles = pd.read_csv(angles_path, index_col=0)
     df_distances = pd.read_csv(distances_path, index_col=0)
 
-    edgelist = pd.DataFrame(columns=['node_1', 'node_2', 'start_of_interaction', 'end_of_interaction', 'duration'])
-    
+    edgelist = pd.DataFrame(columns=["node_1", "node_2", "start_of_interaction", "end_of_interaction", "duration"])
+
     for angles_col, distances_col in zip(df_angles.columns, df_distances.columns):
         if angles_col != distances_col:
             sys.exit()
@@ -69,17 +65,19 @@ for angles_tuple, distances_tuple in zip(angles.items(), distances.items()):
 
         for interaction in clear_list_of_df:
             duration = len(interaction)
-            
-            start_of_interaction =  interaction.index[0]
+
+            start_of_interaction = interaction.index[0]
             end_of_interaction = interaction.index[-1]
 
-            data = {'node_1': node_1,
-                    'node_2': node_2,
-                    'start_of_interaction': int(start_of_interaction),
-                    'end_of_interaction': int(end_of_interaction),
-                    'duration': int(duration)}
-            
-            row = pd.DataFrame.from_dict(data, orient='index').T
+            data = {
+                "node_1": node_1,
+                "node_2": node_2,
+                "start_of_interaction": int(start_of_interaction),
+                "end_of_interaction": int(end_of_interaction),
+                "duration": int(duration),
+            }
+
+            row = pd.DataFrame.from_dict(data, orient="index").T
 
             edgelist = pd.concat([edgelist, row], ignore_index=True)
 

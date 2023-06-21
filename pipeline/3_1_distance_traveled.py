@@ -1,6 +1,6 @@
-# %%
 import os
 import sys
+
 import numpy as np
 import pandas as pd
 
@@ -9,21 +9,17 @@ from src.utils import fileio, plotting
 
 TREATMENT = os.environ["TREATMENT"]
 
-INPUT_DIR = os.path.join(settings.OUTPUT_DIR, TREATMENT, "0_0_preproc_data")
+INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "0_0_preproc_data", TREATMENT)
 trials = fileio.load_multiple_folders(INPUT_DIR)
 
-SCRIPT_OUTPUT = os.path.join(
-    settings.RESULTS_DIR, TREATMENT, "distances_traveled"
-)
+SCRIPT_OUTPUT = os.path.join(settings.RESULTS_DIR, "distances_traveled", TREATMENT)
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
 
 for group_name, group_path in trials.items():
     group_distances = {}
     fly_dict = fileio.load_files_from_folder(group_path)
 
-    GROUP_OUTPUT = os.path.join(
-        settings.RESULTS_DIR, TREATMENT, "distances_traveled", group_name
-    )
+    GROUP_OUTPUT = os.path.join(settings.RESULTS_DIR, TREATMENT, "distances_traveled", group_name)
     os.makedirs(GROUP_OUTPUT, exist_ok=True)
 
     res = pd.DataFrame()

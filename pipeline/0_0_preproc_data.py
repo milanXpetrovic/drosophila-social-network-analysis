@@ -1,17 +1,16 @@
-# %%
 import os
-import sys
+
 import pandas as pd
 
 from src import settings
-from src.utils import fileio, data_utils
+from src.utils import data_utils, fileio
 
 TREATMENT = os.environ["TREATMENT"]
 
 START = int(os.environ["START_TIME"]) * 60 * settings.FPS
 END = int(os.environ["END_TIME"]) * 60 * settings.FPS
 
-SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, TREATMENT, "0_0_preproc_data")
+SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, "0_0_preproc_data", TREATMENT)
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
 
 INPUT_DIR = os.path.join(settings.INPUT_DIR, TREATMENT)

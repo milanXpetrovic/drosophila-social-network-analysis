@@ -1,5 +1,5 @@
 import os
-import sys
+
 import numpy as np
 import pandas as pd
 
@@ -8,16 +8,13 @@ from src.utils import fileio, plotting
 
 TREATMENT = os.environ["TREATMENT"]
 
-START_TIME = int(os.environ["START_TIME"]) * 60
-END_TIME = int(os.environ["END_TIME"]) * 60
+START_TIME, END_TIME = int(os.environ["START_TIME"]) * 60, int(os.environ["END_TIME"]) * 60
+START, END = settings.FPS * START_TIME, settings.FPS * END_TIME
 
-START = settings.FPS * START_TIME
-END = settings.FPS * END_TIME
-
-INPUT_DIR = os.path.join(settings.OUTPUT_DIR, TREATMENT, "0_0_preproc_data")
+INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "0_0_preproc_data", TREATMENT)
 trials = fileio.load_multiple_folders(INPUT_DIR)
 
-SCRIPT_OUTPUT = os.path.join(settings.RESULTS_DIR, TREATMENT, "retention_heatmaps")
+SCRIPT_OUTPUT = os.path.join(settings.RESULTS_DIR, "retention_heatmaps", TREATMENT)
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
 
 pos_x_treatment, pos_y_treatment = np.array([]), np.array([])
@@ -27,7 +24,7 @@ for group_name, group_path in trials.items():
     fly_dict = fileio.load_files_from_folder(group_path)
     for fly_name, fly_path in fly_dict.items():
         df = pd.read_csv(fly_path, usecols=["pos x", "pos y"])
-        df = df. iloc[START:END+1, :]
+        df = df.iloc[START : END + 1, :]
         pos_x, pos_y = df["pos x"].to_numpy(), df["pos y"].to_numpy()
         pos_x_group = np.concatenate((pos_x_group, pos_x))
         pos_y_group = np.concatenate((pos_y_group, pos_y))

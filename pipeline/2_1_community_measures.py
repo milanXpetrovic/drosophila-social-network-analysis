@@ -1,20 +1,19 @@
 # %%
 import os
 import sys
-import pandas as pd
+
 import networkx as nx
+import pandas as pd
 
 from src import settings
 from src.utils import fileio, graph_utils
 
 TREATMENT = os.environ["TREATMENT"]
 
-INPUT_DIR = os.path.join(settings.OUTPUT_DIR, TREATMENT,"1_0_undirected_singleedge_graph")
+INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "1_0_undirected_singleedge_graph", TREATMENT)
 treatment = fileio.load_files_from_folder(INPUT_DIR, file_format=".gml")
 
-SCRIPT_OUTPUT = os.path.join(
-    settings.RESULTS_DIR, TREATMENT, "community_measures"
-)
+SCRIPT_OUTPUT = os.path.join(settings.RESULTS_DIR, "community_measures", TREATMENT)
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
 
 total = pd.DataFrame()
