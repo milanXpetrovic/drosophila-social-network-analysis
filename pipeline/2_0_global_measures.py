@@ -9,8 +9,8 @@ from src.utils import fileio, graph_utils
 TREATMENT = os.environ["TREATMENT"]
 TIME_WINDOW = int(os.environ["TIME_WINDOW"])
 
-INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "1_1_create_snapshots", TREATMENT, f"{TIME_WINDOW}_sec_window")
-SCRIPT_OUTPUT = os.path.join(settings.RESULTS_DIR, "global_measures", TREATMENT, f"{TIME_WINDOW}_sec_window")
+INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "1_1_create_snapshots", f"{TIME_WINDOW}_sec_window", TREATMENT)
+SCRIPT_OUTPUT = os.path.join(settings.RESULTS_DIR, "global_measures", f"{TIME_WINDOW}_sec_window", TREATMENT)
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
 
 treatment = fileio.load_multiple_folders(INPUT_DIR)

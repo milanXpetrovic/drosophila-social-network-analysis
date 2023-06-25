@@ -12,7 +12,7 @@ INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "1_0_find_interactions", TREATMENT
 TIME_WINDOW = int(os.environ["TIME_WINDOW"])
 TIME_WINDOW_FPS = TIME_WINDOW * settings.FPS
 
-SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, "1_1_create_snapshots", TREATMENT, f"{TIME_WINDOW}_sec_window")
+SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, "1_1_create_snapshots", f"{TIME_WINDOW}_sec_window", TREATMENT)
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
 
 treatment = fileio.load_files_from_folder(INPUT_DIR)

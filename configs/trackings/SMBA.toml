@@ -1,0 +1,5 @@
+TREATMENT = "SMBA"
+
+ANGLE = [130, 175]
+DISTANCE = 2.00
+TIME = [0.4, 1.0]

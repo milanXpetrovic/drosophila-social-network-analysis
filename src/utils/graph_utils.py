@@ -86,9 +86,7 @@ def graph_global_measures(g, pop_name):
     # average_betw_c_w_duration = np.mean([k for k in betweenness_c_w_duration.values()])
 
     closeness_centrality_unweighted = nx.closeness_centrality(g)
-    ave_closeness_cent_unw = np.mean(
-        [k for k in closeness_centrality_unweighted.values()]
-    )
+    ave_closeness_cent_unw = np.mean([k for k in closeness_centrality_unweighted.values()])
     closeness_c_w_count = nx.closeness_centrality(g, distance="count")
     ave_closeness_c_w_count = np.mean([k for k in closeness_c_w_count.values()])
     # closeness_c_w_duration = nx.closeness_centrality(g, distance="duration")
@@ -112,19 +110,18 @@ def graph_global_measures(g, pop_name):
     for mod in modules:
         mod_nodes[mod] = [node for node in list(g.nodes) if partition[node] == mod]
     maximum_modularity = round(calculate_Qmax(g, mod_nodes), 4)
-    
+
     try:
         relative_modularity = round(float(newman_modularity) / maximum_modularity, 3)
 
     except:
-        relative_modularity=0
+        relative_modularity = 0
 
     try:
         newman_modularity_count = community.modularity(partition, g, weight="count")  #
     except:
         newman_modularity_count = 0
 
-    
     modules = list(set(partition.values()))
     mod_nodes = {}
     for mod in modules:
@@ -135,7 +132,6 @@ def graph_global_measures(g, pop_name):
         relative_modularity_count = round(float(newman_modularity_count) / maximum_modularity_count, 3)
     except:
         relative_modularity_count = 0
-
 
     d = {
         "total_nodes": total_nodes,
@@ -195,11 +191,11 @@ def group_comm_stats(G, group_name, weight):
     all_comm_len_no_sing = [len(com) for com in communities if len(com) > 1]
     ave_comm_size_no_sing = sum(all_comm_len_no_sing) / len(all_comm_len_no_sing)
 
-    if len(communities)>1:
+    if len(communities) > 1:
         second_biggest_community = len(communities[1])
     else:
         second_biggest_community = 0
-    
+
     d = {
         "number of nodes: ": len(G.nodes()),
         "comm_size=1 (single nodes):": single_element_comm,
@@ -229,10 +225,10 @@ def local_measures_functions():
         ("Degree centrality", lambda g: nx.degree_centrality(g)),
         ("Eigenvector centrality", lambda g: nx.eigenvector_centrality(g)),
         ("Closeness centrality", lambda g: nx.closeness_centrality(g)),
-        (
-            "Strength distribution, weight=duration",
-            lambda g: calculate_strength(g, "duration"),
-        ),
+        # (
+        #     "Strength distribution, weight=duration",
+        #     lambda g: calculate_strength(g, "duration"),
+        # ),
         (
             "Strength distribution, weight=count",
             lambda g: calculate_strength(g, "count"),
@@ -241,10 +237,10 @@ def local_measures_functions():
             "Betweenness centrality weight=None",
             lambda g: nx.betweenness_centrality(g, weight=None),
         ),
-        (
-            "Betweenness centrality weight=duration",
-            lambda g: nx.betweenness_centrality(g, weight="duration"),
-        ),
+        # (
+        #     "Betweenness centrality weight=duration",
+        #     lambda g: nx.betweenness_centrality(g, weight="duration"),
+        # ),
         (
             "Betweenness centrality weight=count",
             lambda g: nx.betweenness_centrality(g, weight="count"),
@@ -253,10 +249,10 @@ def local_measures_functions():
             "Clustering coefficient weight=None",
             lambda g: nx.clustering(g, weight=None),
         ),
-        (
-            "Clustering coefficient weight=duration",
-            lambda g: nx.clustering(g, weight="duration"),
-        ),
+        # (
+        #     "Clustering coefficient weight=duration",
+        #     lambda g: nx.clustering(g, weight="duration"),
+        # ),
         (
             "Clustering coefficient weight=count",
             lambda g: nx.clustering(g, weight="count"),

@@ -37,7 +37,15 @@ for angles_tuple, distances_tuple in zip(angles.items(), distances.items()):
     df_angles = pd.read_csv(angles_path, index_col=0)
     df_distances = pd.read_csv(distances_path, index_col=0)
 
-    edgelist = pd.DataFrame(columns=["node_1", "node_2", "start_of_interaction", "end_of_interaction", "duration"])
+    edgelist = pd.DataFrame(
+        columns=[
+            "node_1",
+            "node_2",
+            "start_of_interaction",
+            "end_of_interaction",
+            "duration",
+        ]
+    )
 
     for angles_col, distances_col in zip(df_angles.columns, df_distances.columns):
         if angles_col != distances_col:
