@@ -31,11 +31,12 @@ for group_name, group_path in treatment.items():
     dist_east_west = math.dist(east, west)
 
     toml_data = {
+        "min_x": float(min_x),
+        "min_y": float(min_y),
         "x_px_ratio": dist_east_west / settings.ARENA_DIAMETER,
         "y_px_ratio": dist_south_north / settings.ARENA_DIAMETER,
     }
 
     toml_file_path = os.path.join(SCRIPT_OUTPUT, f"{group_name.replace('.csv', '')}.toml")
-
     with open(toml_file_path, "w") as toml_file:
         toml.dump(toml_data, toml_file)
