@@ -8,17 +8,19 @@ from src import settings
 from src.utils import fileio
 
 scripts = [
-    # "0_0_preproc_data.py",
-    # "0_1_distances_between_flies_matrix.py",
-    # "0_2_angles_between_flies_matrix.py",
-    # "1_0_find_interactions.py",
-    # "1_1_create_snapshots.py",
-    # "1_2_create_graph.py",
+    "0_0_get_normalization.py",
+    "0_0_preproc_data.py",
+    "0_1_distances_between_flies_matrix.py",
+    "0_2_angles_between_flies_matrix.py",
+    "1_0_find_interactions.py",
+    "1_1_create_snapshots.py",
+    "1_2_create_total_graph.py",
     "2_0_global_measures.py",
-    # "2_1_community_measures.py",
-    # "2_2_local_measures.py",
-    # "3_0_population_retention_heatmap.py",
-    # "3_1_distance_traveled.py",
+    "2_1_community_measures.py",
+    "2_2_local_measures.py",
+    "2_3_local_measures_snapshots.py",
+    "3_0_population_retention_heatmap.py",
+    "3_1_distance_traveled.py",
 ]
 
 START = 0
@@ -27,15 +29,14 @@ END = 30
 os.environ["START_TIME"] = str(START)
 os.environ["END_TIME"] = str(END)
 
-TIME_WINDOW = 60 * 1  # seconds
+TIME_WINDOW = 60 * 2  # seconds
 os.environ["TIME_WINDOW"] = str(TIME_WINDOW)
 
-# ["CsCh", "TMBC", "TMBCxELAV", "SMBA"]
-treatments = ["CsCh", "ELAV", "TMBCxELAV", "SMBA"]
+# treatments = ["CsCh", "ELAV", "TMBCxELAV", "SMBA"]
 # treatments = ["ELAV"]
-# treatment = ["TMBCxELAV"]
-# treatment = ["TMBC"]
-# treatment = ["CsCh"]
+# treatments = ["TMBCxELAV"]
+# treatments = ["SMBA"]
+# treatments = ["CsCh", "SMBA"]
 
 for treatment_value in treatments:
     os.environ["TREATMENT"] = treatment_value
