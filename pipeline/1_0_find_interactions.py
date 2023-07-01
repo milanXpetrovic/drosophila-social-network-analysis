@@ -60,7 +60,7 @@ for angles_tuple, distances_tuple in zip(angles.items(), distances.items()):
         df = df[distance_mask & angle_mask]
 
         min_soc_duration = int(TIME[0] * settings.FPS)
-        max_soc_duration = int(TIME[1] * settings.FPS)
+        max_soc_duration = int((TIME[0]) * settings.FPS)
 
         clear_list_of_df = [
             d
