@@ -1,12 +1,13 @@
 # %%
+import math
 import os
+
 import pandas as pd
+import toml
 from src import settings
 from src.utils import fileio
-import toml
-import math
 
-TREATMENT = "CsCh"
+TREATMENT = os.environ["TREATMENT"]
 INPUT_DIR = os.path.join(settings.INPUT_DIR, TREATMENT)
 
 SCRIPT_OUTPUT = os.path.join(settings.NORMALIZATION_DIR, TREATMENT)
@@ -16,7 +17,12 @@ treatment = fileio.load_multiple_folders(INPUT_DIR)
 
 for group_name, group_path in treatment.items():
     fly_dict = fileio.load_files_from_folder(group_path)
-    min_x, min_y, max_x, max_y = float("inf"), float("inf"), float("-inf"), float("-inf")
+    min_x, min_y, max_x, max_y = (
+        float("inf"),
+        float("inf"),
+        float("-inf"),
+        float("-inf"),
+    )
     for fly_name, fly_path in fly_dict.items():
         df = pd.read_csv(fly_path)
         min_x, max_x = min(min_x, df["pos x"].min()), max(max_x, df["pos x"].max())
