@@ -48,7 +48,7 @@ def prepproc(df, min_x, min_y):
     - df (pd.DataFrame): The preprocessed DataFrame with filled NaN values and subtracted minimum
       x and y coordinates.
     """
-
+    ## TODO: THIS FUNCIONT IS NO LONGER USED
     df = df.fillna(method="ffill")
 
     df["pos x"] = df["pos x"].subtract(min_x)
@@ -165,9 +165,7 @@ def angles_between_all_flies(fly_dict):
 
 
 def create_undirected_singleedge_graph(df_angles, df_distances, ANGLE, DISTANCE, TIME):
-    node_list = list(
-        set((" ".join(["".join(pair) for pair in list(df_angles.columns)])).split(" "))
-    )
+    node_list = list(set((" ".join(["".join(pair) for pair in list(df_angles.columns)])).split(" ")))
     node_list = [x.replace(".csv", "") for x in node_list]
 
     G = nx.Graph()
@@ -185,9 +183,7 @@ def create_undirected_singleedge_graph(df_angles, df_distances, ANGLE, DISTANCE,
 
         distance_mask = df["distance"] <= DISTANCE  # settings.DISTANCE[1]
 
-        angle_mask = (df["angle"] >= ANGLE[0]) & (
-            df["angle"] <= ANGLE[1]
-        )
+        angle_mask = (df["angle"] >= ANGLE[0]) & (df["angle"] <= ANGLE[1])
         df = df[distance_mask & angle_mask]
 
         min_soc_duration = TIME[0] * settings.FPS
