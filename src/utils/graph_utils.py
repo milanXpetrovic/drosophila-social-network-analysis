@@ -1,8 +1,7 @@
 import community
-
+import networkx as nx
 import numpy as np
 import pandas as pd
-import networkx as nx
 
 
 def calculate_strength(g, weight_value):
@@ -45,21 +44,33 @@ def graph_global_measures(g, pop_name):
 
     ave_strength_count = calculate_strength(g, "count")
     # ave_strength_duration = calculate_strength(g, "duration")
-    ##ave_strength_duration= calculate_strength(g, 'duration')
+    # ave_strength_duration= calculate_strength(g, 'duration')
+    try:
+        edges_ave = total_edges / total_nodes
 
-    edges_ave = total_edges / total_nodes
+    except ZeroDivisionError:
+        edges_ave = 0
+
     network_density = nx.density(g)
 
     # Measures of range
     gcc = sorted(nx.connected_components(g.to_undirected()), key=len, reverse=True)
-    gc = g.to_undirected().subgraph(gcc[0])
-    gc = list(max(nx.connected_components(g.to_undirected()), key=len))
-    gc = g.to_undirected().subgraph(gc)
+    try:
+        gc = g.to_undirected().subgraph(gcc[0])
 
-    spl = nx.average_shortest_path_length(gc)
-    diameter = nx.diameter(gc, e=None)
+        gc = list(max(nx.connected_components(g.to_undirected()), key=len))
+        gc = g.to_undirected().subgraph(gc)
 
-    reach = nx.global_reaching_centrality(g, weight=None, normalized=True)
+        spl = nx.average_shortest_path_length(gc)
+        diameter = nx.diameter(gc, e=None)
+        reach = nx.global_reaching_centrality(g, weight=None, normalized=True)
+
+    except:
+        gc = 0
+        spl = 0
+        diameter = 0
+        reach = 0
+
     global_efficiency = nx.global_efficiency(g.to_undirected())
 
     ##########################################################################
@@ -92,19 +103,23 @@ def graph_global_measures(g, pop_name):
     # closeness_c_w_duration = nx.closeness_centrality(g, distance="duration")
     # ave_closeness_c_w_duration = np.mean([k for k in closeness_c_w_duration.values()])
 
-    standard_deviation_degree = round(np.std(deg_list))
-    degree_heterogeneity = standard_deviation_degree / average_degree
-    degree_assortativity = nx.degree_assortativity_coefficient(g)
-
+    try:
+        standard_deviation_degree = round(np.std(deg_list))
+        degree_heterogeneity = standard_deviation_degree / average_degree
+        degree_assortativity = nx.degree_assortativity_coefficient(g)
+    except:
+        degree_heterogeneity, degree_assortativity = 0, 0
     # mjere za komponente
     ncc = nx.number_connected_components(g.to_undirected())
     # bggest component size
     gcc = sorted(nx.connected_components(g.to_undirected()), key=len, reverse=True)
-    bcs = len(g.to_undirected().subgraph(gcc[0]))
 
     partition = community.best_partition(g.to_undirected())
 
-    newman_modularity = community.modularity(partition, g.to_undirected(), weight="count")  #
+    try:
+        newman_modularity = community.modularity(partition, g.to_undirected(), weight="count")  #
+    except:
+        newman_modularity = 0
     modules = list(set(partition.values()))
     mod_nodes = {}
     for mod in modules:
@@ -223,40 +238,19 @@ def local_measures_functions():
 
     graph_functions = [
         ("Degree centrality", lambda g: nx.degree_centrality(g)),
+        ("In-degree centrality", lambda g: nx.in_degree_centrality(g)),
+        ("Out-degree centrality", lambda g: nx.out_degree_centrality(g)),
         ("Eigenvector centrality", lambda g: nx.eigenvector_centrality(g)),
         ("Closeness centrality", lambda g: nx.closeness_centrality(g)),
-        # (
-        #     "Strength distribution, weight=duration",
-        #     lambda g: calculate_strength(g, "duration"),
-        # ),
-        (
-            "Strength distribution, weight=count",
-            lambda g: calculate_strength(g, "count"),
-        ),
-        (
-            "Betweenness centrality weight=None",
-            lambda g: nx.betweenness_centrality(g, weight=None),
-        ),
-        # (
-        #     "Betweenness centrality weight=duration",
-        #     lambda g: nx.betweenness_centrality(g, weight="duration"),
-        # ),
-        (
-            "Betweenness centrality weight=count",
-            lambda g: nx.betweenness_centrality(g, weight="count"),
-        ),
-        (
-            "Clustering coefficient weight=None",
-            lambda g: nx.clustering(g, weight=None),
-        ),
-        # (
-        #     "Clustering coefficient weight=duration",
-        #     lambda g: nx.clustering(g, weight="duration"),
-        # ),
-        (
-            "Clustering coefficient weight=count",
-            lambda g: nx.clustering(g, weight="count"),
-        ),
+        ("Strength distribution, weight=count", lambda g: calculate_strength(g, "count")),
+        ("Betweenness centrality weight=None", lambda g: nx.betweenness_centrality(g, weight=None)),
+        ("Betweenness centrality weight=count", lambda g: nx.betweenness_centrality(g, weight="count")),
+        ("Clustering coefficient weight=None", lambda g: nx.clustering(g, weight=None)),
+        ("Clustering coefficient weight=count", lambda g: nx.clustering(g, weight="count")),
+        ("PageRank centrality", lambda g: nx.pagerank(g)),
+        ("Degree", lambda g: dict(nx.degree(g))),
+        ("In-degree", lambda g: dict(g.in_degree())),
+        ("Out-degree", lambda g: dict(g.out_degree()))
     ]
 
     return graph_functions
