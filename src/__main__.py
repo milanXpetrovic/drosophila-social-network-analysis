@@ -27,14 +27,6 @@ config_file_path = "/home/milky/drosophila-SNA/configs/main.toml"
 with open(config_file_path, "r") as file:
     config = toml.load(file)
 
-os.environ["START_TIME"] = str(config["START_TIME"])
-os.environ["END_TIME"] = str(config["END_TIME"])
-os.environ["FPS"] = str(config["FPS"])
-os.environ["TIME_WINDOW"] = str(config["TIME_WINDOW"])
-
-os.environ["ARENA_DIAMETER"] = str(config["ARENA_DIAMETER"])
-os.environ["EXPERIMENT_DURATION"] = str(config["EXPERIMENT_DURATION"])
-
 for TREATMENT_NAME in config["TREATMENTS"]:
     os.environ["TREATMENT"] = TREATMENT_NAME
     TREATMENT = os.environ["TREATMENT"]
