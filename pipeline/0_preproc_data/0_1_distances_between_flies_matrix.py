@@ -11,8 +11,8 @@ SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, "0_1_distances_between_flies_m
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
 
 INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "0_0_preproc_data", TREATMENT)
-
 treatment = fileio.load_multiple_folders(INPUT_DIR)
+
 for group_name, group_path in treatment.items():
     fly_dict = fileio.load_files_from_folder(group_path)
     distances = data_utils.distances_between_all_flies(fly_dict)

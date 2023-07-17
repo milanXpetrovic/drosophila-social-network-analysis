@@ -8,11 +8,15 @@ from src import settings
 from src.utils import fileio
 
 TREATMENT = os.environ["TREATMENT"]
-INPUT_DIR = os.path.join(settings.INPUT_DIR, TREATMENT)
+
+CONFIG_PATH = os.path.join(settings.CONFIG_DIR, "main.toml")
+with open(CONFIG_PATH, "r") as file:
+    config = toml.load(file)
 
 SCRIPT_OUTPUT = os.path.join(settings.NORMALIZATION_DIR, TREATMENT)
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
 
+INPUT_DIR = os.path.join(settings.INPUT_DIR, TREATMENT)
 treatment = fileio.load_multiple_folders(INPUT_DIR)
 
 for group_name, group_path in treatment.items():
@@ -39,8 +43,8 @@ for group_name, group_path in treatment.items():
     toml_data = {
         "min_x": float(min_x),
         "min_y": float(min_y),
-        "x_px_ratio": dist_east_west / int(os.environ["ARENA_DIAMETER"]),
-        "y_px_ratio": dist_south_north / int(os.environ["ARENA_DIAMETER"]),
+        "x_px_ratio": dist_east_west / config["ARENA_DIAMETER"],
+        "y_px_ratio": dist_south_north / config["ARENA_DIAMETER"],
     }
 
     toml_file_path = os.path.join(SCRIPT_OUTPUT, f"{group_name.replace('.csv', '')}.toml")

@@ -10,6 +10,10 @@ from src.utils import fileio
 
 TREATMENT = os.environ["TREATMENT"]
 
+CONFIG_PATH = os.path.join(settings.CONFIG_DIR, "main.toml")
+with open(CONFIG_PATH, "r") as file:
+    config = toml.load(file)
+
 SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, "1_0_find_interactions", TREATMENT)
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
 
@@ -54,7 +58,7 @@ for angles_tuple, distances_tuple in zip(angles.items(), distances.items()):
         df = pd.concat([df_angles[angles_col], df_distances[distances_col]], axis=1)
         df.columns = ["angle", "distance"]
 
-        distance_mask = df["distance"] <= DISTANCE  # settings.DISTANCE[1]
+        distance_mask = df["distance"] <= DISTANCE
         angle_mask = (df["angle"] >= ANGLE[0]) & (df["angle"] <= ANGLE[1])
         df = df[distance_mask & angle_mask]
         min_soc_duration = int(TIME[0] * int(os.environ["FPS"]))

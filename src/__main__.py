@@ -7,7 +7,6 @@ import time
 
 from src import settings
 
-
 scripts = [
     # "0_0_0_get_normalization.py",
     # "0_0_1_preproc_data.py",
