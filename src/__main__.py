@@ -20,7 +20,7 @@ scripts = [
     # "2_0_global_measures.py",
     # "2_1_community_measures.py",
     # "2_2_local_measures.py",
-    "2_3_local_measures_snapshots.py",
+    # "2_3_local_measures_snapshots.py",
     # "3_0_population_retention_heatmap.py",
 ]
 

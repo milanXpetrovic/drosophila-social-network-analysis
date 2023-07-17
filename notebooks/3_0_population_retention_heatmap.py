@@ -24,7 +24,7 @@ for group_name, group_path in trials.items():
     fly_dict = fileio.load_files_from_folder(group_path)
     for fly_name, fly_path in fly_dict.items():
         df = pd.read_csv(fly_path, usecols=["pos x", "pos y"])
-        df = df.iloc[START : END + 1, :]
+        df = df.iloc[START: END + 1, :]
         pos_x, pos_y = df["pos x"].to_numpy(), df["pos y"].to_numpy()
         pos_x_group = np.concatenate((pos_x_group, pos_x))
         pos_y_group = np.concatenate((pos_y_group, pos_y))
