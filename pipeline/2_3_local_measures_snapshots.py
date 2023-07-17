@@ -1,5 +1,4 @@
 # %%
-import sys
 import os
 
 import networkx as nx
@@ -26,13 +25,12 @@ for group_name, group_path in treatment.items():
     # Fly traveled distances part
     group_distances_path = treatment_distances[group_name+".csv"]
     df_distances = pd.read_csv(group_distances_path, index_col=0)
-    df_distances = df_distances.groupby(df_distances.index // (int(TIME_WINDOW) * int(settings.FPS))).sum()
+    df_distances = df_distances.groupby(df_distances.index // (int(TIME_WINDOW) * int(os.environ["FPS"]))).sum()
     df_distances.index = df_distances.index+1
     df_distances = df_distances.T
 
     # Graph measures part
     all_snapshopts = fileio.load_files_from_folder(group_path, '.gml')
-
     os.makedirs(os.path.join(SCRIPT_OUTPUT, group_name), exist_ok=True)
 
     for snapshot_name, snapshot_path in all_snapshopts.items():
@@ -45,12 +43,8 @@ for group_name, group_path in treatment.items():
                 data[function_name] = 0
 
         df = pd.DataFrame(data)
-        # print(df)
 
         snapshot_name = snapshot_name.replace('.gml', '')
-        # print(df.index)
-        # print(df_distances[int(snapshot_name)].index)
-        # sys.exit()
         df["Distance traveled"] = df_distances[int(snapshot_name)]
 
         df.to_csv(os.path.join(SCRIPT_OUTPUT, group_name, f"{snapshot_name}.csv"))

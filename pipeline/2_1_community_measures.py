@@ -1,6 +1,5 @@
 # %%
 import os
-import sys
 
 import networkx as nx
 import pandas as pd

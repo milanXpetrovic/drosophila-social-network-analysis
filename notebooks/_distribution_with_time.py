@@ -4,7 +4,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from src.utils import fileio
 
-path = r"/home/milky/drosophila-SNA/data/results/global_measures/120_sec_window/"
+path = r"/home/milky/drosophila-SNA/data/results/global_measures/60_sec_window/"
 all_treatments = fileio.load_multiple_folders(path)
 
 dataframes = []

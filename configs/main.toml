@@ -1,4 +1,18 @@
 
-EXPERIMENT_DURATION = 600  # experiment duration time must be in seconds
-FPS = 24
+#experiment start and end minte
+START_TIME=0
+END_TIME=15
 
+# arena diameter in mm
+ARENA_DIAMETER=120  
+# experiment duration time must be in seconds
+EXPERIMENT_DURATION=900 
+#video FPS
+FPS=60
+
+# timewindow size in seconds for snapshot creation
+TIME_WINDOW=180  
+
+# treatments you want to processs
+# treatments = ["CsCh", "ELAV", "TMBCxELAV", "SMBA"]
+TREATMENTS = ["wt", "fx"]

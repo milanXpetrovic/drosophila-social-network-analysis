@@ -1,8 +1,5 @@
 import os
 
-ARENA_DIAMETER = 60  # in mm
-EXPERIMENT_DURATION = 1800  # experiment duration time must be in seconds
-FPS = 24
 
 ROOT_DIR = os.path.dirname(os.path.dirname(__file__))
 

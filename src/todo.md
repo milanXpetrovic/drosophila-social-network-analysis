@@ -5,6 +5,7 @@
 - [x] Create directed graphs
 - [ ] Find outlayers in movement
 - [x] Normalization from px to mm convert 
+- [ ] Triadic closure
 
 # New features
 **Random networks:** 

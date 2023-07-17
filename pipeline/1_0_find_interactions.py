@@ -1,9 +1,9 @@
 import os
 import sys
+import toml
 
 import numpy as np
 import pandas as pd
-import toml
 
 from src import settings
 from src.utils import fileio
@@ -43,7 +43,7 @@ for angles_tuple, distances_tuple in zip(angles.items(), distances.items()):
             "node_2",
             "start_of_interaction",
             "end_of_interaction",
-            "duration",
+            "duration"
         ]
     )
 
@@ -56,11 +56,9 @@ for angles_tuple, distances_tuple in zip(angles.items(), distances.items()):
 
         distance_mask = df["distance"] <= DISTANCE  # settings.DISTANCE[1]
         angle_mask = (df["angle"] >= ANGLE[0]) & (df["angle"] <= ANGLE[1])
-
         df = df[distance_mask & angle_mask]
-
-        min_soc_duration = int(TIME[0] * settings.FPS)
-        max_soc_duration = int((TIME[0]) * settings.FPS)
+        min_soc_duration = int(TIME[0] * int(os.environ["FPS"]))
+        max_soc_duration = int((TIME[0]) * int(os.environ["FPS"]))
 
         clear_list_of_df = [
             d
@@ -73,7 +71,6 @@ for angles_tuple, distances_tuple in zip(angles.items(), distances.items()):
 
         for interaction in clear_list_of_df:
             duration = len(interaction)
-
             start_of_interaction = interaction.index[0]
             end_of_interaction = interaction.index[-1]
 
@@ -82,11 +79,10 @@ for angles_tuple, distances_tuple in zip(angles.items(), distances.items()):
                 "node_2": node_2,
                 "start_of_interaction": int(start_of_interaction),
                 "end_of_interaction": int(end_of_interaction),
-                "duration": int(duration),
+                "duration": int(duration)
             }
 
             row = pd.DataFrame.from_dict(data, orient="index").T
-
             edgelist = pd.concat([edgelist, row], ignore_index=True)
 
     edgelist.to_csv(os.path.join(SCRIPT_OUTPUT, angles_name))
