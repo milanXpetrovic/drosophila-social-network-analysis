@@ -9,13 +9,15 @@ from src import settings
 
 
 scripts = [
-    # "0_0_0_get_normalization.py",
-    # "0_0_1_preproc_data.py",
-    # "0_1_distances_between_flies_matrix.py",
-    # "0_2_angles_between_flies_matrix.py",
+    # "0_preproc_data/0_0_0_get_normalization.py",
+    # "0_preproc_data/0_0_1_preproc_data.py",
+    # "0_preproc_data/0_1_distances_between_flies_matrix.py",
+    # "0_preproc_data/0_2_angles_between_flies_matrix.py",
+
     # "1_0_find_interactions.py",
     # "1_1_create_snapshots.py",
     # "1_2_create_total_graph.py",
+
     # "2_0_1_distance_traveled.py",
     # "2_0_global_measures.py",
     # "2_1_community_measures.py",
