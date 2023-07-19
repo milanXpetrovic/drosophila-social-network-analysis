@@ -23,9 +23,19 @@ Currently, the module is being tested on data obtained by monitoring Dosophila m
 
 ## How to use?
 
-1. Add tracking data to `.data/trackings/<treatment name>`
-2. Create configuration in `configs/trackings/<treatment_name>.toml` values for `angle`, `degree` and `time` which are the criteria for determining edges in networks
-3. Run `__main__.py` from `./src` all results will be saved to `./data/results`
+1. Install needed packages:
+
+```
+pip install -r requirements.txt
+```
+
+2. Add tracking data to `.data/trackings/<treatment name>`
+
+3. Check `configs/main.toml` for `START`, `END`, `ARENA_DIAMETER`, `FPS`.
+
+4. Create configuration in `configs/trackings/<treatment_name>.toml` values for `angle`, `degree` and `time` which are the criteria for determining edges in networks.
+
+5. Run `__main__.py` from `./src` all results will be saved to `./data/results`
 
 ## Join us
 The project is open-source and aims to create research tools. If you are interested in development, feel free to contact us or just fork the repo.
