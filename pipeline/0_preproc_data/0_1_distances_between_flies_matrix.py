@@ -1,6 +1,4 @@
-# %%
 import os
-import sys
 
 from src import settings
 from src.utils import data_utils, fileio

@@ -16,3 +16,5 @@ TIME_WINDOW=180
 # treatments you want to processs
 # treatments = ["CsCh", "ELAV", "TMBCxELAV", "SMBA"]
 TREATMENTS = ["wt", "fx"]
+
+N_RANDOM_GROUPS = 20

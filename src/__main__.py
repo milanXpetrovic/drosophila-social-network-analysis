@@ -7,6 +7,7 @@ import time
 
 from src import settings
 
+
 scripts = [
     # "0_0_0_get_normalization.py",
     # "0_0_1_preproc_data.py",
@@ -23,8 +24,8 @@ scripts = [
     # "3_0_population_retention_heatmap.py",
 ]
 
-config_file_path = "/home/milky/drosophila-SNA/configs/main.toml"
-with open(config_file_path, "r") as file:
+CONFIG_PATH = os.path.join(settings.CONFIG_DIR, "main.toml")
+with open(CONFIG_PATH, "r") as file:
     config = toml.load(file)
 
 for TREATMENT_NAME in config["TREATMENTS"]:
