@@ -1,7 +1,7 @@
 
 #experiment start and end minute
-START_TIME=3
-END_TIME=23
+START_TIME=0
+END_TIME=20
 
 # arena diameter in mm
 ARENA_DIAMETER=60  

@@ -22,4 +22,4 @@ for group_name, group_path in treatment.items():
     for function_name, function_defintion in graph_functions:
         data[function_name] = function_defintion(G)
     df = pd.DataFrame(data)
-    df.to_csv(os.path.join(SCRIPT_OUTPUT, f"{group_name.replace('.gml','')}"))
+    df.to_csv(os.path.join(SCRIPT_OUTPUT, f"{group_name.replace('.gml','')}.csv"))
