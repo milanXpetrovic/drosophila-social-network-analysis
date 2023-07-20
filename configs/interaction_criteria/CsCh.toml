@@ -1,5 +1,5 @@
 TREATMENT = "CsCh"
 
 ANGLE = [-160, 160] 
-DISTANCE = 2.50
-TIME = [0.4, 1.0]
+DISTANCE = 2.0
+TIME = [0.4, 0.6]

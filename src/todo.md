@@ -24,15 +24,3 @@ measures_correlation(result_table):
 **ML**
 path features 
 path_features_ethogram():
-
-
-
-
-snapshots_global_measures_separated.ipynb
-snapshots_local_measures_separated.ipynb  
-
-snapshots_global_measures_total.ipynb
-snapshots_local_measures_total.ipynb
-
-static_global_measures.ipynb
-static_local_measures.ipynb

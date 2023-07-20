@@ -3,6 +3,7 @@
 # Generates pseudo populations by random sampling N flies from given treatment,
 # each fly from different group
 
+import matplotlib.pyplot as plt
 import os
 import sys
 import toml
@@ -84,24 +85,25 @@ TREATMENT_CONFIG = os.path.join(settings.CONFIG_DIR, "interaction_criteria", f"{
 with open(TREATMENT_CONFIG) as f:
     treatment_config = toml.load(f)
 
-temp_ind = random.sample(range(len(treatment)), 12)
-pick_random_groups = {list(treatment.keys())[i]: list(treatment.values())[i] for i in temp_ind}
+SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, "1_0_find_interactions", f"pseudo_{TREATMENT}")
+os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
 
-pseudo_fly_dict = {}
-for group_name, group_path in pick_random_groups.items():
-    group = fileio.load_files_from_folder(group_path, file_format=".csv")
+for i in range(100):
+    temp_ind = random.sample(range(len(treatment)), 12)
+    pick_random_groups = {list(treatment.keys())[i]: list(treatment.values())[i] for i in temp_ind}
 
-    random_ind = random.randint(0, len(group) - 1)
-    pick_fly_name = list(group.keys())[random_ind]
-    pick_fly_path = list(group.values())[random_ind]
+    pseudo_fly_dict = {}
+    for group_name, group_path in pick_random_groups.items():
+        group = fileio.load_files_from_folder(group_path, file_format=".csv")
 
-    pseudo_fly_dict.update({f"{pick_fly_name}_{group_name}": pick_fly_path})
+        random_ind = random.randint(0, len(group) - 1)
+        pick_fly_name = list(group.keys())[random_ind]
+        pick_fly_path = list(group.values())[random_ind]
 
+        pseudo_fly_dict.update({f"{pick_fly_name}_{group_name}": pick_fly_path})
 
-# make random population
-distances = data_utils.distances_between_all_flies(pseudo_fly_dict)
-angles = data_utils.angles_between_all_flies(pseudo_fly_dict)
+    distances = data_utils.distances_between_all_flies(pseudo_fly_dict)
+    angles = data_utils.angles_between_all_flies(pseudo_fly_dict)
+    edgelist = find_interactions(angles, distances, main_config, treatment_config)
 
-edgelist = find_interactions(angles, distances, main_config, treatment_config)
-
-# %%
+    edgelist.to_csv(os.path.join(SCRIPT_OUTPUT, f"{i}.csv"))
