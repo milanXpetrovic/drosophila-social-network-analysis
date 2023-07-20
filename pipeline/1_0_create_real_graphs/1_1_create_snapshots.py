@@ -1,5 +1,5 @@
 import os
-
+import toml
 import networkx as nx
 import pandas as pd
 
@@ -7,10 +7,15 @@ from src import settings
 from src.utils import fileio
 
 TREATMENT = os.environ["TREATMENT"]
+
+CONFIG_PATH = os.path.join(settings.CONFIG_DIR, "main.toml")
+with open(CONFIG_PATH, "r") as file:
+    main_config = toml.load(file)
+
 INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "1_0_find_interactions", TREATMENT)
 
-TIME_WINDOW = int(os.environ["TIME_WINDOW"])
-TIME_WINDOW_FPS = TIME_WINDOW * int(os.environ["FPS"])
+TIME_WINDOW = main_config["TIME_WINDOW"]
+TIME_WINDOW_FPS = TIME_WINDOW * main_config["FPS"]
 
 SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, "1_1_create_snapshots", f"{TIME_WINDOW}_sec_window", TREATMENT)
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)

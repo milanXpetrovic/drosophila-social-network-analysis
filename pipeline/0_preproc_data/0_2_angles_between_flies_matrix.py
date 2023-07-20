@@ -14,5 +14,5 @@ treatment = fileio.load_multiple_folders(INPUT_DIR)
 
 for group_name, group_path in treatment.items():
     fly_dict = fileio.load_files_from_folder(group_path)
-    distances = data_utils.angles_between_all_flies(fly_dict)
-    distances.to_csv(os.path.join(SCRIPT_OUTPUT, f"{group_name}.csv"))
+    angles = data_utils.angles_between_all_flies(fly_dict)
+    angles.to_csv(os.path.join(SCRIPT_OUTPUT, f"{group_name}.csv"))

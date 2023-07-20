@@ -1,20 +1,21 @@
 
 #experiment start and end minute
-START_TIME=0
-END_TIME=15
+START_TIME=3
+END_TIME=23
 
 # arena diameter in mm
-ARENA_DIAMETER=120  
+ARENA_DIAMETER=60  
 # experiment duration time must be in seconds
-EXPERIMENT_DURATION=900 
+EXPERIMENT_DURATION=1200 
 #video FPS
-FPS=60
+FPS=24
 
 # timewindow size in seconds for snapshot creation
-TIME_WINDOW=180  
+TIME_WINDOW=120  
 
 # treatments you want to processs
 # treatments = ["CsCh", "ELAV", "TMBCxELAV", "SMBA"]
-TREATMENTS = ["wt", "fx"]
+# TREATMENTS = ["wt", "fx"]
+TREATMENTS = ["CTRL_1DIZ", "LDA_1DIZ", "LDA_OCT_1DIZ", "OCT_1DIZ"]
 
 N_RANDOM_GROUPS = 20

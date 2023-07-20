@@ -6,13 +6,15 @@
 import os
 import sys
 import toml
+import random
+import numpy as np
 import pandas as pd
 
 from src import settings
 from src.utils import data_utils, fileio
 
 
-def find_interactions(df_angles, df_distances, treatment_config):
+def find_interactions(df_angles, df_distances, main_config, treatment_config):
     ANGLE = treatment_config["ANGLE"]
     DISTANCE = treatment_config["DISTANCE"]
     TIME = treatment_config["TIME"]
@@ -37,8 +39,8 @@ def find_interactions(df_angles, df_distances, treatment_config):
         distance_mask = df["distance"] <= DISTANCE
         angle_mask = (df["angle"] >= ANGLE[0]) & (df["angle"] <= ANGLE[1])
         df = df[distance_mask & angle_mask]
-        min_soc_duration = int(TIME[0] * int(os.environ["FPS"]))
-        max_soc_duration = int((TIME[0]) * int(os.environ["FPS"]))
+        min_soc_duration = int(TIME[0] * main_config["FPS"])
+        max_soc_duration = int((TIME[1]) * main_config["FPS"])
 
         clear_list_of_df = [
             d
@@ -68,21 +70,38 @@ def find_interactions(df_angles, df_distances, treatment_config):
     return edgelist
 
 
-TREATMENT = os.environ["TREATMENT"]
+# TREATMENT = os.environ["TREATMENT"]
+TREATMENT = "CsCh"
 
 CONFIG_PATH = os.path.join(settings.CONFIG_DIR, "main.toml")
 with open(CONFIG_PATH, "r") as file:
-    config = toml.load(file)
+    main_config = toml.load(file)
 
 INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "0_0_preproc_data", TREATMENT)
 treatment = fileio.load_multiple_folders(INPUT_DIR)
 
-TREATMENT_CONFIG = os.path.join(settings.CONFIG_DIR, "trackings", f"{TREATMENT}.toml")
+TREATMENT_CONFIG = os.path.join(settings.CONFIG_DIR, "interaction_criteria", f"{TREATMENT}.toml")
 with open(TREATMENT_CONFIG) as f:
     treatment_config = toml.load(f)
 
+temp_ind = random.sample(range(len(treatment)), 12)
+pick_random_groups = {list(treatment.keys())[i]: list(treatment.values())[i] for i in temp_ind}
+
+pseudo_fly_dict = {}
+for group_name, group_path in pick_random_groups.items():
+    group = fileio.load_files_from_folder(group_path, file_format=".csv")
+
+    random_ind = random.randint(0, len(group) - 1)
+    pick_fly_name = list(group.keys())[random_ind]
+    pick_fly_path = list(group.values())[random_ind]
+
+    pseudo_fly_dict.update({f"{pick_fly_name}_{group_name}": pick_fly_path})
+
 
 # make random population
+distances = data_utils.distances_between_all_flies(pseudo_fly_dict)
+angles = data_utils.angles_between_all_flies(pseudo_fly_dict)
 
+edgelist = find_interactions(angles, distances, main_config, treatment_config)
 
-find_interactions(df_angles, df_distances, treatment_config)
+# %%

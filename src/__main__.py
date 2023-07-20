@@ -20,6 +20,7 @@ scripts = [
     # "2_analysis/2_0_global_measures.py",
     # "2_analysis/2_1_community_measures.py",
     # "2_analysis/2_2_local_measures.py",
+    "2_analysis/2_0_global_measures_snapshots.py",
     # "2_analysis/2_3_local_measures_snapshots.py",
     # "2_analysis/3_0_population_retention_heatmap.py",
 ]
@@ -31,7 +32,7 @@ with open(CONFIG_PATH, "r") as file:
 for TREATMENT_NAME in config["TREATMENTS"]:
     os.environ["TREATMENT"] = TREATMENT_NAME
     TREATMENT = os.environ["TREATMENT"]
-    TREATMENT_CONFIG = os.path.join(settings.CONFIG_DIR, "trackings", f"{TREATMENT}.toml")
+    TREATMENT_CONFIG = os.path.join(settings.CONFIG_DIR, "interaction_criteria", f"{TREATMENT}.toml")
 
     print("-" * 15, f" START: {TREATMENT} ", "-" * 25)
     for script in scripts:

@@ -12,7 +12,7 @@ TREATMENT = os.environ["TREATMENT"]
 
 CONFIG_PATH = os.path.join(settings.CONFIG_DIR, "main.toml")
 with open(CONFIG_PATH, "r") as file:
-    config = toml.load(file)
+    main_config = toml.load(file)
 
 SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, "1_0_find_interactions", TREATMENT)
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
@@ -23,7 +23,7 @@ DISTANCES_DIR = os.path.join(settings.OUTPUT_DIR, "0_1_distances_between_flies_m
 angles = fileio.load_files_from_folder(ANGLES_DIR)
 distances = fileio.load_files_from_folder(DISTANCES_DIR)
 
-TREATMENT_CONFIG = os.path.join(settings.CONFIG_DIR, "trackings", f"{TREATMENT}.toml")
+TREATMENT_CONFIG = os.path.join(settings.CONFIG_DIR, "interaction_criteria", f"{TREATMENT}.toml")
 
 with open(TREATMENT_CONFIG) as f:
     treatment_config = toml.load(f)
@@ -61,8 +61,8 @@ for angles_tuple, distances_tuple in zip(angles.items(), distances.items()):
         distance_mask = df["distance"] <= DISTANCE
         angle_mask = (df["angle"] >= ANGLE[0]) & (df["angle"] <= ANGLE[1])
         df = df[distance_mask & angle_mask]
-        min_soc_duration = int(TIME[0] * int(os.environ["FPS"]))
-        max_soc_duration = int((TIME[0]) * int(os.environ["FPS"]))
+        min_soc_duration = int(TIME[0] * main_config["FPS"])
+        max_soc_duration = int((TIME[1]) * main_config["FPS"])
 
         clear_list_of_df = [
             d

@@ -9,7 +9,7 @@ from src.utils import fileio
 
 TREATMENT = os.environ["TREATMENT"]
 INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "1_0_find_interactions", TREATMENT)
-SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, "1_2_create_graph", TREATMENT)
+SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, "1_2_create_total_graph", TREATMENT)
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
 
 treatment = fileio.load_files_from_folder(INPUT_DIR)

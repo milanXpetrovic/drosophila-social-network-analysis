@@ -1,5 +1,6 @@
 # %%
 import os
+import toml
 
 import networkx as nx
 import pandas as pd
@@ -8,7 +9,12 @@ from src import settings
 from src.utils import fileio, graph_utils
 
 TREATMENT = os.environ["TREATMENT"]
-TIME_WINDOW = os.environ["TIME_WINDOW"]
+
+CONFIG_PATH = os.path.join(settings.CONFIG_DIR, "main.toml")
+with open(CONFIG_PATH, "r") as file:
+    config = toml.load(file)
+
+TIME_WINDOW = config["TIME_WINDOW"]
 
 INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "1_1_create_snapshots", f"{TIME_WINDOW}_sec_window", TREATMENT)
 treatment = fileio.load_multiple_folders(INPUT_DIR)
@@ -25,7 +31,7 @@ for group_name, group_path in treatment.items():
     # Fly traveled distances part
     group_distances_path = treatment_distances[group_name+".csv"]
     df_distances = pd.read_csv(group_distances_path, index_col=0)
-    df_distances = df_distances.groupby(df_distances.index // (int(TIME_WINDOW) * int(os.environ["FPS"]))).sum()
+    df_distances = df_distances.groupby(df_distances.index // (int(TIME_WINDOW) * config["FPS"])).sum()
     df_distances.index = df_distances.index+1
     df_distances = df_distances.T
 
@@ -43,8 +49,6 @@ for group_name, group_path in treatment.items():
                 data[function_name] = 0
 
         df = pd.DataFrame(data)
-
         snapshot_name = snapshot_name.replace('.gml', '')
         df["Distance traveled"] = df_distances[int(snapshot_name)]
-
         df.to_csv(os.path.join(SCRIPT_OUTPUT, group_name, f"{snapshot_name}.csv"))
