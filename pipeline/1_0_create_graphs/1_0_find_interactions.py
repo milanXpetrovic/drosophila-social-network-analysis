@@ -61,14 +61,9 @@ for angles_tuple, distances_tuple in zip(angles.items(), distances.items()):
         distance_mask = df["distance"] <= DISTANCE
         angle_mask = (df["angle"] >= ANGLE[0]) & (df["angle"] <= ANGLE[1])
         df = df[distance_mask & angle_mask]
-        min_soc_duration = int(TIME[0] * main_config["FPS"])
-        max_soc_duration = int((TIME[1]) * main_config["FPS"])
 
-        clear_list_of_df = [
-            d
-            for _, d in df.groupby(df.index - np.arange(len(df)))
-            if len(d) >= min_soc_duration and len(d) <= max_soc_duration
-        ]
+        timecut = int(TIME[0] * main_config["FPS"])
+        clear_list_of_df = [d for _, d in df.groupby(df.index - np.arange(len(df))) if len(d) >= timecut]
 
         node_1, node_2 = angles_col.split(" ")
         node_1, node_2 = node_1.replace(".csv", ""), node_2.replace(".csv", "")

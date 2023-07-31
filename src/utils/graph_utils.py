@@ -4,60 +4,155 @@ import numpy as np
 import pandas as pd
 
 
-def calculate_strength(g, weight_value):
-    graph_freq = {}
-    nodes = list(g.nodes)
-    for node in nodes:
-        edges = list(g.edges(node, data=True))
+def calculate_weighted_in_degree(g, weight_value):
+    in_degrees = {}
 
-        freq = 0
-        for edge in edges:
-            (edge_a, edge_b, data) = edge
-            freq += data[weight_value]
+    for node in g.nodes:
+        in_degree = 0
 
-        graph_freq.update({node: freq})
+        in_edges = g.in_edges(node, data=True)
+        for edge in in_edges:
+            _, _, data = edge
+            in_degree += data.get(weight_value, 0)
 
-    ave_strength_value = np.mean([k for k in graph_freq.values()])
+        in_degrees[node] = in_degree
 
-    return ave_strength_value
+    return in_degrees
 
 
-def calculate_Qmax(G, mod_nodes):
-    r"""returns maximum modularity possible given the network partition"""
-    Lt = sum([G.degree(node) for node in list(G.nodes)])
-    total = 0
+def calculate_weighted_out_degree(g, weight_value):
+    out_degrees = {}
 
-    for mod in mod_nodes.keys():
-        Lk = sum([G.degree(node) for node in mod_nodes[mod]])
-        total += (1.0 * Lk / Lt) - (1.0 * Lk / Lt) ** 2
+    for node in g.nodes:
+        out_degree = 0
 
-    return total
+        out_edges = g.out_edges(node, data=True)
+        for edge in out_edges:
+            _, _, data = edge
+            out_degree += data.get(weight_value, 0)
+
+        out_degrees[node] = out_degree
+
+    return out_degrees
 
 
 def graph_global_measures(g, pop_name):
     """ """
-    # osnovne mjere
-    total_nodes = len(g.nodes())
-    total_edges = len(list(g.edges()))
+
+    in_strength_count = calculate_weighted_in_degree(g, "count")
+    out_strength_count = calculate_weighted_out_degree(g, "count")
+
+    ave_in_strength_count = np.mean(list(in_strength_count.values()))
+    ave_out_strength_count = np.mean(list(out_strength_count.values()))
+
+    in_strength_duration = calculate_weighted_in_degree(g, "total_interaction_times")
+    out_strength_duration = calculate_weighted_in_degree(g, "total_interaction_times")
+
+    ave_in_strength_duration = np.mean(list(in_strength_duration.values()))
+    ave_out_strength_duration = np.mean(list(out_strength_duration.values()))
+
+    degree_centrality = nx.degree_centrality(g)
+    ave_deg_cent = np.mean([k for k in degree_centrality.values()])
+
     deg_list = [g.degree(node) for node in list(g.nodes)]
     average_degree = np.mean(deg_list)
 
-    ave_strength_count = calculate_strength(g, "count")
-    # ave_strength_duration = calculate_strength(g, "duration")
-    # ave_strength_duration= calculate_strength(g, 'duration')
     try:
-        edges_ave = total_edges / total_nodes
+        standard_deviation_degree = round(np.std(deg_list))
+        degree_heterogeneity = standard_deviation_degree / average_degree
+        degree_assortativity = nx.degree_assortativity_coefficient(g)
+    except BaseException:
+        degree_heterogeneity, degree_assortativity = 0, 0
 
-    except ZeroDivisionError:
-        edges_ave = 0
+    clustering_coeff = nx.clustering(g)
+    average_cl_coeff_unweighted = np.mean([k for k in clustering_coeff.values()])
+    clustering_coeff_w_count = nx.clustering(g, weight="count")
+    average_cl_coeff_w_count = np.mean([k for k in clustering_coeff_w_count.values()])
+    clustering_coeff_w_duration = nx.clustering(g, weight="total_interaction_times")
+    average_cl_coeff_w_duration = np.mean(
+        [k for k in clustering_coeff_w_duration.values()]
+    )
 
-    network_density = nx.density(g)
+    betweenness_centrality = nx.betweenness_centrality(g)
+    average_betw_cent_unweighted = np.mean([k for k in betweenness_centrality.values()])
+    betweenness_c_w_count = nx.betweenness_centrality(g, weight="count")
+    average_betw_c_w_count = np.mean([k for k in betweenness_c_w_count.values()])
+    betweenness_c_w_duration = nx.betweenness_centrality(g, weight="total_interaction_times")
+    average_betw_c_w_duration = np.mean([k for k in betweenness_c_w_duration.values()])
+
+    closeness_centrality_unweighted = nx.closeness_centrality(g)
+    ave_closeness_cent_unw = np.mean([k for k in closeness_centrality_unweighted.values()])
+    closeness_c_w_count = nx.closeness_centrality(g, distance="count")
+    ave_closeness_c_w_count = np.mean([k for k in closeness_c_w_count.values()])
+    closeness_c_w_duration = nx.closeness_centrality(g, distance="total_interaction_times")
+    ave_closeness_c_w_duration = np.mean([k for k in closeness_c_w_duration.values()])
+
+    partition = community.best_partition(g.to_undirected())
+    try:
+        newman_modularity_unweighted = community.modularity(partition, g.to_undirected(), weight=None)
+        newman_modularity_count = community.modularity(partition, g.to_undirected(), weight="count")
+        newman_modularity_duration = community.modularity(
+            partition, g.to_undirected(), weight="total_interaction_times")
+
+    except BaseException:
+        newman_modularity_unweighted, newman_modularity_count, newman_modularity_duration = 0, 0, 0
+
+    d = {
+        "Total nodes": g.number_of_nodes(),
+        "Total edges": g.number_of_edges(),
+
+        "Average in-strength weight=count": ave_in_strength_count,
+        "Average out-strength weight=count": ave_out_strength_count,
+
+        "Average in-strength weight=duration": ave_in_strength_duration,
+        "Average out-strength weight=duration": ave_out_strength_duration,
+
+        "Average degree": average_degree,
+        "Avragee degree centrality": ave_deg_cent,
+
+        "Degree heterogeneity": degree_heterogeneity,
+        "Degree aassortativity": degree_assortativity,
+
+        "Reciprocity": nx.reciprocity(g),
+        "Network density": nx.density(g),
+        "Global efficiency": nx.global_efficiency(g.to_undirected()),
+        "Transitivity": nx.transitivity(g),
+        "Number of connected components": nx.number_connected_components(g.to_undirected()),
+
+        "Average clustering coefficient unweighted": average_cl_coeff_unweighted,
+        "Average clustering coefficient weight=count": average_cl_coeff_w_count,
+        "Average clustering coefficient weight=duration": average_cl_coeff_w_duration,
+
+        "Average betweenness centrality unweighted": average_betw_cent_unweighted,
+        "Average betweenness centrality weight=count": average_betw_c_w_count,
+        "Average betweenness centrality weight=duration": average_betw_c_w_duration,
+
+        "Average closseness centrality unweighted": ave_closeness_cent_unw,
+        "Average closseness centrality weight=count": ave_closeness_c_w_count,
+        "Average closseness centrality weight=duration": ave_closeness_c_w_duration,
+
+        "Newman modularity unweighted": newman_modularity_unweighted,
+        "Newman_modularity weight=count": newman_modularity_count,
+        "Newman_modularity weight=dration": newman_modularity_duration,
+    }
+
+    df = pd.DataFrame(d, index=[pop_name.replace(".gml", "")])
+    df = df.T
+
+    return df
+
+
+def global_range_measures():
+    """
+    TODO
 
     # Measures of range
+    # "Number of components": ncc,
+    # "biggest_component size": bcs,
+
     gcc = sorted(nx.connected_components(g.to_undirected()), key=len, reverse=True)
     try:
         gc = g.to_undirected().subgraph(gcc[0])
-
         gc = list(max(nx.connected_components(g.to_undirected()), key=len))
         gc = g.to_undirected().subgraph(gc)
 
@@ -65,129 +160,13 @@ def graph_global_measures(g, pop_name):
         diameter = nx.diameter(gc, e=None)
         reach = nx.global_reaching_centrality(g, weight=None, normalized=True)
 
-    except:
+    except BaseException:
         gc = 0
         spl = 0
         diameter = 0
         reach = 0
 
-    global_efficiency = nx.global_efficiency(g.to_undirected())
-
-    ##########################################################################
-
-    clustering_coeff = nx.clustering(g)
-    average_cl_coeff_unweighted = np.mean([k for k in clustering_coeff.values()])
-    clustering_coeff_w_count = nx.clustering(g, weight="count")
-    average_cl_coeff_w_count = np.mean([k for k in clustering_coeff_w_count.values()])
-    # clustering_coeff_w_duration = nx.clustering(g, weight="duration")
-    # average_cl_coeff_w_duration = np.mean(
-    #     [k for k in clustering_coeff_w_duration.values()]
-    # )
-
-    transitivity = nx.transitivity(g)
-
-    degree_centrality = nx.degree_centrality(g)
-    ave_deg_cent = np.mean([k for k in degree_centrality.values()])
-
-    betweenness_centrality = nx.betweenness_centrality(g)
-    average_betw_cent_unweighted = np.mean([k for k in betweenness_centrality.values()])
-    betweenness_c_w_count = nx.betweenness_centrality(g, weight="count")
-    average_betw_c_w_count = np.mean([k for k in betweenness_c_w_count.values()])
-    # betweenness_c_w_duration = nx.betweenness_centrality(g, weight="duration")
-    # average_betw_c_w_duration = np.mean([k for k in betweenness_c_w_duration.values()])
-
-    closeness_centrality_unweighted = nx.closeness_centrality(g)
-    ave_closeness_cent_unw = np.mean([k for k in closeness_centrality_unweighted.values()])
-    closeness_c_w_count = nx.closeness_centrality(g, distance="count")
-    ave_closeness_c_w_count = np.mean([k for k in closeness_c_w_count.values()])
-    # closeness_c_w_duration = nx.closeness_centrality(g, distance="duration")
-    # ave_closeness_c_w_duration = np.mean([k for k in closeness_c_w_duration.values()])
-
-    try:
-        standard_deviation_degree = round(np.std(deg_list))
-        degree_heterogeneity = standard_deviation_degree / average_degree
-        degree_assortativity = nx.degree_assortativity_coefficient(g)
-    except:
-        degree_heterogeneity, degree_assortativity = 0, 0
-    # mjere za komponente
-    ncc = nx.number_connected_components(g.to_undirected())
-    # bggest component size
-    gcc = sorted(nx.connected_components(g.to_undirected()), key=len, reverse=True)
-
-    partition = community.best_partition(g.to_undirected())
-
-    try:
-        newman_modularity = community.modularity(partition, g.to_undirected(), weight="count")  #
-    except:
-        newman_modularity = 0
-    modules = list(set(partition.values()))
-    mod_nodes = {}
-    for mod in modules:
-        mod_nodes[mod] = [node for node in list(g.nodes) if partition[node] == mod]
-    maximum_modularity = round(calculate_Qmax(g, mod_nodes), 4)
-
-    try:
-        relative_modularity = round(float(newman_modularity) / maximum_modularity, 3)
-
-    except:
-        relative_modularity = 0
-
-    try:
-        newman_modularity_count = community.modularity(partition, g, weight="count")  #
-    except:
-        newman_modularity_count = 0
-
-    modules = list(set(partition.values()))
-    mod_nodes = {}
-    for mod in modules:
-        mod_nodes[mod] = [node for node in list(g.nodes) if partition[node] == mod]
-    maximum_modularity_count = round(calculate_Qmax(g, mod_nodes), 4)
-
-    try:
-        relative_modularity_count = round(float(newman_modularity_count) / maximum_modularity_count, 3)
-    except:
-        relative_modularity_count = 0
-
-    d = {
-        "total_nodes": total_nodes,
-        "total_edges": total_edges,
-        "ave_degree": average_degree,
-        "ave_strength_count": ave_strength_count,
-        # "ave_strength_duration": ave_strength_duration,
-        "edges_ave": edges_ave,
-        "network_density": network_density,
-        "shortest_path_len": spl,
-        "diameter": diameter,
-        "reach": reach,
-        "global_efficiency": global_efficiency,
-        "ave_cl_coeff_unweighted": average_cl_coeff_unweighted,
-        "ave_cl_coeff_w_count": average_cl_coeff_w_count,
-        # "ave_cl_coeff_w_duration": average_cl_coeff_w_duration,
-        "transitivity": transitivity,
-        "ave_deg_centrality": ave_deg_cent,
-        "ave_betw_cent_unweighted": average_betw_cent_unweighted,
-        "ave_betw_c_w_count": average_betw_c_w_count,
-        # "ave_betw_c_w_duration": average_betw_c_w_duration,
-        "ave_closseness unweighted": ave_closeness_cent_unw,
-        "ave_closseness_w_count": ave_closeness_c_w_count,
-        # "ave_closseness_w_duration": ave_closeness_c_w_duration,
-        "degree_heterogeneity": degree_heterogeneity,
-        "degree_assortativity": degree_assortativity,
-        "number_of_components": ncc,
-        # "biggest_component size": bcs,
-        "Newman_modularity_U": newman_modularity,
-        "Newman_modularity": newman_modularity,
-        "maximum_modularity": maximum_modularity,
-        "relative_modularity": relative_modularity,
-        "Newman_modularity count": newman_modularity_count,
-        "maximum_modularity count": maximum_modularity_count,
-        "relative_modularity count": relative_modularity_count,
-    }
-
-    df = pd.DataFrame(d, index=[pop_name.replace(".gml", "")])
-    df = df.T
-
-    return df
+    """
 
 
 def group_comm_stats(G, group_name, weight):
@@ -242,11 +221,12 @@ def local_measures_functions():
         ("Out-degree centrality", lambda g: nx.out_degree_centrality(g)),
         ("Eigenvector centrality", lambda g: nx.eigenvector_centrality(g)),
         ("Closeness centrality", lambda g: nx.closeness_centrality(g)),
-        ("Strength distribution, weight=count", lambda g: calculate_strength(g, "count")),
-        ("Betweenness centrality weight=None", lambda g: nx.betweenness_centrality(g, weight=None)),
-        ("Betweenness centrality weight=count", lambda g: nx.betweenness_centrality(g, weight="count")),
-        ("Clustering coefficient weight=None", lambda g: nx.clustering(g, weight=None)),
-        ("Clustering coefficient weight=count", lambda g: nx.clustering(g, weight="count")),
+        ("In-Strength distribution, w=count", lambda g: calculate_weighted_in_degree(g, "count")),
+        ("Out-Strength distribution, w=count", lambda g: calculate_weighted_out_degree(g, "count")),
+        ("Betweenness centrality w=None", lambda g: nx.betweenness_centrality(g, weight=None)),
+        ("Betweenness centrality w=count", lambda g: nx.betweenness_centrality(g, weight="count")),
+        ("Clustering coefficient w=None", lambda g: nx.clustering(g, weight=None)),
+        ("Clustering coefficient w=count", lambda g: nx.clustering(g, weight="count")),
         ("PageRank centrality", lambda g: nx.pagerank(g)),
         ("Degree", lambda g: dict(nx.degree(g))),
         ("In-degree", lambda g: dict(g.in_degree())),

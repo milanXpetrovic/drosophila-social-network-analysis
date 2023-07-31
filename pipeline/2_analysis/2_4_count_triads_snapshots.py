@@ -23,7 +23,6 @@ SCRIPT_OUTPUT = os.path.join(settings.RESULTS_DIR, "count_triads_snapshots", f"{
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
 
 for group_name, group_path in treatment.items():
-
     all_graphs = fileio.load_files_from_folder(group_path, '.gml')
 
     res = {}

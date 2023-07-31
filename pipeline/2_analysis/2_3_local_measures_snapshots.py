@@ -45,7 +45,7 @@ for group_name, group_path in treatment.items():
         for function_name, function_defintion in graph_functions:
             try:
                 data[function_name] = function_defintion(G)
-            except:
+            except BaseException:
                 data[function_name] = 0
 
         df = pd.DataFrame(data)

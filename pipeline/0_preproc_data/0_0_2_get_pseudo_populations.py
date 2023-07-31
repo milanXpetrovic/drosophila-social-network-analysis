@@ -88,7 +88,7 @@ with open(TREATMENT_CONFIG) as f:
 SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, "1_0_find_interactions", f"pseudo_{TREATMENT}")
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
 
-for i in range(100):
+for i in range(1, 1001):
     temp_ind = random.sample(range(len(treatment)), 12)
     pick_random_groups = {list(treatment.keys())[i]: list(treatment.values())[i] for i in temp_ind}
 
