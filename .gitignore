@@ -1,4 +1,6 @@
-data/
+data/*
+data/trackings/*
+
 .env/
 .vscode/
 # Byte-compiled / optimized / DLL files
