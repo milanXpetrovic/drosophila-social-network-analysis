@@ -6,3 +6,4 @@ docutils
 jinja2
 scipy
 toml
+seaborn

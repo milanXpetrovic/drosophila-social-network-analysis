@@ -15,8 +15,8 @@ TIME_WINDOW = 120
 
 # treatments you want to processs
 # TREATMENTS = ["ELAV", "TMBCxELAV", "SMBA", "CsCh"]
-# TREATMENTS = ["wt", "fx"]
-TREATMENTS = ["CsCh", "pseudo_CsCh"]
+TREATMENTS = ["wt", "fx"]
+# TREATMENTS = ["CsCh", "pseudo_CsCh"]
 # TREATMENTS = ["CTRL_1DIZ", "LDA_1DIZ", "OCT_1DIZ", "LDA_OCT_1DIZ"]
 # TREATMENTS = ["CTRL_1DIZ", "LDA_1DIZ", "OCT_1DIZ", "LDA_OCT_1DIZ", "CTRL_5DIZ", "LDA_5DIZ", "OCT_5DIZ", "LDA_OCT_5DIZ"] 
 
