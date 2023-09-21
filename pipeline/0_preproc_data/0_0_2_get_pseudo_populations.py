@@ -71,9 +71,7 @@ def find_interactions(df_angles, df_distances, main_config, treatment_config):
     return edgelist
 
 
-# TREATMENT = os.environ["TREATMENT"]
-TREATMENT = "CsCh"
-
+TREATMENT = "CTRL_5DIZ"
 CONFIG_PATH = os.path.join(settings.CONFIG_DIR, "main.toml")
 with open(CONFIG_PATH, "r") as file:
     main_config = toml.load(file)
@@ -107,3 +105,9 @@ for i in range(1, 1001):
     edgelist = find_interactions(angles, distances, main_config, treatment_config)
 
     edgelist.to_csv(os.path.join(SCRIPT_OUTPUT, f"{i}.csv"))
+# %%
+
+for fly_name, fly_path in pseudo_fly_dict.items():
+    df = pd.read_csv(fly_path)
+    print(fly_name)
+    print(len(df))

@@ -45,4 +45,5 @@ for group_name, group_path in treatment.items():
         mean_ratio = (group_norm.get("x_px_ratio") + group_norm.get("y_px_ratio")) / 2
         df["major axis len"] = df["major axis len"] / mean_ratio
 
+        df.reset_index(drop=True, inplace=True)
         df.to_csv(os.path.join(SCRIPT_OUTPUT, group_name, fly_name))

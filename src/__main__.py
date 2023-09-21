@@ -1,12 +1,13 @@
 # %%
-import os
-import subprocess
-import sys
-import toml
-import time
-
 from src import settings
+import time
+import toml
+import sys
+import subprocess
+import os
+# os.environ['OPENBLAS_NUM_THREADS'] = '1'
 
+# "0_preproc_data/0_0_2_get_pseudo_populations.py"
 
 scripts = [
     # "0_preproc_data/0_0_0_get_normalization.py",
@@ -18,13 +19,12 @@ scripts = [
     "1_0_create_graphs/1_2_create_total_graph.py",
     "2_analysis/2_0_1_distance_traveled.py",
     "2_analysis/2_0_global_measures.py",
-    # "2_analysis/2_1_community_measures.py",
+    # # ##  "2_analysis/2_1_community_measures.py",
     "2_analysis/2_2_local_measures.py",
     "2_analysis/2_0_global_measures_snapshots.py",
     "2_analysis/2_3_local_measures_snapshots.py",
-    "2_analysis/2_4_count_triads_snapshots.py"
-    "2_analysis/3_0_population_retention_heatmap.py",
-
+    "2_analysis/2_4_count_triads_snapshots.py",
+    # "2_analysis/3_0_population_retention_heatmap.py",
 ]
 
 CONFIG_PATH = os.path.join(settings.CONFIG_DIR, "main.toml")

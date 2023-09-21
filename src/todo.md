@@ -8,14 +8,22 @@
 ## New features
 
 - [ ] `main` - Add time threshold between two interactions
+- [ ] `feature` random networks from data
+- [ ] `feature` add directed weighted ER networks genration
+- [ ] `feature` - measures_correlation (result_table)
+- [ ] `feature` - subgraphs of size 4, 5, 6, ...
+
+- [ ] `analysis` - distance traveled
+- [ ] `analysis` - Z-scores
 - [ ] `analysis` - Triadic closure
-- [ ] `analysis` - measures_correlation (result_table)
-
-- [ ] `analysis` - add analysis like Levine lab
-    - Interaction duration (sec), Movement (mm/s), Interaction Rate (interactions/min), Assortativity (Z-scores), Clustering Coefficient (Z-scores), Global Efficiency (Z-scores), Betweenness Centrality (Z-scores), interaction reciprocity
+- [ ] `analysis` - histogram of times between interaction
+- [ ] `analysis` - plot poing with ave value and se
 
 
-
+- [ ] `feature` - create data converter for matlab SL script
+- create discretization spatial method
+- social distance and angle plot script
+- fix nan/inf values in data
 
 ### Done
 

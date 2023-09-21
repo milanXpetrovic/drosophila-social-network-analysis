@@ -1,25 +1,19 @@
 
-#experiment start and end minute
-START_TIME = 0
-END_TIME = 30
+START_TIME = 3
+END_TIME = 23
+# experiment duration time must be in seconds
+EXPERIMENT_DURATION = 1200
+
+# timewindow size in seconds for snapshot creation
+TIME_WINDOW = 30
 
 # arena diameter in mm
 ARENA_DIAMETER = 60
-# experiment duration time must be in seconds
-EXPERIMENT_DURATION = 1800
 #video FPS
 FPS = 24
 
-# timewindow size in seconds for snapshot creation
-TIME_WINDOW = 120
+# TREATMENTS = [""] #
+# TREATMENTS = ["OCT_5DIZ"]
+TREATMENTS = ["CsCh", "CTRL_5DIZ", "OCT_5DIZ", "LDA_5DIZ", "pseudo_CsCh"]
 
-# treatments you want to processs
-# TREATMENTS = ["ELAV", "TMBCxELAV", "SMBA", "CsCh"]
-TREATMENTS = ["wt", "fx"]
-# TREATMENTS = ["CsCh", "pseudo_CsCh"]
-# TREATMENTS = ["CTRL_1DIZ", "LDA_1DIZ", "OCT_1DIZ", "LDA_OCT_1DIZ"]
-# TREATMENTS = ["CTRL_1DIZ", "LDA_1DIZ", "OCT_1DIZ", "LDA_OCT_1DIZ", "CTRL_5DIZ", "LDA_5DIZ", "OCT_5DIZ", "LDA_OCT_5DIZ"] 
-
-# TREATMENTS = ["CTRL_5DIZ", "LDA_5DIZ", "OCT_5DIZ", "LDA_OCT_5DIZ"]
-
-N_RANDOM_GROUPS = 20
+N_RANDOM_GROUPS = 2000
