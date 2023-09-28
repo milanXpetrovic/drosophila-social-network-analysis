@@ -1,3 +1,4 @@
+# %%
 import os
 import sys
 import toml
@@ -8,7 +9,8 @@ import pandas as pd
 from src import settings
 from src.utils import fileio
 
-TREATMENT = os.environ["TREATMENT"]
+# TREATMENT = os.environ["TREATMENT"]
+TREATMENT = "LDA_5DIZ"
 
 CONFIG_PATH = os.path.join(settings.CONFIG_DIR, "main.toml")
 with open(CONFIG_PATH, "r") as file:
@@ -47,7 +49,9 @@ for angles_tuple, distances_tuple in zip(angles.items(), distances.items()):
             "node_2",
             "start_of_interaction",
             "end_of_interaction",
-            "duration"
+            "duration",
+            "distance",
+            "angle",
         ]
     )
 
@@ -78,10 +82,13 @@ for angles_tuple, distances_tuple in zip(angles.items(), distances.items()):
                 "node_2": node_2,
                 "start_of_interaction": int(start_of_interaction),
                 "end_of_interaction": int(end_of_interaction),
-                "duration": int(duration)
+                "duration": int(duration),
+                "distance": interaction.distance.to_list(),
+                "angle": interaction.angle.to_list(),
             }
 
             row = pd.DataFrame.from_dict(data, orient="index").T
             edgelist = pd.concat([edgelist, row], ignore_index=True)
 
+    edgelist = edgelist.sort_values("start_of_interaction")
     edgelist.to_csv(os.path.join(SCRIPT_OUTPUT, angles_name))
