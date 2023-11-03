@@ -225,6 +225,10 @@ def local_measures_functions():
         ("Out-Strength distribution, w=count", lambda g: calculate_weighted_out_degree(g, "count")),
         ("In-Strength distribution, w=duration", lambda g: calculate_weighted_in_degree(g, "total_interaction_times")),
         ("Out-Strength distribution, w=duration", lambda g: calculate_weighted_out_degree(g, "total_interaction_times")),
+        ("Weighted Degree (count)", lambda g: dict(nx.degree(g, weight="count"))),
+        ("Weighted Degree (duration)", lambda g: dict(nx.degree(g, weight="total_interaction_times"))),
+        ("In-degree", lambda g: dict(g.in_degree())),
+        ("Out-degree", lambda g: dict(g.out_degree())),
         ("Betweenness centrality w=None", lambda g: nx.betweenness_centrality(g, weight=None)),
         ("Betweenness centrality w=count", lambda g: nx.betweenness_centrality(g, weight="count")),
         ("Betweenness centrality w=duration", lambda g: nx.betweenness_centrality(g, weight="total_interaction_times")),
@@ -232,9 +236,6 @@ def local_measures_functions():
         ("Clustering coefficient w=count", lambda g: nx.clustering(g, weight="count")),
         ("Clustering coefficient w=duration", lambda g: nx.clustering(g, weight="total_interaction_times")),
         ("PageRank centrality", lambda g: nx.pagerank(g)),
-        ("Degree", lambda g: dict(nx.degree(g))),
-        ("In-degree", lambda g: dict(g.in_degree())),
-        ("Out-degree", lambda g: dict(g.out_degree()))
     ]
 
     return graph_functions

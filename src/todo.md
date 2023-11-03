@@ -8,6 +8,8 @@
 ## New features
 
 - [ ] `main` - Add time threshold between two interactions
+- [ ] `analysis` - histogram of times between interaction
+
 - [ ] `feature` random networks from data
 - [ ] `feature` add directed weighted ER networks genration
 - [ ] `feature` - measures_correlation (result_table)
@@ -16,7 +18,6 @@
 - [ ] `analysis` - distance traveled
 - [ ] `analysis` - Z-scores
 - [ ] `analysis` - Triadic closure
-- [ ] `analysis` - histogram of times between interaction
 - [ ] `analysis` - plot poing with ave value and se
 
 
