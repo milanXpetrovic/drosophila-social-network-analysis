@@ -8,7 +8,7 @@ OUTPUT_DIR = os.path.join(ROOT_DIR, "data", "processed")
 
 NORMALIZATION_DIR = os.path.join(ROOT_DIR, "data", "normalization")
 
-PIPELINE_DIR = os.path.join(ROOT_DIR, "pipeline")
+PIPELINE_DIR = os.path.join(ROOT_DIR, "src")
 RESULTS_DIR = os.path.join(ROOT_DIR, "data", "results")
 
 LOGS_DIR = os.path.join(ROOT_DIR, "logs")

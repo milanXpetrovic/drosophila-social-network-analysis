@@ -1,8 +1,5 @@
 # %%
 
-# Generates pseudo populations by random sampling N flies from given treatment,
-# each fly from different group
-
 import matplotlib.pyplot as plt
 import os
 import sys
@@ -13,7 +10,6 @@ import pandas as pd
 from src import settings
 from src.utils import data_utils, fileio
 
-os.environ['OPENBLAS_NUM_THREADS'] = '1'
 
 def find_interactions(df_angles, df_distances, main_config, treatment_config):
     ANGLE = treatment_config["ANGLE"]
@@ -71,7 +67,7 @@ def find_interactions(df_angles, df_distances, main_config, treatment_config):
     return edgelist
 
 
-TREATMENT = "CsCh"
+TREATMENT = "LDA_5DIZ"
 CONFIG_PATH = os.path.join(settings.CONFIG_DIR, "main.toml")
 with open(CONFIG_PATH, "r") as file:
     main_config = toml.load(file)
@@ -105,9 +101,4 @@ for i in range(1, 1001):
     edgelist = find_interactions(angles, distances, main_config, treatment_config)
 
     edgelist.to_csv(os.path.join(SCRIPT_OUTPUT, f"{i}.csv"))
-# %%
 
-for fly_name, fly_path in pseudo_fly_dict.items():
-    df = pd.read_csv(fly_path)
-    print(fly_name)
-    print(len(df))

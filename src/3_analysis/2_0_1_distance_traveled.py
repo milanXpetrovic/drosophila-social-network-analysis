@@ -1,3 +1,4 @@
+#%%
 import os
 
 import numpy as np
@@ -18,7 +19,7 @@ for group_name, group_path in trials.items():
     group_distances = {}
     fly_dict = fileio.load_files_from_folder(group_path)
 
-    GROUP_OUTPUT = os.path.join(settings.RESULTS_DIR, TREATMENT, "distances_traveled", group_name)
+    GROUP_OUTPUT = os.path.join(settings.RESULTS_DIR, "distances_traveled", TREATMENT, group_name)
     os.makedirs(GROUP_OUTPUT, exist_ok=True)
 
     res = pd.DataFrame()

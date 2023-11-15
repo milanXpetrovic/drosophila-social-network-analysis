@@ -1,3 +1,4 @@
+#%%
 import os
 
 from src import settings

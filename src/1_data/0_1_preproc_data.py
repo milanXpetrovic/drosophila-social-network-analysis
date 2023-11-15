@@ -1,10 +1,9 @@
-# %%
 import os
 import toml
 import pandas as pd
 
 from src import settings
-from src.utils import data_utils, fileio
+from src.utils import fileio
 
 TREATMENT = os.environ["TREATMENT"]
 
@@ -45,4 +44,6 @@ for group_name, group_path in treatment.items():
         df["major axis len"] = df["major axis len"] / mean_ratio
 
         df.reset_index(drop=True, inplace=True)
+
+        df = df[["pos x", "pos y", "ori", "major axis len"]]
         df.to_csv(os.path.join(SCRIPT_OUTPUT, group_name, fly_name))
