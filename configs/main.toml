@@ -9,10 +9,12 @@ TIME_WINDOW = 60
 
 # arena diameter in mm
 ARENA_DIAMETER = 61
+
 #video FPS
 FPS = 24
 
 TREATMENTS = ["CsCh", "Cs_5DIZ", "LDA_5DIZ", "OCT_5DIZ"] 
 # TREATMENTS = ["CsCh"]
 
+N_OF_SAMPLES = 12
 N_RANDOM_GROUPS = 10000

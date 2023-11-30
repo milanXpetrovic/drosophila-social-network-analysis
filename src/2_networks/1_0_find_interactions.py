@@ -82,8 +82,8 @@ for angles_tuple, distances_tuple in zip(angles.items(), distances.items()):
                 "start_of_interaction": int(start_of_interaction),
                 "end_of_interaction": int(end_of_interaction),
                 "duration": int(duration),
-                "distance": interaction.distance.to_list(),
-                "angle": interaction.angle.to_list(),
+                # "distance": interaction.distance.to_list(),
+                # "angle": interaction.angle.to_list(),
             }
 
             row = pd.DataFrame.from_dict(data, orient="index").T

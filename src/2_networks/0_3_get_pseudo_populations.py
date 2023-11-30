@@ -67,7 +67,7 @@ def find_interactions(df_angles, df_distances, main_config, treatment_config):
     return edgelist
 
 
-TREATMENT = "LDA_5DIZ"
+TREATMENT = os.environ["TREATMENT"]
 CONFIG_PATH = os.path.join(settings.CONFIG_DIR, "main.toml")
 with open(CONFIG_PATH, "r") as file:
     main_config = toml.load(file)
@@ -82,8 +82,11 @@ with open(TREATMENT_CONFIG) as f:
 SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, "1_0_find_interactions", f"pseudo_{TREATMENT}")
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
 
-for i in range(1, 1001):
-    temp_ind = random.sample(range(len(treatment)), 12)
+
+n_random_groups = main_config['N_RANDOM_GROUPS']
+for i in range(1, n_random_groups):
+    
+    temp_ind = random.sample(range(len(treatment)), main_config['N_OF_SAMPLES'])
     pick_random_groups = {list(treatment.keys())[i]: list(treatment.values())[i] for i in temp_ind}
 
     pseudo_fly_dict = {}
