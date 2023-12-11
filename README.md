@@ -2,9 +2,19 @@
 
 **Python pipeline for *Drosophila melanogaster* social network analysis from trajectorial data**
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10355543.svg)](https://doi.org/10.5281/zenodo.10355543)
 [![License](https://img.shields.io/badge/license-BSD--3%20Clause-green)](https://github.com/milanXpetrovic/my_module/blob/main/LICENSE.md)
 
-Currently, the module is being tested on data obtained by monitoring Dosophila melanogaster populations and social interaction networks are being created from track data.
+[![python](https://img.shields.io/badge/Python-3.9-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org)
+[![jupyter](https://img.shields.io/badge/Jupyter-Lab-F37626.svg?style=flat&logo=Jupyter)](https://jupyterlab.readthedocs.io/en/stable)
+[![PEP8](https://img.shields.io/badge/code%20style-pep8-orange.svg)](https://www.python.org/dev/peps/pep-0008/)
+
+
+The module is being used on data obtained by monitoring Dosophila melanogaster populations and social interaction networks are being created from track data.
+
+**Example of video recording:**
+
+![](./docs/arena.gif)
 
 ## Complex networks features
 
