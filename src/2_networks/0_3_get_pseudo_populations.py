@@ -69,6 +69,7 @@ def find_interactions(df_angles, df_distances, main_config, treatment_config):
 
 
 TREATMENT = os.environ["TREATMENT"]
+
 CONFIG_PATH = os.path.join(settings.CONFIG_DIR, "main.toml")
 with open(CONFIG_PATH, "r") as file:
     main_config = toml.load(file)
@@ -206,7 +207,7 @@ def process_iteration(i):
 
 
 # TREATMENT = os.environ["TREATMENT"]
-TREATMENT = "CsCh"
+TREATMENT = "LDA_5DIZ"
 
 
 CONFIG_PATH = os.path.join(settings.CONFIG_DIR, "main.toml")
