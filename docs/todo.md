@@ -10,7 +10,8 @@
 
 ## New features
 
-- [ ] `main` - Add time threshold between two interactions
+- [ ] `main` - Add time threshold between two interaction
+- [ ] `analysis` - bursty behavior
 - [ ] `analysis` - histogram of times between interaction
 
 - [ ] `feature` random networks from data
