@@ -1,4 +1,4 @@
-# Drosophila social network analysis: 
+# Drosophila social network analysis
 
 **Python pipeline for *Drosophila melanogaster* social network analysis from trajectorial data**
 
@@ -45,7 +45,7 @@ pip install -r requirements.txt
 
 4. Create configuration in `configs/trackings/<treatment_name>.toml` values for `angle`, `degree` and `time` which are the criteria for determining edges in networks.
 
-5. Run `__main__.py` from `./src` all results will be saved to `./data/results`
+5. Run `__main__.py` from `./src`, all results will be saved to `./data/results`
 
 ## Join us
 The project is open-source and aims to create research tools. If you are interested in development, feel free to contact us or just fork the repo.
