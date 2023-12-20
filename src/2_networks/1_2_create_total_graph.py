@@ -30,8 +30,8 @@ for group_name, group_path in treatment.items():
 
         if G.has_edge(node_1, node_2):
             G[node_1][node_2]["count"] += 1
-            G[node_1][node_2]["interaction_times_list(seconds)"].append(duration)
-            G[node_1][node_2]["total_interaction_time(seconds)"] += duration
+            G[node_1][node_2]["interaction_times_list"].append(duration)
+            G[node_1][node_2]["total_interaction_times"] += duration
 
         else:
             G.add_edge(node_1, node_2, count=1, total_interaction_times=duration,
