@@ -1,3 +1,4 @@
+#%%
 import os
 
 import networkx as nx
@@ -6,7 +7,8 @@ import pandas as pd
 from src import settings
 from src.utils import fileio, graph_utils
 
-TREATMENT = os.environ["TREATMENT"]
+# TREATMENT = os.environ["TREATMENT"]
+TREATMENT = "Cs_5DIZ"
 
 INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "1_2_create_total_graph", TREATMENT)
 SCRIPT_OUTPUT = os.path.join(settings.RESULTS_DIR, "global_measures")

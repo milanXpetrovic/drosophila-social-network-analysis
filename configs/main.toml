@@ -1,7 +1,7 @@
-
-# experiment duration time must be in seconds
 START_TIME = 0
 END_TIME = 20
+
+# experiment duration time must be in seconds
 EXPERIMENT_DURATION = 1200
 
 # timewindow size in seconds for snapshot creation
@@ -13,10 +13,8 @@ ARENA_DIAMETER = 61
 #video FPS
 FPS = 24
 
-# TREATMENTS = ["LDA_OCT_5DIZ"]
-# TREATMENTS = ["CsCh"]
-TREATMENTS = ["CsCh", "Cs_5DIZ", "LDA_5DIZ", "OCT_5DIZ", "LDA_OCT_5DIZ"]
-#
+# TREATMENTS = ["pseudo_Cs_5DIZ", "pseudo_LDA_5DIZ"]
+TREATMENTS = ["Cs_5DIZ", "LDA_5DIZ", "pseudo_Cs_5DIZ", "pseudo_LDA_5DIZ"]
 
 N_OF_SAMPLES = 12
 N_RANDOM_GROUPS = 10000

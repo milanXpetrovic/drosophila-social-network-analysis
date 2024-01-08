@@ -51,11 +51,11 @@ def graph_global_measures(g, pop_name):
     # ave_in_strength_duration = np.mean(list(in_strength_duration.values()))
     # ave_out_strength_duration = np.mean(list(out_strength_duration.values()))
 
-    weighted_degree_count = nx.degree(g, weight='count')
-    ave_weighted_degree_count = np.mean([k for k in weighted_degree_count.values()])
+    # weighted_degree_count = nx.degree(g, weight='count')
+    # ave_weighted_degree_count = np.mean([k for k in weighted_degree_count.values()])
 
-    weighted_degree_time = nx.degree(g, weight='total_interaction_times')
-    ave_weighted_degree_time = np.mean([k for k in weighted_degree_time.values()])
+    # weighted_degree_time = nx.degree(g, weight='total_interaction_times')
+    # ave_weighted_degree_time = np.mean([k for k in weighted_degree_time.values()])
 
     deg_list = [g.degree(node) for node in list(g.nodes)]
     average_degree = np.mean(deg_list)
@@ -110,8 +110,8 @@ def graph_global_measures(g, pop_name):
         # "Average in-strength weight=duration": ave_in_strength_duration,
         # "Average out-strength weight=duration": ave_out_strength_duration,
 
-        "Average degree weight=count": ave_weighted_degree_count,
-        "Average degree weight=time": ave_weighted_degree_time,
+        # "Average degree weight=count": ave_weighted_degree_count,
+        # "Average degree weight=time": ave_weighted_degree_time,
 
         "Degree heterogeneity": degree_heterogeneity,
         "Degree aassortativity": degree_assortativity,

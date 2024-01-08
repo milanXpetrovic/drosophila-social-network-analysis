@@ -5,8 +5,8 @@
 
 **MAIN**
 
-- [ ] `main` write script that converts xlsx to csv data
-- [ ] `analysis` write plot script that plots movement of each group in 2d line plot
+- [ ] `feature` ERGM in R
+- [ ] `feature` triads
 
 ## New features
 
@@ -19,22 +19,22 @@
 - [ ] `feature` - measures_correlation (result_table)
 - [ ] `feature` - subgraphs of size 4, 5, 6, ...
 
-- [ ] `analysis` - distance traveled
+- [x] `analysis` - distance traveled
 - [ ] `analysis` - Z-scores
 - [ ] `analysis` - Triadic closure
-- [ ] `analysis` - plot poing with ave value and se
+- [ ] `analysis` - plot point with ave value and se
 
-
-- [ ] `feature` - create data converter for matlab SL script
 - create discretization spatial method
 - social distance and angle plot script
-- fix nan/inf values in data
 
 ### Done
 
-- [x] `main` - Enable multiple types of treatments to process 
+- [x] `main` write script that converts xlsx to csv data
+- [x] `analysis` write plot script that plots movement of each group in 2d line plot
+
+- [x] `main` - Enable multiple types of treatments to process
 - [x] `main` - Create directed graphs
-- [x] `main` - Normalization from px to mm convert 
+- [x] `main` - Normalization from px to mm convert
 
 - [x] `random_networks` -  1_3_1_create_random_networks
 
@@ -45,7 +45,11 @@
 - [x] `analysis` - 3_1_distance_traveled_plots
 - [x] `analysis` - count_of_interactions_in_time
 
+- [x] `feature` - create data converter for matlab SL script
+- [x] `feature` fix nan/inf values in data
+
 **ML**
+
 - [ ] `main` - Find outlayers in movement
-path features 
+path features
 path_features_ethogram():
