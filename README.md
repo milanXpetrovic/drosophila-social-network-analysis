@@ -10,7 +10,7 @@
 [![PEP8](https://img.shields.io/badge/code%20style-pep8-orange.svg)](https://www.python.org/dev/peps/pep-0008/)
 
 
-The module is being used on data obtained by monitoring Dosophila melanogaster populations and social interaction networks are being created from track data.
+The module is being used on data obtained by monitoring Drosophila melanogaster populations and social interaction networks are being created from track data.
 
 **Example of video recording:**
 
