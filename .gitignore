@@ -1,8 +1,6 @@
 data/*
 data/trackings/*
 
-notebooks/*
-
 .env/
 .vscode/
 # Byte-compiled / optimized / DLL files
