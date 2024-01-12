@@ -1,33 +1,28 @@
-#%%
-from src import settings
-import time
-import toml
-import sys
-import subprocess
+# %%
 import os
+import subprocess
+import sys
+import time
 
+import toml
+from src import settings
 
 scripts = [
     # "1_data/0_0_0_get_csv_from_xlsx.py",
-
     # "1_data/0_0_get_normalization.py",
     # "1_data/0_1_preproc_data.py",
     # "1_data/0_2_distances_angles_matrix.py",
-
     # "2_networks/1_0_find_interactions.py",
     # "2_networks/1_1_create_snapshots.py",
     # "2_networks/1_2_create_total_graph.py",
     # "2_networks/1_3_create_adj_matrix.py",
     # "2_networks/0_3_get_pseudo_populations.py",
-
     # "3_analysis/2_0_1_distance_traveled.py",
-
-    "3_analysis/2_0_global_measures.py",
-    # "3_analysis/2_2_local_measures.py",
+    # "3_analysis/2_0_global_measures.py",
+    "3_analysis/2_2_local_measures.py",
     # # # # ##  "2_analysis/2_1_community_measures.py",
     # "3_analysis/2_0_global_measures_snapshots.py",
     # "3_analysis/2_3_local_measures_snapshots.py",
-    
     # "2_analysis/2_4_count_triads_snapshots.py",
     # "2_analysis/3_0_population_retention_heatmap.py",
 ]
@@ -40,7 +35,9 @@ with open(CONFIG_PATH, "r") as file:
 for TREATMENT_NAME in config["TREATMENTS"]:
     os.environ["TREATMENT"] = TREATMENT_NAME
     TREATMENT = os.environ["TREATMENT"]
-    TREATMENT_CONFIG = os.path.join(settings.CONFIG_DIR, "interaction_criteria", f"{TREATMENT}.toml")
+    TREATMENT_CONFIG = os.path.join(
+        settings.CONFIG_DIR, "interaction_criteria", f"{TREATMENT}.toml"
+    )
 
     print("-" * 15, f" START: {TREATMENT} ", "-" * 25)
     for script in scripts:

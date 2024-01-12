@@ -1,10 +1,9 @@
 # %%
 import os
-import toml
 
 import networkx as nx
 import pandas as pd
-
+import toml
 from src import settings
 from src.utils import fileio
 
@@ -26,7 +25,7 @@ for group_name, group_path in treatment.items():
 
     for _, row in df_interactions.iterrows():
         node_1, node_2 = row["node_1"], row["node_2"]
-        duration = row["duration"]/config['FPS']
+        duration = row["duration"] / config["FPS"]
 
         if G.has_edge(node_1, node_2):
             G[node_1][node_2]["count"] += 1
@@ -34,7 +33,12 @@ for group_name, group_path in treatment.items():
             G[node_1][node_2]["total_interaction_times"] += duration
 
         else:
-            G.add_edge(node_1, node_2, count=1, total_interaction_times=duration,
-                       interaction_times_list=[duration])
+            G.add_edge(
+                node_1,
+                node_2,
+                count=1,
+                total_interaction_times=duration,
+                interaction_times_list=[duration],
+            )
 
     nx.write_gml(G, os.path.join(SCRIPT_OUTPUT, f"{group_name.replace('.csv', '')}.gml"))

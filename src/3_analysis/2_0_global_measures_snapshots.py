@@ -1,9 +1,8 @@
 import os
-import toml
 
 import networkx as nx
 import pandas as pd
-
+import toml
 from src import settings
 from src.utils import fileio, graph_utils
 
@@ -14,9 +13,14 @@ with open(CONFIG_PATH, "r") as file:
     config = toml.load(file)
 
 TIME_WINDOW = config["TIME_WINDOW"]
+INPUT_DIR = os.path.join(
+    settings.OUTPUT_DIR, "1_1_create_snapshots", f"{TIME_WINDOW}_sec_window", TREATMENT
+)
 
-INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "1_1_create_snapshots", f"{TIME_WINDOW}_sec_window", TREATMENT)
-SCRIPT_OUTPUT = os.path.join(settings.RESULTS_DIR, "global_measures_snapshots", f"{TIME_WINDOW}_sec_window", TREATMENT)
+SCRIPT_OUTPUT = os.path.join(
+    settings.RESULTS_DIR, "global_measures_snapshots", f"{TIME_WINDOW}_sec_window", TREATMENT
+)
+
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
 
 treatment = fileio.load_multiple_folders(INPUT_DIR)
