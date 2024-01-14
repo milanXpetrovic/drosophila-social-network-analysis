@@ -1,5 +1,6 @@
 #%%
-import os, sys
+import os
+import sys
 
 import networkx as nx
 import pandas as pd
@@ -7,10 +8,8 @@ import pandas as pd
 from src import settings
 from src.utils import fileio, graph_utils
 
-
-# TREATMENT = os.environ["TREATMENT"]
-TREATMENT = "LDA_5DIZ"
-
+TREATMENT = os.environ["TREATMENT"]
+# TREATMENT = "LDA_5DIZ"
 
 INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "1_2_create_total_graph", TREATMENT)
 SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, "1_3_create_adj_matrix", TREATMENT)

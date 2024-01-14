@@ -1,0 +1,22 @@
+
+pod users na administration
+kad strisnem view zelim vidjeti podake od osobe, slicno onome sto sam napravio za profil
+
+slicno je kao profile funckcija ali nije trenutni korisnik nego zadani korisnik
+
+detail view ali id je od usera kojeg smo odbbrali 
+
+- paziti da je premision doar
+- dodati mixine za sigurnost 
+- querisetovi moraju biti dobri (imam ga u user.py linija 89)
+
+
+
+Drugi task
+srediti faxorije
+Phone number i identifier nisu dobri zbor `-` koji su u formi
+Samo staviti da generira random brojeve bez crtica
+
+dignuti identifier na 50 i phone number na 20 u modelu
+
+

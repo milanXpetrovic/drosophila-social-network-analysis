@@ -1,16 +1,15 @@
 #%%
 import os
-import sys
-import toml
 import random
+import sys
+from concurrent.futures import ThreadPoolExecutor
 
 import numpy as np
 import pandas as pd
+import toml
 
 from src import settings
 from src.utils import data_utils, fileio
-import sys
-from concurrent.futures import ThreadPoolExecutor
 
 
 def find_interactions(df_angles, df_distances, main_config, treatment_config):
@@ -70,7 +69,6 @@ def find_interactions(df_angles, df_distances, main_config, treatment_config):
 
 
 def process_iteration(i):
-
     if i % 100 == 0:
         print(i)
     
@@ -95,8 +93,8 @@ def process_iteration(i):
     edgelist.to_csv(os.path.join(SCRIPT_OUTPUT, f"{i}.csv"))
 
 
-# TREATMENT = os.environ["TREATMENT"]
-TREATMENT = 'LDA_5DIZ'
+TREATMENT = os.environ["TREATMENT"]
+# TREATMENT = 'LDA_5DIZ'
     
 CONFIG_PATH = os.path.join(settings.CONFIG_DIR, "main.toml")
 with open(CONFIG_PATH, "r") as file:

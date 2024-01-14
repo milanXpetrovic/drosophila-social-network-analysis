@@ -1,10 +1,10 @@
 # %%
 import os
 import sys
-import toml
 
 import numpy as np
 import pandas as pd
+import toml
 
 from src import settings
 from src.utils import fileio

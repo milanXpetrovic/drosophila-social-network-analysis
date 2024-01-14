@@ -1,7 +1,8 @@
 import os
-import toml
+
 import networkx as nx
 import pandas as pd
+import toml
 
 from src import settings
 from src.utils import fileio
@@ -33,9 +34,6 @@ for group_name, group_path in treatment.items():
     for i in range(1, df_interactions["snapshot"].max() + 1):
         df_snapshot = df_interactions[df_interactions["snapshot"] == i]
         G = nx.DiGraph()
-
-        # nodes = ['fly' + str(i) for i in range(1, 13)]
-        # G.add_nodes_from(nodes)
 
         for _, row in df_snapshot.iterrows():
             node_1, node_2 = row["node_1"], row["node_2"]

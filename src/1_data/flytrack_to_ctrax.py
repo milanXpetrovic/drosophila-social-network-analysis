@@ -1,10 +1,12 @@
 # %%
-import scipy.io
-import pandas as pd
-import numpy as np
-import re
 import json
-import sys, os
+import os
+import re
+import sys
+
+import numpy as np
+import pandas as pd
+import scipy.io
 
 TREATMENT = "CTRL_5DIZ"
 # import fileio

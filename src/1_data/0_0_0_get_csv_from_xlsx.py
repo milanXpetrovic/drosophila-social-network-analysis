@@ -1,15 +1,15 @@
 #%%
 import math
-import os, sys
+import os
+import sys
 
 import pandas as pd
 import toml
+
 from src import settings
 from src.utils import fileio
 
 TREATMENT = os.environ["TREATMENT"]
-# TREATMENT = 'Cs_5DIZ'
-
 
 CONFIG_PATH = os.path.join(settings.CONFIG_DIR, "main.toml")
 with open(CONFIG_PATH, "r") as file:
