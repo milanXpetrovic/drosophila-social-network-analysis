@@ -5,6 +5,7 @@ import sys
 import time
 
 import toml
+
 from src import settings
 
 scripts = [
@@ -12,19 +13,23 @@ scripts = [
     # "1_data/0_0_get_normalization.py",
     # "1_data/0_1_preproc_data.py",
     # "1_data/0_2_distances_angles_matrix.py",
+
     # "2_networks/1_0_find_interactions.py",
-    # "2_networks/1_1_create_snapshots.py",
     # "2_networks/1_2_create_total_graph.py",
-    # "2_networks/1_3_create_adj_matrix.py",
-    # "2_networks/0_3_get_pseudo_populations.py",
+    "2_networks/1_4_get_pseudo_populations.py",
     # "3_analysis/2_0_1_distance_traveled.py",
     # "3_analysis/2_0_global_measures.py",
-    "3_analysis/2_2_local_measures.py",
-    # # # # ##  "2_analysis/2_1_community_measures.py",
-    # "3_analysis/2_0_global_measures_snapshots.py",
-    # "3_analysis/2_3_local_measures_snapshots.py",
-    # "2_analysis/2_4_count_triads_snapshots.py",
-    # "2_analysis/3_0_population_retention_heatmap.py",
+    # # # # # ##  "2_analysis/2_1_community_measures.py",
+    # "3_analysis/2_2_local_measures.py",
+    # # "2_analysis/3_0_population_retention_heatmap.py",
+]
+
+temporal_networks_scripts = [
+    # "2_networks/1_1_create_snapshots.py",
+    # # "2_networks/1_3_create_adj_matrix.py",
+    # # "3_analysis/2_0_global_measures_snapshots.py",
+    # # "3_analysis/2_3_local_measures_snapshots.py", s
+    # # "2_analysis/2_4_count_triads_snapshots.py",
 ]
 
 
@@ -44,7 +49,6 @@ for TREATMENT_NAME in config["TREATMENTS"]:
         try:
             print(f"STARTING with: {script}")
             script_path = os.path.join(settings.PIPELINE_DIR, script)
-
             subprocess.run(["python", script_path])
             print(f"DONE with: {script}")
             time.sleep(1)

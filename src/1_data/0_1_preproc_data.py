@@ -1,3 +1,4 @@
+#%%
 import os
 
 import pandas as pd
@@ -46,5 +47,5 @@ for group_name, group_path in treatment.items():
 
         df.reset_index(drop=True, inplace=True)
 
-        df = df[["pos x", "pos y", "ori", "major axis len"]]
+        # df = df[["pos x", "pos y", "ori", "major axis len"]]
         df.to_csv(os.path.join(SCRIPT_OUTPUT, group_name, fly_name))
