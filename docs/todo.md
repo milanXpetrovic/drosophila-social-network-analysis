@@ -17,7 +17,7 @@
 - [ ] `feature` random networks from data
 - [ ] `feature` add directed weighted ER networks genration
 - [ ] `feature` - measures_correlation (result_table)
-- [ ] `feature` - subgraphs of size 4, 5, 6, ...
+- [ ] `feature` - subgraphs of size n, larger than 3
 
 - [x] `analysis` - distance traveled
 - [ ] `analysis` - Z-scores
@@ -47,9 +47,3 @@
 
 - [x] `feature` - create data converter for matlab SL script
 - [x] `feature` fix nan/inf values in data
-
-**ML**
-
-- [ ] `main` - Find outlayers in movement
-path features
-path_features_ethogram():
