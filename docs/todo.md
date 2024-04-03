@@ -2,7 +2,6 @@
 
 **Tags:** `main`, `random_networks`, `dynamics`, `temporal`, `analysis`
 
-
 **MAIN**
 
 - [ ] `feature` ERGM in R
@@ -14,7 +13,7 @@
 - [ ] `analysis` - bursty behavior
 - [ ] `analysis` - histogram of times between interaction
 
-- [ ] `feature` random networks from data
+- [x] `feature` random networks from data
 - [ ] `feature` add directed weighted ER networks genration
 - [ ] `feature` - measures_correlation (result_table)
 - [ ] `feature` - subgraphs of size n, larger than 3
