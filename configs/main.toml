@@ -1,3 +1,4 @@
+# start and end time must be in minutes
 START_TIME = 0
 END_TIME = 20
 
@@ -8,13 +9,15 @@ EXPERIMENT_DURATION = 1200
 TIME_WINDOW = 60
 
 # arena diameter in mm
-ARENA_DIAMETER = 61
+ARENA_DIAMETER = 61 
 
 #video FPS
 FPS = 24
 
-# TREATMENTS = ["pseudo_Cs_5DIZ", "pseudo_LDA_5DIZ"]
-TREATMENTS = ['CsCh', 'Cs_5DIZ', 'LDA_5DIZ', 'OCT_5DIZ', 'LDA_OCT_5DIZ'] 
+# list of strings of treatment names, etc. ["CS", "CS_LDA", "LDA"]
+TREATMENTS = [] 
 
-N_OF_SAMPLES = 12
+# number of pseudo random groups
 N_RANDOM_GROUPS = 10000
+# number of samples for pseudo random group
+N_OF_SAMPLES = 12
