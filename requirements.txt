@@ -9,3 +9,4 @@ toml
 seaborn
 isort>=5.13
 matplotlib>=3.7
+docutils
