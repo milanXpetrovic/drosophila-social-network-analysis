@@ -1,5 +1,8 @@
 # %%
 import os
+
+os.environ['OPENBLAS_NUM_THREADS'] = '1'
+
 import subprocess
 import sys
 import time
@@ -9,14 +12,14 @@ import toml
 from src import settings
 
 scripts = [
-    "1_data/0_0_0_get_csv_from_xlsx.py",
-    "1_data/0_0_get_normalization.py",
-    "1_data/0_1_preproc_data.py",
-    "1_data/0_2_distances_angles_matrix.py",
+    # "1_data/0_0_0_get_csv_from_xlsx.py",
+    # "1_data/0_0_get_normalization.py",
+    # "1_data/0_1_preproc_data.py",
+    # "1_data/0_2_distances_angles_matrix.py",
 
     "2_networks/1_0_find_interactions.py",
     "2_networks/1_2_create_total_graph.py",
-    "2_networks/1_4_get_pseudo_populations.py",
+    # "2_networks/1_4_get_pseudo_populations.py",
     "3_analysis/2_0_1_distance_traveled.py",
     "3_analysis/2_0_global_measures.py",
     "3_analysis/2_2_local_measures.py",

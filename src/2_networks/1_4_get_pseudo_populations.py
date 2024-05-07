@@ -1,8 +1,8 @@
 #%%
+import multiprocessing
 import os
 import random
 import sys
-from concurrent.futures import ThreadPoolExecutor
 
 import numpy as np
 import pandas as pd
@@ -12,20 +12,37 @@ from src import settings
 from src.utils import data_utils, fileio
 
 
-def find_interactions(df_angles, df_distances, main_config, treatment_config):
+def process_iteration(iteration_data):
+    i, treatment_all, main_config, treatment_config, SCRIPT_OUTPUT = iteration_data
+    
+    temp_ind = random.sample(range(len(treatment_all)), main_config['N_OF_SAMPLES'])
+    pick_random_groups = {list(treatment_all.keys())[i]: list(treatment_all.values())[i] for i in temp_ind}
+
+    pseudo_fly_dict = {}
+    for group_name, _ in pick_random_groups.items():
+        group = treatment_all[group_name]
+
+        random_ind = random.randint(0, len(group) - 1)
+
+        pick_fly_name = list(group.keys())[random_ind]
+        pick_fly_path = list(group.values())[random_ind]
+
+        pseudo_fly_dict[f"{pick_fly_name}_{group_name}"] = pick_fly_path
+
+    distances = data_utils.distances_between_all_flies(pseudo_fly_dict)
+    angles = data_utils.angles_between_all_flies(pseudo_fly_dict)
+    edgelist2 = find_interactions2(angles, distances, main_config, treatment_config)
+    edgelist2.to_csv(os.path.join(SCRIPT_OUTPUT, f"{i}.csv"))
+
+
+def find_interactions2(df_angles, df_distances, main_config, treatment_config):
     ANGLE = treatment_config["ANGLE"]
     DISTANCE = treatment_config["DISTANCE"]
     TIME = treatment_config["TIME"]
+    max_soc_duration = 1
 
-    edgelist = pd.DataFrame(
-        columns=[
-            "node_1",
-            "node_2",
-            "start_of_interaction",
-            "end_of_interaction",
-            "duration"
-        ]
-    )
+    edgelist = []
+    columns = ["node_1", "node_2", "start_of_interaction", "end_of_interaction", "duration"]
 
     for angles_col, distances_col in zip(df_angles.columns, df_distances.columns):
         if angles_col != distances_col:
@@ -37,13 +54,11 @@ def find_interactions(df_angles, df_distances, main_config, treatment_config):
         distance_mask = df["distance"] <= DISTANCE
         angle_mask = (df["angle"] >= ANGLE[0]) & (df["angle"] <= ANGLE[1])
         df = df[distance_mask & angle_mask]
-        min_soc_duration = int(TIME[0] * main_config["FPS"])
-        max_soc_duration = int((TIME[0]) * main_config["FPS"])
 
         clear_list_of_df = [
             d
             for _, d in df.groupby(df.index - np.arange(len(df)))
-            if len(d) <= max_soc_duration
+            if len(d) >= max_soc_duration
         ]
 
         node_1, node_2 = angles_col.split(" ")
@@ -54,52 +69,23 @@ def find_interactions(df_angles, df_distances, main_config, treatment_config):
             start_of_interaction = interaction.index[0]
             end_of_interaction = interaction.index[-1]
 
-            data = {
-                "node_1": node_1,
-                "node_2": node_2,
-                "start_of_interaction": int(start_of_interaction),
-                "end_of_interaction": int(end_of_interaction),
-                "duration": int(duration)
-            }
+            edgelist.append([node_1, node_2, int(start_of_interaction), int(end_of_interaction), int(duration)])
 
-            row = pd.DataFrame.from_dict(data, orient="index").T
-            edgelist = pd.concat([edgelist, row], ignore_index=True)
-
-    return edgelist
+    return pd.DataFrame(edgelist, columns=columns)
 
 
-def process_iteration(i):
-    if i % 100 == 0:
-        print(i)
-    
-    temp_ind = random.sample(range(len(treatment)), main_config['N_OF_SAMPLES'])
-    pick_random_groups = {list(treatment.keys())[i]: list(treatment.values())[i] for i in temp_ind}
-
-    pseudo_fly_dict = {}
-    for group_name, group_path in pick_random_groups.items():
-        group = fileio.load_files_from_folder(group_path, file_format=".csv")
-
-        random_ind = random.randint(0, len(group) - 1)
-
-        pick_fly_name = list(group.keys())[random_ind]
-        pick_fly_path = list(group.values())[random_ind]
-
-        pseudo_fly_dict[f"{pick_fly_name}_{group_name}"] = pick_fly_path
-
-    distances = data_utils.distances_between_all_flies(pseudo_fly_dict)
-    angles = data_utils.angles_between_all_flies(pseudo_fly_dict)
-    edgelist = find_interactions(angles, distances, main_config, treatment_config)
-
-    edgelist.to_csv(os.path.join(SCRIPT_OUTPUT, f"{i}.csv"))
- 
 TREATMENT = os.environ["TREATMENT"]
-    
 CONFIG_PATH = os.path.join(settings.CONFIG_DIR, "main.toml")
 with open(CONFIG_PATH, "r") as file:
     main_config = toml.load(file)
 
 INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "0_0_preproc_data", TREATMENT)
 treatment = fileio.load_multiple_folders(INPUT_DIR)
+
+treatment_all = {}
+for group_name, group_path in treatment.items():
+    group = fileio.load_files_from_folder(group_path, file_format=".csv")
+    treatment_all.update({group_name: group})
 
 TREATMENT_CONFIG = os.path.join(settings.CONFIG_DIR, "interaction_criteria", f"{TREATMENT}.toml")
 with open(TREATMENT_CONFIG) as f:
@@ -108,28 +94,14 @@ with open(TREATMENT_CONFIG) as f:
 SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, "1_0_find_interactions", f"pseudo_{TREATMENT}")
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
 
-existing_files = []
-if os.path.exists(SCRIPT_OUTPUT):
-    existing_files = [f for f in os.listdir(SCRIPT_OUTPUT) if os.path.isfile(os.path.join(SCRIPT_OUTPUT, f))]
+existing_files = [f for f in os.listdir(SCRIPT_OUTPUT) if os.path.isfile(os.path.join(SCRIPT_OUTPUT, f))]
+existing_files_count = len(existing_files)
+start_iteration = existing_files_count + 1 if existing_files else 1
 
-    existing_files_count = len(existing_files)
-    start_iteration = existing_files_count + 1
+num_processes = multiprocessing.cpu_count()//2
+pool = multiprocessing.Pool(processes=num_processes)
+iteration_data = [(i, treatment_all, main_config, treatment_config, SCRIPT_OUTPUT) for i in range(start_iteration, main_config['N_RANDOM_GROUPS'] + 1)]
 
-else:
-    start_iteration = 1
-
-n_random_groups = main_config['N_RANDOM_GROUPS']
-
-if start_iteration >= n_random_groups:
-    print(f'done for {TREATMENT}')
-
-else:
-    print(f'continue from {start_iteration}')
-    # max_workers = max(1, os.cpu_count() // 2)
-    max_workers = os.cpu_count() 
-    print(f'n of workers: {max_workers}')
-
-    with ThreadPoolExecutor(max_workers=max_workers) as executor:
-        executor.map(process_iteration, range(start_iteration, n_random_groups + 1))
-   
-   
+pool.map(process_iteration, iteration_data)
+pool.close()
+pool.join()

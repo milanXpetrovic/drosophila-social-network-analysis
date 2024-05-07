@@ -1,9 +1,9 @@
 # start and end time must be in minutes
 START_TIME = 0
-END_TIME = 20
+END_TIME = 15
 
 # experiment duration time must be in seconds
-EXPERIMENT_DURATION = 1200
+EXPERIMENT_DURATION = 900
 
 # timewindow size in seconds for snapshot creation
 TIME_WINDOW = 60
@@ -12,10 +12,21 @@ TIME_WINDOW = 60
 ARENA_DIAMETER = 61 
 
 #video FPS
-FPS = 24
+FPS = 60
 
 # list of strings of treatment names, etc. ["CS", "CS_LDA", "LDA"]
-TREATMENTS = [] 
+TREATMENTS = [
+    'fx',
+    'fx_gal_100micM',
+    'fx_gal_300micM',
+    'fx_gal_500micM',
+    'fx_gal_1000_micM',
+    'wt',
+    'wt_gal_100micM',
+    'wt_gal_300micM',
+    'wt_gal_500micM',
+    'wt_gal_1000micM'
+ ] 
 
 # number of pseudo random groups
 N_RANDOM_GROUPS = 10000
