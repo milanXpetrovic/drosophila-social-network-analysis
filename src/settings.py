@@ -1,16 +1,13 @@
 import os
 
-
 ROOT_DIR = os.path.dirname(os.path.dirname(__file__))
 
-INPUT_DIR = os.path.join(ROOT_DIR, "data", "trackings")
-OUTPUT_DIR = os.path.join(ROOT_DIR, "data", "processed")
-
-NORMALIZATION_DIR = os.path.join(ROOT_DIR, "data", "normalization")
+DATA_DIR = r'/srv/milky/drosophila-datasets/drosophila-isolation'
+INPUT_DIR = os.path.join(DATA_DIR, "data", "trackings")
+OUTPUT_DIR = os.path.join(DATA_DIR, "data", "processed")
+NORMALIZATION_DIR = os.path.join(DATA_DIR, "data", "normalization")
+RESULTS_DIR = os.path.join(DATA_DIR, "data", "results")
 
 PIPELINE_DIR = os.path.join(ROOT_DIR, "src")
-RESULTS_DIR = os.path.join(ROOT_DIR, "data", "results")
-
 LOGS_DIR = os.path.join(ROOT_DIR, "logs")
-
 CONFIG_DIR = os.path.join(ROOT_DIR, "configs")
