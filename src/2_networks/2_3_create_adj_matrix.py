@@ -1,18 +1,16 @@
 #%%
 import os
-import sys
 
 import networkx as nx
 import pandas as pd
 
 from src import settings
-from src.utils import fileio, graph_utils
+from src.utils import fileio
 
 TREATMENT = os.environ["TREATMENT"]
-# TREATMENT = "LDA_5DIZ"
 
-INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "1_2_create_total_graph", TREATMENT)
-SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, "1_3_create_adj_matrix", TREATMENT)
+INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "2_2_create_total_graph", TREATMENT)
+SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, "2_3_create_adj_matrix", TREATMENT)
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
 
 graphs = fileio.load_files_from_folder(INPUT_DIR, file_format=".gml")

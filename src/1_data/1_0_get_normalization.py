@@ -10,8 +10,7 @@ from src.utils import fileio
 TREATMENT = os.environ["TREATMENT"]
 
 CONFIG_PATH = os.path.join(settings.CONFIG_DIR, "main.toml")
-with open(CONFIG_PATH, "r") as file:
-    config = toml.load(file)
+with open(CONFIG_PATH, "r") as file: config = toml.load(file)
 
 INPUT_DIR = os.path.join(settings.INPUT_DIR, TREATMENT)
 treatment = fileio.load_multiple_folders(INPUT_DIR)
@@ -51,5 +50,4 @@ for group_name, group_path in treatment.items():
     }
 
     toml_file_path = os.path.join(SCRIPT_OUTPUT, f"{group_name.replace('.csv', '')}.toml")
-    with open(toml_file_path, "w") as toml_file:
-        toml.dump(toml_data, toml_file)
+    with open(toml_file_path, "w") as toml_file: toml.dump(toml_data, toml_file)

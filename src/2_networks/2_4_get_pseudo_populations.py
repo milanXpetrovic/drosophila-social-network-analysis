@@ -79,7 +79,7 @@ CONFIG_PATH = os.path.join(settings.CONFIG_DIR, "main.toml")
 with open(CONFIG_PATH, "r") as file:
     main_config = toml.load(file)
 
-INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "0_0_preproc_data", TREATMENT)
+INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "1_0_preproc_data", TREATMENT)
 treatment = fileio.load_multiple_folders(INPUT_DIR)
 
 treatment_all = {}
@@ -91,7 +91,7 @@ TREATMENT_CONFIG = os.path.join(settings.CONFIG_DIR, "interaction_criteria", f"{
 with open(TREATMENT_CONFIG) as f:
     treatment_config = toml.load(f)
 
-SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, "1_0_find_interactions", f"pseudo_{TREATMENT}")
+SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, "2_0_find_interactions", f"pseudo_{TREATMENT}")
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
 
 existing_files = [f for f in os.listdir(SCRIPT_OUTPUT) if os.path.isfile(os.path.join(SCRIPT_OUTPUT, f))]

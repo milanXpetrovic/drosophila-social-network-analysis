@@ -8,7 +8,7 @@ from src import settings
 from src.utils import fileio, graph_utils
 
 TREATMENT = os.environ["TREATMENT"]
-INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "1_2_create_total_graph", TREATMENT)
+INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "2_2_create_total_graph", TREATMENT)
 treatment = fileio.load_files_from_folder(INPUT_DIR, file_format=".gml")
 
 SCRIPT_OUTPUT = os.path.join(settings.RESULTS_DIR, "local_measures", TREATMENT)

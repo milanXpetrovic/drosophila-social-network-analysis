@@ -10,8 +10,7 @@ from src.utils import fileio
 TREATMENT = os.environ["TREATMENT"]
 
 CONFIG_PATH = os.path.join(settings.CONFIG_DIR, "main.toml")
-with open(CONFIG_PATH, "r") as file:
-    config = toml.load(file)
+with open(CONFIG_PATH, "r") as file: config = toml.load(file)
 
 INPUT_DIR = os.path.join(settings.INPUT_DIR, TREATMENT)
 treatment = fileio.load_multiple_folders(INPUT_DIR)
@@ -19,7 +18,10 @@ treatment = fileio.load_multiple_folders(INPUT_DIR)
 START = config["START_TIME"] * 60 * config["FPS"]
 END = config["END_TIME"] * 60 * config["FPS"]
 
-SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, "0_0_preproc_data", TREATMENT)
+SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, "1_1_preproc_data", TREATMENT)
+
+
+#%%
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
 
 for group_name, group_path in treatment.items():
@@ -28,8 +30,7 @@ for group_name, group_path in treatment.items():
     fly_dict = fileio.load_files_from_folder(group_path)
     group_norm_path = os.path.join(settings.NORMALIZATION_DIR, TREATMENT, f"{group_name.replace('.csv', '')}.toml")
 
-    with open(group_norm_path, "r") as group_norm:
-        group_norm = toml.load(group_norm)
+    with open(group_norm_path, "r") as group_norm: group_norm = toml.load(group_norm)
 
     for fly_name, fly_path in fly_dict.items():
         df = pd.read_csv(fly_path)

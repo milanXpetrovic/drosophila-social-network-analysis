@@ -11,12 +11,11 @@ from src.utils import fileio, graph_utils
 TREATMENT = os.environ["TREATMENT"]
 
 CONFIG_PATH = os.path.join(settings.CONFIG_DIR, "main.toml")
-with open(CONFIG_PATH, "r") as file:
-    config = toml.load(file)
+with open(CONFIG_PATH, "r") as file: config = toml.load(file)
 
 TIME_WINDOW = config["TIME_WINDOW"]
 
-INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "1_1_create_snapshots", f"{TIME_WINDOW}_sec_window", TREATMENT)
+INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "2_1_create_snapshots", f"{TIME_WINDOW}_sec_window", TREATMENT)
 treatment = fileio.load_multiple_folders(INPUT_DIR)
 
 # DISTANCE_TRAVELED = os.path.join(settings.RESULTS_DIR, "distances_traveled", TREATMENT)

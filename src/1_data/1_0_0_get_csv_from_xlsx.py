@@ -1,7 +1,5 @@
 #%%
-import math
 import os
-import sys
 
 import pandas as pd
 import toml
@@ -12,8 +10,7 @@ from src.utils import fileio
 TREATMENT = os.environ["TREATMENT"]
 
 CONFIG_PATH = os.path.join(settings.CONFIG_DIR, "main.toml")
-with open(CONFIG_PATH, "r") as file:
-    config = toml.load(file)
+with open(CONFIG_PATH, "r") as file: config = toml.load(file)
 
 INPUT_DIR = f"/srv/milky/drosophila-datasets/BB/{TREATMENT}"
 treatment = fileio.load_multiple_folders(INPUT_DIR)

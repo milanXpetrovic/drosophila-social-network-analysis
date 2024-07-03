@@ -9,7 +9,7 @@ from src.utils import fileio, graph_utils
 
 TREATMENT = os.environ["TREATMENT"]
 
-INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "1_2_create_total_graph", TREATMENT)
+INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "2_2_create_total_graph", TREATMENT)
 SCRIPT_OUTPUT = os.path.join(settings.RESULTS_DIR, "global_measures")
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
 

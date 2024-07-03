@@ -10,13 +10,12 @@ from src.utils import fileio
 
 TREATMENT = os.environ["TREATMENT"]
 
-INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "1_0_find_interactions", TREATMENT)
-SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, "1_2_create_total_graph", TREATMENT)
+INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "2_0_find_interactions", TREATMENT)
+SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, "2_2_create_total_graph", TREATMENT)
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
 
 CONFIG_PATH = os.path.join(settings.CONFIG_DIR, "main.toml")
-with open(CONFIG_PATH, "r") as file:
-    config = toml.load(file)
+with open(CONFIG_PATH, "r") as file: config = toml.load(file)
 
 treatment = fileio.load_files_from_folder(INPUT_DIR)
 for group_name, group_path in treatment.items():
