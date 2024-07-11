@@ -2,16 +2,13 @@ import os
 
 import networkx as nx
 import pandas as pd
-import toml
 
 from src import settings
 from src.utils import fileio
 
 TREATMENT = os.environ["TREATMENT"]
 
-CONFIG_PATH = os.path.join(settings.CONFIG_DIR, "main.toml")
-with open(CONFIG_PATH, "r") as file:
-    config = toml.load(file)
+config = fileio.get_config(settings.CONFIG_NAME)
 
 TIME_WINDOW = config["TIME_WINDOW"]
 

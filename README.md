@@ -35,9 +35,13 @@ The module is being used on data obtained by monitoring Drosophila melanogaster 
 
 1. Install needed packages:
 
-```
-pip install -r requirements.txt
-```
+    ```shell
+    virtualenv .venv
+    ```
+
+    ```shell
+    pip install -r requirements.txt
+    ```
 
 2. Add tracking data to `.data/trackings/<treatment name>`
 
@@ -49,3 +53,8 @@ pip install -r requirements.txt
 
 ## Join us
 The project is open-source and aims to create research tools. If you are interested in development, feel free to contact us or just fork the repo.
+
+
+## Data format
+
+    How dataframe should look like?

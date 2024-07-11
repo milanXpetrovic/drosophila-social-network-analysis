@@ -75,9 +75,8 @@ def find_interactions2(df_angles, df_distances, main_config, treatment_config):
 
 
 TREATMENT = os.environ["TREATMENT"]
-CONFIG_PATH = os.path.join(settings.CONFIG_DIR, "main.toml")
-with open(CONFIG_PATH, "r") as file:
-    main_config = toml.load(file)
+
+main_config = fileio.get_config(settings.CONFIG_NAME)
 
 INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "1_0_preproc_data", TREATMENT)
 treatment = fileio.load_multiple_folders(INPUT_DIR)

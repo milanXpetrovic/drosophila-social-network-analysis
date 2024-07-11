@@ -11,8 +11,7 @@ from src.utils import fileio
 
 TREATMENT = os.environ["TREATMENT"]
 
-CONFIG_PATH = os.path.join(settings.CONFIG_DIR, "main.toml")
-with open(CONFIG_PATH, "r") as file: main_config = toml.load(file)
+main_config = fileio.get_config(settings.CONFIG_NAME)
 
 SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, "2_0_find_interactions", TREATMENT)
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)

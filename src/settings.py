@@ -1,5 +1,7 @@
 import os
 
+CONFIG_NAME = 'main.toml'
+
 ROOT_DIR = os.path.dirname(os.path.dirname(__file__))
 
 DATA_DIR = r'/srv/milky/drosophila-datasets/drosophila-isolation'

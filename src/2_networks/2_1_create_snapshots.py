@@ -1,19 +1,17 @@
+#%%
 import os
 
 import networkx as nx
 import pandas as pd
-import toml
 
 from src import settings
 from src.utils import fileio
 
 TREATMENT = os.environ["TREATMENT"]
 
-CONFIG_PATH = os.path.join(settings.CONFIG_DIR, "main.toml")
-with open(CONFIG_PATH, "r") as file:
-    main_config = toml.load(file)
+INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "1_0_find_interactions", TREATMENT)
 
-INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "2_0_find_interactions", TREATMENT)
+main_config = fileio.get_config(settings.CONFIG_NAME)
 
 TIME_WINDOW = main_config["TIME_WINDOW"]
 TIME_WINDOW_FPS = TIME_WINDOW * main_config["FPS"]
@@ -22,6 +20,7 @@ SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, "2_1_create_snapshots", f"{TIM
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
 
 treatment = fileio.load_files_from_folder(INPUT_DIR)
+
 for group_name, group_path in treatment.items():
     df_interactions = pd.read_csv(group_path, index_col=0)
     df_interactions = df_interactions.sort_values("start_of_interaction")

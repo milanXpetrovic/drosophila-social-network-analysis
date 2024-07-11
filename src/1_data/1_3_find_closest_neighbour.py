@@ -2,16 +2,13 @@
 import os
 
 import pandas as pd
-import toml
 
 from src import settings
 from src.utils import fileio
 
 TREATMENT = os.environ["TREATMENT"]
 
-CONFIG_PATH = os.path.join(settings.CONFIG_DIR, "main.toml")
-with open(CONFIG_PATH, "r") as file:
-    main_config = toml.load(file)
+config = fileio.get_config(settings.CONFIG_NAME)
 
 DISTANCES_DIR = os.path.join(settings.OUTPUT_DIR, "1_1_1_distances_matrix", TREATMENT)
 distances = fileio.load_files_from_folder(DISTANCES_DIR)

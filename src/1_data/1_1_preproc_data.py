@@ -9,8 +9,7 @@ from src.utils import fileio
 
 TREATMENT = os.environ["TREATMENT"]
 
-CONFIG_PATH = os.path.join(settings.CONFIG_DIR, "main.toml")
-with open(CONFIG_PATH, "r") as file: config = toml.load(file)
+config = fileio.get_config(settings.CONFIG_NAME)
 
 INPUT_DIR = os.path.join(settings.INPUT_DIR, TREATMENT)
 treatment = fileio.load_multiple_folders(INPUT_DIR)

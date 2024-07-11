@@ -13,8 +13,16 @@ ARENA_DIAMETER = 61
 #video FPS
 FPS = 24
 
-# TREATMENTS = ["pseudo_Cs_5DIZ", "pseudo_LDA_5DIZ"]
-TREATMENTS = ['CsCh', 'Cs_5DIZ', 'LDA_5DIZ', 'OCT_5DIZ', 'LDA_OCT_5DIZ'] 
+# TREATMENTS = ['CS_10D', 'CsCh', 'Cs_5DIZ', 'LDA_5DIZ', 'LDA_OCT_5DIZ', 'OCT_5DIZ'] 
+TREATMENTS = ['Cs_5DIZ', 'CS_10D', 'CsCh'] 
+# TREATMENTS = ['pseudo_CS_10D', 'pseudo_CsCh', 'pseudo_Cs_5DIZ', 'pseudo_LDA_5DIZ', 'pseudo_LDA_OCT_5DIZ', 'pseudo_OCT_5DIZ'] 
+PSEUDO_TREATMENTS = ['pseudo_CsCh', 'pseudo_Cs_5DIZ', 'pseudo_LDA_5DIZ', 'pseudo_OCT_5DIZ'] 
+
+# TREATMENTS = ['CS_10D', 'CsCh', 'Cs_5DIZ', 'LDA_5DIZ', 'LDA_OCT_5DIZ', 'OCT_5DIZ', 'pseudo_CS_10D', 'pseudo_CsCh', 'pseudo_Cs_5DIZ', 'pseudo_LDA_5DIZ', 'pseudo_LDA_OCT_5DIZ', 'pseudo_OCT_5DIZ']
 
 N_OF_SAMPLES = 12
 N_RANDOM_GROUPS = 10000
+
+
+## this is part fo the plots
+COLORS = ["black", "white"]
