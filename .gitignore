@@ -1,5 +1,9 @@
 data/*
 data/trackings/*
+reports/*
+configs/*
+docs/*
+src/settings.py
 
 .env/
 .vscode/
