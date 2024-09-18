@@ -1,6 +1,13 @@
 data/*
 data/trackings/*
+<<<<<<< HEAD
 notebooks/*
+=======
+reports/*
+configs/*
+docs/*
+src/settings.py
+>>>>>>> drosophila-isolation
 
 .env/
 .vscode/

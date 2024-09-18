@@ -1,0 +1,682 @@
+[
+  {
+    "parameters": [-0.1445, 0.0741, 0.3576, 1.273, 0.4297],
+    "standardErrors": [0.0258, 0.0204, 0.0639, 0.0669, 0.0287],
+    "logLikelihood": [-9430.5627],
+    "finalScore": [-0.0002, -0.0001, 0, 0, 0.0001],
+    "finalInformationMatrix": [
+      [3874.8999, 2811.5201, 612.5238, 486.6194, 1665.6344],
+      [2811.5201, 4925.7657, 457.4443, 722.1344, 1176.6546],
+      [612.5238, 457.4443, 482.339, 304.7646, 369.2821],
+      [486.6194, 722.1344, 304.7646, 472.9262, 372.057],
+      [1665.6344, 1176.6546, 369.2821, 372.057, 2008.3424]
+    ],
+    "convergence": {
+      "isConverged": [true],
+      "maxAbsScore": [0.0002]
+    },
+    "nIterations": [7],
+    "nEvents": [2122],
+    "formula": ["~", "interactionDependent", "indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)"],
+    "model": ["REM"],
+    "subModel": ["choice"],
+    "rightCensored": [false],
+    "nParams": [5],
+    "call": ["estimate", "interactionDependent ~ indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)", "REM"],
+    "coefMat": [
+      [-0.1445, 0.0258, -5.6096, 2.0285e-08],
+      [0.0741, 0.0204, 3.6228, 0.0003],
+      [0.3576, 0.0639, 5.5998, 2.1466e-08],
+      [1.273, 0.0669, 19.0197, 0],
+      [0.4297, 0.0287, 14.9826, 0]
+    ],
+    "AIC": [18871.1254],
+    "BIC": [18899.426]
+  },
+  {
+    "parameters": [-0.1664, 0.0194, 0.0618, 1.6868, 0.4185],
+    "standardErrors": [0.0259, 0.0226, 0.0612, 0.0647, 0.028],
+    "logLikelihood": [-10905.6366],
+    "finalScore": [-2.0803e-09, -1.3052e-09, 6.4451e-10, 6.8853e-10, 1.6126e-09],
+    "finalInformationMatrix": [
+      [3935.64, 2641.4948, 629.4891, 437.1629, 1782.7331],
+      [2641.4948, 4065.5328, 411.8816, 597.0528, 1303.554],
+      [629.4891, 411.8816, 573.4742, 370.6077, 422.7122],
+      [437.1629, 597.0528, 370.6077, 532.9205, 427.4986],
+      [1782.7331, 1303.554, 422.7122, 427.4986, 2194.1617]
+    ],
+    "convergence": {
+      "isConverged": [true],
+      "maxAbsScore": [2.0803e-09]
+    },
+    "nIterations": [8],
+    "nEvents": [2480],
+    "formula": ["~", "interactionDependent", "indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)"],
+    "model": ["REM"],
+    "subModel": ["choice"],
+    "rightCensored": [false],
+    "nParams": [5],
+    "call": ["estimate", "interactionDependent ~ indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)", "REM"],
+    "coefMat": [
+      [-0.1664, 0.0259, -6.4336, 1.246e-10],
+      [0.0194, 0.0226, 0.86, 0.3898],
+      [0.0618, 0.0612, 1.0098, 0.3126],
+      [1.6868, 0.0647, 26.0811, 0],
+      [0.4185, 0.028, 14.9548, 0]
+    ],
+    "AIC": [21821.2733],
+    "BIC": [21850.3534]
+  },
+  {
+    "parameters": [-0.0856, 0.0638, -0.1322, 1.42, 0.4025],
+    "standardErrors": [0.0249, 0.0221, 0.0625, 0.0633, 0.0291],
+    "logLikelihood": [-9770.2585],
+    "finalScore": [-7.551e-06, -5.262e-06, 3.1595e-06, 1.12e-06, 3.1474e-06],
+    "finalInformationMatrix": [
+      [3828.3178, 2544.8292, 558.4405, 402.8086, 1391.701],
+      [2544.8292, 4089.2119, 368.6706, 588.0205, 960.0401],
+      [558.4405, 368.6706, 486.2753, 306.6917, 313.0322],
+      [402.8086, 588.0205, 306.6917, 498.9534, 339.9945],
+      [1391.701, 960.0401, 313.0322, 339.9945, 1777.3162]
+    ],
+    "convergence": {
+      "isConverged": [true],
+      "maxAbsScore": [7.551e-06]
+    },
+    "nIterations": [7],
+    "nEvents": [2154],
+    "formula": ["~", "interactionDependent", "indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)"],
+    "model": ["REM"],
+    "subModel": ["choice"],
+    "rightCensored": [false],
+    "nParams": [5],
+    "call": ["estimate", "interactionDependent ~ indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)", "REM"],
+    "coefMat": [
+      [-0.0856, 0.0249, -3.4346, 0.0006],
+      [0.0638, 0.0221, 2.8873, 0.0039],
+      [-0.1322, 0.0625, -2.1152, 0.0344],
+      [1.42, 0.0633, 22.4361, 0],
+      [0.4025, 0.0291, 13.8518, 0]
+    ],
+    "AIC": [19550.5169],
+    "BIC": [19578.8923]
+  },
+  {
+    "parameters": [-0.0283, 0.0329, -0.0721, 1.3293, 0.1629],
+    "standardErrors": [0.0188, 0.0171, 0.0539, 0.0562, 0.0185],
+    "logLikelihood": [-14199.6196],
+    "finalScore": [0.0006, 0.0007, 0.0001, 0.0002, 0.0005],
+    "finalInformationMatrix": [
+      [7678.3527, 5404.572, 920.6807, 654.8794, 3408.9093],
+      [5404.572, 7702.4252, 647.6862, 876.602, 2475.5775],
+      [920.6807, 647.6862, 653.7955, 400.0802, 642.1816],
+      [654.8794, 876.602, 400.0802, 620.0108, 632.4724],
+      [3408.9093, 2475.5775, 642.1816, 632.4724, 4648.7566]
+    ],
+    "convergence": {
+      "isConverged": [true],
+      "maxAbsScore": [0.0007]
+    },
+    "nIterations": [7],
+    "nEvents": [3063],
+    "formula": ["~", "interactionDependent", "indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)"],
+    "model": ["REM"],
+    "subModel": ["choice"],
+    "rightCensored": [false],
+    "nParams": [5],
+    "call": ["estimate", "interactionDependent ~ indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)", "REM"],
+    "coefMat": [
+      [-0.0283, 0.0188, -1.5019, 0.1331],
+      [0.0329, 0.0171, 1.9278, 0.0539],
+      [-0.0721, 0.0539, -1.3371, 0.1812],
+      [1.3293, 0.0562, 23.664, 0],
+      [0.1629, 0.0185, 8.8011, 0]
+    ],
+    "AIC": [28409.2391],
+    "BIC": [28439.3749]
+  },
+  {
+    "parameters": [-0.0699, -0.0256, 0.1972, 1.3815, 0.3872],
+    "standardErrors": [0.0202, 0.017, 0.0544, 0.0567, 0.0234],
+    "logLikelihood": [-12675.9183],
+    "finalScore": [-0.0002, -0.0001, 0.0001, 0.0001, 0.0002],
+    "finalInformationMatrix": [
+      [5431.3419, 3304.4172, 786.9721, 515.383, 2304.0775],
+      [3304.4172, 6077.0777, 476.355, 794.5793, 1457.1874],
+      [786.9721, 476.355, 668.1037, 410.9995, 542.8771],
+      [515.383, 794.5793, 410.9995, 632.2544, 498.0307],
+      [2304.0775, 1457.1874, 542.8771, 498.0307, 2953.1007]
+    ],
+    "convergence": {
+      "isConverged": [true],
+      "maxAbsScore": [0.0002]
+    },
+    "nIterations": [7],
+    "nEvents": [2832],
+    "formula": ["~", "interactionDependent", "indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)"],
+    "model": ["REM"],
+    "subModel": ["choice"],
+    "rightCensored": [false],
+    "nParams": [5],
+    "call": ["estimate", "interactionDependent ~ indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)", "REM"],
+    "coefMat": [
+      [-0.0699, 0.0202, -3.4529, 0.0006],
+      [-0.0256, 0.017, -1.5021, 0.1331],
+      [0.1972, 0.0544, 3.6271, 0.0003],
+      [1.3815, 0.0567, 24.3534, 0],
+      [0.3872, 0.0234, 16.5657, 0]
+    ],
+    "AIC": [25361.8366],
+    "BIC": [25391.5803]
+  },
+  {
+    "parameters": [-0.0423, 0.0373, -0.0031, 1.1397, 0.3242],
+    "standardErrors": [0.0207, 0.019, 0.0586, 0.0597, 0.0222],
+    "logLikelihood": [-12287.5394],
+    "finalScore": [0.0003, 0.0003, 0.0001, 0.0001, 0.0003],
+    "finalInformationMatrix": [
+      [6137.9859, 4088.0626, 824.6118, 584.8878, 2657.4481],
+      [4088.0626, 5925.189, 561.8197, 772.6324, 1835.694],
+      [824.6118, 561.8197, 592.9465, 382.7953, 595.5423],
+      [584.8878, 772.6324, 382.7953, 584.5663, 571.4],
+      [2657.4481, 1835.694, 595.5423, 571.4, 3395.6407]
+    ],
+    "convergence": {
+      "isConverged": [true],
+      "maxAbsScore": [0.0003]
+    },
+    "nIterations": [7],
+    "nEvents": [2680],
+    "formula": ["~", "interactionDependent", "indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)"],
+    "model": ["REM"],
+    "subModel": ["choice"],
+    "rightCensored": [false],
+    "nParams": [5],
+    "call": ["estimate", "interactionDependent ~ indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)", "REM"],
+    "coefMat": [
+      [-0.0423, 0.0207, -2.0471, 0.0407],
+      [0.0373, 0.019, 1.9681, 0.0491],
+      [-0.0031, 0.0586, -0.0525, 0.9581],
+      [1.1397, 0.0597, 19.0971, 0],
+      [0.3242, 0.0222, 14.633, 0]
+    ],
+    "AIC": [24585.0788],
+    "BIC": [24614.5466]
+  },
+  {
+    "parameters": [-0.0532, 0.0521, -0.1806, 1.5526, 0.3789],
+    "standardErrors": [0.0273, 0.0247, 0.0692, 0.0682, 0.0371],
+    "logLikelihood": [-7927.2104],
+    "finalScore": [-2.2591e-07, -2.8617e-07, -2.2247e-07, -2.6512e-07, -1.3835e-07],
+    "finalInformationMatrix": [
+      [2808.0079, 1670.1857, 417.3691, 279.829, 833.9368],
+      [1670.1857, 2941.7446, 255.7434, 457.3052, 539.6446],
+      [417.3691, 255.7434, 379.7078, 235.3097, 183.391],
+      [279.829, 457.3052, 235.3097, 411.9221, 206.3909],
+      [833.9368, 539.6446, 183.391, 206.3909, 1017.3717]
+    ],
+    "convergence": {
+      "isConverged": [true],
+      "maxAbsScore": [2.8617e-07]
+    },
+    "nIterations": [7],
+    "nEvents": [1744],
+    "formula": ["~", "interactionDependent", "indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)"],
+    "model": ["REM"],
+    "subModel": ["choice"],
+    "rightCensored": [false],
+    "nParams": [5],
+    "call": ["estimate", "interactionDependent ~ indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)", "REM"],
+    "coefMat": [
+      [-0.0532, 0.0273, -1.9525, 0.0509],
+      [0.0521, 0.0247, 2.1079, 0.035],
+      [-0.1806, 0.0692, -2.6091, 0.0091],
+      [1.5526, 0.0682, 22.7765, 0],
+      [0.3789, 0.0371, 10.2268, 0]
+    ],
+    "AIC": [15864.4207],
+    "BIC": [15891.7404]
+  },
+  {
+    "parameters": [-0.0327, 0.009, 0.0064, 0.9994, 0.2388],
+    "standardErrors": [0.022, 0.0194, 0.0592, 0.0579, 0.0288],
+    "logLikelihood": [-10589.7506],
+    "finalScore": [3.0865e-08, 1.5319e-07, 1.4061e-08, 2.37e-08, 1.7957e-08],
+    "finalInformationMatrix": [
+      [3859.8588, 2212.4896, 479.8652, 303.9708, 1152.4774],
+      [2212.4896, 4309.4887, 308.1434, 558.9655, 679.4002],
+      [479.8652, 308.1434, 485.48, 293.2036, 191.9639],
+      [303.9708, 558.9655, 293.2036, 523.2356, 190.1717],
+      [1152.4774, 679.4002, 191.9639, 190.1717, 1571.3988]
+    ],
+    "convergence": {
+      "isConverged": [true],
+      "maxAbsScore": [1.5319e-07]
+    },
+    "nIterations": [7],
+    "nEvents": [2235],
+    "formula": ["~", "interactionDependent", "indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)"],
+    "model": ["REM"],
+    "subModel": ["choice"],
+    "rightCensored": [false],
+    "nParams": [5],
+    "call": ["estimate", "interactionDependent ~ indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)", "REM"],
+    "coefMat": [
+      [-0.0327, 0.022, -1.4836, 0.1379],
+      [0.009, 0.0194, 0.464, 0.6427],
+      [0.0064, 0.0592, 0.1079, 0.9141],
+      [0.9994, 0.0579, 17.2646, 0],
+      [0.2388, 0.0288, 8.2941, 0]
+    ],
+    "AIC": [21189.5011],
+    "BIC": [21218.0611]
+  },
+  {
+    "parameters": [-0.0186, -0.0011, -0.0413, 0.9768, 0.2709],
+    "standardErrors": [0.0176, 0.0149, 0.05, 0.0505, 0.0204],
+    "logLikelihood": [-13485.8677],
+    "finalScore": [4.4821e-06, 9.0256e-06, 1.6353e-06, 2.0679e-06, 7.1435e-06],
+    "finalInformationMatrix": [
+      [6335.2768, 3649.2597, 745.3485, 468.9626, 2467.2789],
+      [3649.2597, 7313.3237, 449.8663, 855.5492, 1436.2252],
+      [745.3485, 449.8663, 642.3632, 350.7217, 465.9315],
+      [468.9626, 855.5492, 350.7217, 658.2856, 435.5993],
+      [2467.2789, 1436.2252, 465.9315, 435.5993, 3473.7203]
+    ],
+    "convergence": {
+      "isConverged": [true],
+      "maxAbsScore": [9.0256e-06]
+    },
+    "nIterations": [7],
+    "nEvents": [2868],
+    "formula": ["~", "interactionDependent", "indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)"],
+    "model": ["REM"],
+    "subModel": ["choice"],
+    "rightCensored": [false],
+    "nParams": [5],
+    "call": ["estimate", "interactionDependent ~ indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)", "REM"],
+    "coefMat": [
+      [-0.0186, 0.0176, -1.0552, 0.2913],
+      [-0.0011, 0.0149, -0.0742, 0.9409],
+      [-0.0413, 0.05, -0.8253, 0.4092],
+      [0.9768, 0.0505, 19.3523, 0],
+      [0.2709, 0.0204, 13.2584, 0]
+    ],
+    "AIC": [26981.7354],
+    "BIC": [27011.5422]
+  },
+  {
+    "parameters": [-0.0005, 0.005, -0.044, 0.9468, 0.1535],
+    "standardErrors": [0.0145, 0.0126, 0.043, 0.0444, 0.0157],
+    "logLikelihood": [-17595.9182],
+    "finalScore": [0.0002, 0.0002, 0, 0, 0.0001],
+    "finalInformationMatrix": [
+      [9943.179, 5917.4597, 1055.9273, 667.2917, 4177.0499],
+      [5917.4597, 10677.6261, 637.6755, 1110.4926, 2555.4039],
+      [1055.9273, 637.6755, 833.3501, 426.9057, 666.1666],
+      [667.2917, 1110.4926, 426.9057, 812.6096, 640.4407],
+      [4177.0499, 2555.4039, 666.1666, 640.4407, 5983.9394]
+    ],
+    "convergence": {
+      "isConverged": [true],
+      "maxAbsScore": [0.0002]
+    },
+    "nIterations": [7],
+    "nEvents": [3713],
+    "formula": ["~", "interactionDependent", "indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)"],
+    "model": ["REM"],
+    "subModel": ["choice"],
+    "rightCensored": [false],
+    "nParams": [5],
+    "call": ["estimate", "interactionDependent ~ indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)", "REM"],
+    "coefMat": [
+      [-0.0005, 0.0145, -0.0311, 0.9752],
+      [0.005, 0.0126, 0.3975, 0.691],
+      [-0.044, 0.043, -1.0224, 0.3066],
+      [0.9468, 0.0444, 21.3315, 0],
+      [0.1535, 0.0157, 9.7631, 0]
+    ],
+    "AIC": [35201.8365],
+    "BIC": [35232.9345]
+  },
+  {
+    "parameters": [-0.0315, 0.0451, -0.1287, 1.0672, 0.2616],
+    "standardErrors": [0.0201, 0.0174, 0.056, 0.0551, 0.0254],
+    "logLikelihood": [-11192.224],
+    "finalScore": [3.488e-08, 1.135e-08, 1.0221e-07, 7.3346e-08, 3.8407e-07],
+    "finalInformationMatrix": [
+      [4782.2165, 2789.7897, 575.3134, 375.5691, 1566.5253],
+      [2789.7897, 5480.4393, 350.2118, 683.2511, 958.8698],
+      [575.3134, 350.2118, 523.6648, 301.6438, 275.0304],
+      [375.5691, 683.2511, 301.6438, 564.7551, 284.0158],
+      [1566.5253, 958.8698, 275.0304, 284.0158, 2109.3949]
+    ],
+    "convergence": {
+      "isConverged": [true],
+      "maxAbsScore": [3.8407e-07]
+    },
+    "nIterations": [7],
+    "nEvents": [2380],
+    "formula": ["~", "interactionDependent", "indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)"],
+    "model": ["REM"],
+    "subModel": ["choice"],
+    "rightCensored": [false],
+    "nParams": [5],
+    "call": ["estimate", "interactionDependent ~ indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)", "REM"],
+    "coefMat": [
+      [-0.0315, 0.0201, -1.5705, 0.1163],
+      [0.0451, 0.0174, 2.5949, 0.0095],
+      [-0.1287, 0.056, -2.2997, 0.0215],
+      [1.0672, 0.0551, 19.3659, 0],
+      [0.2616, 0.0254, 10.2814, 0]
+    ],
+    "AIC": [22394.4479],
+    "BIC": [22423.3222]
+  },
+  {
+    "parameters": [-0.0387, 0.0415, 0.0203, 1.1542, 0.3666],
+    "standardErrors": [0.0243, 0.0222, 0.0645, 0.0634, 0.0319],
+    "logLikelihood": [-9433.1688],
+    "finalScore": [8.2067e-09, 1.5814e-09, 3.0788e-09, -1.1829e-09, 9.3345e-10],
+    "finalInformationMatrix": [
+      [3583.1885, 2154.0461, 523.4531, 358.3061, 1135.811],
+      [2154.0461, 3650.9039, 333.4327, 538.8044, 733.5294],
+      [523.4531, 333.4327, 456.62, 293.2601, 267.7901],
+      [358.3061, 538.8044, 293.2601, 486.7812, 273.718],
+      [1135.811, 733.5294, 267.7901, 273.718, 1404.0338]
+    ],
+    "convergence": {
+      "isConverged": [true],
+      "maxAbsScore": [8.2067e-09]
+    },
+    "nIterations": [7],
+    "nEvents": [2037],
+    "formula": ["~", "interactionDependent", "indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)"],
+    "model": ["REM"],
+    "subModel": ["choice"],
+    "rightCensored": [false],
+    "nParams": [5],
+    "call": ["estimate", "interactionDependent ~ indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)", "REM"],
+    "coefMat": [
+      [-0.0387, 0.0243, -1.5928, 0.1112],
+      [0.0415, 0.0222, 1.8704, 0.0614],
+      [0.0203, 0.0645, 0.3147, 0.753],
+      [1.1542, 0.0634, 18.2186, 0],
+      [0.3666, 0.0319, 11.5048, 0]
+    ],
+    "AIC": [18876.3376],
+    "BIC": [18904.4337]
+  },
+  {
+    "parameters": [-0.0487, 0.0363, -0.0765, 1.0435, 0.2775],
+    "standardErrors": [0.0193, 0.0177, 0.0544, 0.0543, 0.0231],
+    "logLikelihood": [-12420.6472],
+    "finalScore": [1.8997e-07, 1.388e-07, 2.4357e-07, 1.1601e-07, 3.2649e-07],
+    "finalInformationMatrix": [
+      [5983.0536, 3706.1261, 743.4578, 489.9773, 2168.7683],
+      [3706.1261, 5968.4359, 459.1282, 736.4181, 1466.5049],
+      [743.4578, 459.1282, 602.3252, 364.0483, 427.7227],
+      [489.9773, 736.4181, 364.0483, 624.8703, 449.3215],
+      [2168.7683, 1466.5049, 427.7227, 449.3215, 2789.9033]
+    ],
+    "convergence": {
+      "isConverged": [true],
+      "maxAbsScore": [3.2649e-07]
+    },
+    "nIterations": [7],
+    "nEvents": [2651],
+    "formula": ["~", "interactionDependent", "indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)"],
+    "model": ["REM"],
+    "subModel": ["choice"],
+    "rightCensored": [false],
+    "nParams": [5],
+    "call": ["estimate", "interactionDependent ~ indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)", "REM"],
+    "coefMat": [
+      [-0.0487, 0.0193, -2.519, 0.0118],
+      [0.0363, 0.0177, 2.0543, 0.0399],
+      [-0.0765, 0.0544, -1.4057, 0.1598],
+      [1.0435, 0.0543, 19.232, 0],
+      [0.2775, 0.0231, 12.0189, 0]
+    ],
+    "AIC": [24851.2945],
+    "BIC": [24880.7079]
+  },
+  {
+    "parameters": [-0.0309, 0.0436, 0.0311, 1.1987, 0.2835],
+    "standardErrors": [0.0222, 0.02, 0.06, 0.0602, 0.0295],
+    "logLikelihood": [-9958.8695],
+    "finalScore": [5.8231e-08, 5.1142e-08, 3.2583e-08, 1.5154e-08, 5.988e-08],
+    "finalInformationMatrix": [
+      [3954.4632, 2301.11, 526.346, 354.7599, 1194.0596],
+      [2301.11, 4277.5011, 332.2981, 597.6337, 730.7569],
+      [526.346, 332.2981, 489.1168, 296.5033, 265.3061],
+      [354.7599, 597.6337, 296.5033, 513.8827, 281.1052],
+      [1194.0596, 730.7569, 265.3061, 281.1052, 1573.9879]
+    ],
+    "convergence": {
+      "isConverged": [true],
+      "maxAbsScore": [5.988e-08]
+    },
+    "nIterations": [7],
+    "nEvents": [2148],
+    "formula": ["~", "interactionDependent", "indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)"],
+    "model": ["REM"],
+    "subModel": ["choice"],
+    "rightCensored": [false],
+    "nParams": [5],
+    "call": ["estimate", "interactionDependent ~ indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)", "REM"],
+    "coefMat": [
+      [-0.0309, 0.0222, -1.3938, 0.1634],
+      [0.0436, 0.02, 2.1809, 0.0292],
+      [0.0311, 0.06, 0.5195, 0.6034],
+      [1.1987, 0.0602, 19.9169, 0],
+      [0.2835, 0.0295, 9.5973, 0]
+    ],
+    "AIC": [19927.739],
+    "BIC": [19956.1004]
+  },
+  {
+    "parameters": [-0.0367, 0.0003, 0.1949, 1.2526, 0.2818],
+    "standardErrors": [0.023, 0.0183, 0.0661, 0.068, 0.0245],
+    "logLikelihood": [-9521.3118],
+    "finalScore": [2.4953e-09, 4.0146e-09, 1.0986e-09, 1.1225e-09, 5.1696e-09],
+    "finalInformationMatrix": [
+      [4344.6234, 2974.051, 587.0548, 440.8139, 1922.5748],
+      [2974.051, 5540.9515, 408.9132, 669.6532, 1273.344],
+      [587.0548, 408.9132, 422.413, 253.1413, 390.6899],
+      [440.8139, 669.6532, 253.1413, 412.1892, 351.3112],
+      [1922.5748, 1273.344, 390.6899, 351.3112, 2607.183]
+    ],
+    "convergence": {
+      "isConverged": [true],
+      "maxAbsScore": [5.1696e-09]
+    },
+    "nIterations": [8],
+    "nEvents": [2083],
+    "formula": ["~", "interactionDependent", "indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)"],
+    "model": ["REM"],
+    "subModel": ["choice"],
+    "rightCensored": [false],
+    "nParams": [5],
+    "call": ["estimate", "interactionDependent ~ indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)", "REM"],
+    "coefMat": [
+      [-0.0367, 0.023, -1.5959, 0.1105],
+      [0.0003, 0.0183, 0.0164, 0.9869],
+      [0.1949, 0.0661, 2.9507, 0.0032],
+      [1.2526, 0.068, 18.4101, 0],
+      [0.2818, 0.0245, 11.5217, 0]
+    ],
+    "AIC": [19052.6237],
+    "BIC": [19080.8315]
+  },
+  {
+    "parameters": [-0.0639, 0.0387, 0.0777, 1.4859, 0.4299],
+    "standardErrors": [0.0281, 0.025, 0.0695, 0.0698, 0.0356],
+    "logLikelihood": [-8108.0867],
+    "finalScore": [-2.477e-06, -1.3281e-06, 6.7416e-07, 4.6196e-07, 1.0991e-06],
+    "finalInformationMatrix": [
+      [2742.9378, 1721.0673, 450.1543, 314.5003, 826.3251],
+      [1721.0673, 2986.405, 292.9015, 477.2911, 528.7017],
+      [450.1543, 292.9015, 409.6768, 264.0243, 204.0419],
+      [314.5003, 477.2911, 264.0243, 423.2286, 223.1107],
+      [826.3251, 528.7017, 204.0419, 223.1107, 1084.594]
+    ],
+    "convergence": {
+      "isConverged": [true],
+      "maxAbsScore": [2.477e-06]
+    },
+    "nIterations": [7],
+    "nEvents": [1803],
+    "formula": ["~", "interactionDependent", "indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)"],
+    "model": ["REM"],
+    "subModel": ["choice"],
+    "rightCensored": [false],
+    "nParams": [5],
+    "call": ["estimate", "interactionDependent ~ indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)", "REM"],
+    "coefMat": [
+      [-0.0639, 0.0281, -2.2753, 0.0229],
+      [0.0387, 0.025, 1.5487, 0.1214],
+      [0.0777, 0.0695, 1.118, 0.2636],
+      [1.4859, 0.0698, 21.2776, 0],
+      [0.4299, 0.0356, 12.072, 0]
+    ],
+    "AIC": [16226.1733],
+    "BIC": [16253.6594]
+  },
+  {
+    "parameters": [-0.081, 0.0122, 0.2971, 1.316, 0.4464],
+    "standardErrors": [0.0314, 0.0281, 0.0774, 0.0763, 0.044],
+    "logLikelihood": [-6783.8873],
+    "finalScore": [-4.1828e-06, -1.6193e-06, 7.3078e-07, 8.0284e-07, 2.0493e-06],
+    "finalInformationMatrix": [
+      [2060.4072, 1148.6654, 352.1789, 229.9117, 647.7179],
+      [1148.6654, 2177.1312, 225.3502, 382.1673, 400.3087],
+      [352.1789, 225.3502, 318.7236, 201.3461, 160.5207],
+      [229.9117, 382.1673, 201.3461, 339.3492, 155.9883],
+      [647.7179, 400.3087, 160.5207, 155.9883, 743.804]
+    ],
+    "convergence": {
+      "isConverged": [true],
+      "maxAbsScore": [4.1828e-06]
+    },
+    "nIterations": [7],
+    "nEvents": [1489],
+    "formula": ["~", "interactionDependent", "indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)"],
+    "model": ["REM"],
+    "subModel": ["choice"],
+    "rightCensored": [false],
+    "nParams": [5],
+    "call": ["estimate", "interactionDependent ~ indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)", "REM"],
+    "coefMat": [
+      [-0.081, 0.0314, -2.5814, 0.0098],
+      [0.0122, 0.0281, 0.4361, 0.6628],
+      [0.2971, 0.0774, 3.8386, 0.0001],
+      [1.316, 0.0763, 17.2403, 0],
+      [0.4464, 0.044, 10.1512, 0]
+    ],
+    "AIC": [13577.7745],
+    "BIC": [13604.3038]
+  },
+  {
+    "parameters": [-0.0736, 0.0636, 0.1565, 1.3054, 0.2913],
+    "standardErrors": [0.0281, 0.0259, 0.0702, 0.0694, 0.0408],
+    "logLikelihood": [-8046.5311],
+    "finalScore": [-1.1442e-08, -1.4363e-10, 3.2916e-09, 2.5735e-09, 5.8351e-10],
+    "finalInformationMatrix": [
+      [2527.5376, 1531.6993, 370.0506, 255.9513, 590.5521],
+      [1531.6993, 2675.1868, 243.1585, 413.3807, 360.4567],
+      [370.0506, 243.1585, 386.2128, 252.0321, 123.8034],
+      [255.9513, 413.3807, 252.0321, 412.9636, 145.7805],
+      [590.5521, 360.4567, 123.8034, 145.7805, 761.6061]
+    ],
+    "convergence": {
+      "isConverged": [true],
+      "maxAbsScore": [1.1442e-08]
+    },
+    "nIterations": [7],
+    "nEvents": [1743],
+    "formula": ["~", "interactionDependent", "indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)"],
+    "model": ["REM"],
+    "subModel": ["choice"],
+    "rightCensored": [false],
+    "nParams": [5],
+    "call": ["estimate", "interactionDependent ~ indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)", "REM"],
+    "coefMat": [
+      [-0.0736, 0.0281, -2.6219, 0.0087],
+      [0.0636, 0.0259, 2.4598, 0.0139],
+      [0.1565, 0.0702, 2.2298, 0.0258],
+      [1.3054, 0.0694, 18.8064, 0],
+      [0.2913, 0.0408, 7.1442, 9.055e-13]
+    ],
+    "AIC": [16103.0623],
+    "BIC": [16130.3791]
+  },
+  {
+    "parameters": [-0.0583, 0.0559, 0.1942, 1.3403, 0.4539],
+    "standardErrors": [0.0312, 0.0273, 0.0743, 0.0756, 0.0391],
+    "logLikelihood": [-7229.3752],
+    "finalScore": [3.9417e-08, -1.0904e-08, 4.483e-08, -1.8561e-08, -1.7623e-08],
+    "finalInformationMatrix": [
+      [2298.8671, 1530.2209, 376.3877, 289.8562, 730.7584],
+      [1530.2209, 2622.8762, 265.7704, 437.1749, 499.4726],
+      [376.3877, 265.7704, 351.5148, 227.8431, 175.3281],
+      [289.8562, 437.1749, 227.8431, 366.7871, 205.5756],
+      [730.7584, 499.4726, 175.3281, 205.5756, 930.8169]
+    ],
+    "convergence": {
+      "isConverged": [true],
+      "maxAbsScore": [4.483e-08]
+    },
+    "nIterations": [7],
+    "nEvents": [1603],
+    "formula": ["~", "interactionDependent", "indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)"],
+    "model": ["REM"],
+    "subModel": ["choice"],
+    "rightCensored": [false],
+    "nParams": [5],
+    "call": ["estimate", "interactionDependent ~ indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)", "REM"],
+    "coefMat": [
+      [-0.0583, 0.0312, -1.8665, 0.062],
+      [0.0559, 0.0273, 2.0484, 0.0405],
+      [0.1942, 0.0743, 2.6146, 0.0089],
+      [1.3403, 0.0756, 17.7269, 0],
+      [0.4539, 0.0391, 11.6198, 0]
+    ],
+    "AIC": [14468.7505],
+    "BIC": [14495.6486]
+  },
+  {
+    "parameters": [-0.0526, 0.0094, 0.005, 1.1076, 0.2902],
+    "standardErrors": [0.0204, 0.0172, 0.0549, 0.0554, 0.0252],
+    "logLikelihood": [-11467.9641],
+    "finalScore": [-1.3564e-06, -6.8076e-07, 3.6233e-07, 2.8807e-07, 1.0225e-06],
+    "finalInformationMatrix": [
+      [5108.0723, 3299.6391, 657.2232, 469.378, 1817.8348],
+      [3299.6391, 6088.1409, 432.5252, 781.2223, 1237.5738],
+      [657.2232, 432.5252, 561.0283, 325.3493, 352.8842],
+      [469.378, 781.2223, 325.3493, 583.5858, 369.9953],
+      [1817.8348, 1237.5738, 352.8842, 369.9953, 2297.0474]
+    ],
+    "convergence": {
+      "isConverged": [true],
+      "maxAbsScore": [1.3564e-06]
+    },
+    "nIterations": [7],
+    "nEvents": [2455],
+    "formula": ["~", "interactionDependent", "indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)"],
+    "model": ["REM"],
+    "subModel": ["choice"],
+    "rightCensored": [false],
+    "nParams": [5],
+    "call": ["estimate", "interactionDependent ~ indeg(interactionNetwork, window = window_size) + outdeg(interactionNetwork, window = window_size) + inertia(interactionNetwork, window = window_size) + recip(interactionNetwork, window = window_size) + trans(interactionNetwork, window = window_size)", "REM"],
+    "coefMat": [
+      [-0.0526, 0.0204, -2.5791, 0.0099],
+      [0.0094, 0.0172, 0.544, 0.5864],
+      [0.005, 0.0549, 0.0912, 0.9273],
+      [1.1076, 0.0554, 20.0007, 0],
+      [0.2902, 0.0252, 11.498, 0]
+    ],
+    "AIC": [22945.9282],
+    "BIC": [22974.9576]
+  }
+]
