@@ -12,19 +12,6 @@ import toml
 from src import settings
 
 scripts = [
-<<<<<<< HEAD
-    "1_data/0_0_0_get_csv_from_xlsx.py",
-    "1_data/0_0_get_normalization.py",
-    "1_data/0_1_preproc_data.py",
-    "1_data/0_2_distances_angles_matrix.py",
-
-    "2_networks/1_0_find_interactions.py",
-    "2_networks/1_2_create_total_graph.py",
-    "2_networks/1_4_get_pseudo_populations.py",
-    "3_analysis/2_0_1_distance_traveled.py",
-    "3_analysis/2_0_global_measures.py",
-    "3_analysis/2_2_local_measures.py",
-=======
     # "1_data/1_0_0_get_csv_from_xlsx.py",
     # "1_data/1_0_get_normalization.py",
     # "1_data/1_1_preproc_data.py",
@@ -40,7 +27,6 @@ scripts = [
     # "3_analysis/3_2_local_measures.py",
     # # # # # ##  "2_analysis/2_1_community_measures.py",
     # # "2_analysis/2_0_population_retention_heatmap.py",
->>>>>>> drosophila-isolation
 ]
 
 temporal_networks_scripts = [
