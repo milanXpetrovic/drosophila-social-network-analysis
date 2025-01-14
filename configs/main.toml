@@ -1,39 +1,27 @@
 # start and end time must be in minutes
 START_TIME = 0
 END_TIME = 20
-
 # experiment duration time must be in seconds
 EXPERIMENT_DURATION = 1200
-
 # timewindow size in seconds for snapshot creation
 TIME_WINDOW = 60
-
 # arena diameter in mm
 ARENA_DIAMETER = 61 
-
 #video FPS
 FPS = 24
 
-<<<<<<< HEAD
-# list of strings of treatment names, etc. ["CS", "CS_LDA", "LDA"]
-TREATMENTS = [] 
-=======
-# TREATMENTS = ['CS_10D', 'CsCh', 'Cs_5DIZ', 'LDA_5DIZ', 'LDA_OCT_5DIZ', 'OCT_5DIZ'] 
-TREATMENTS = ['Cs_5DIZ', 'CS_10D', 'CsCh'] 
-# TREATMENTS = ['pseudo_CS_10D', 'pseudo_CsCh', 'pseudo_Cs_5DIZ', 'pseudo_LDA_5DIZ', 'pseudo_LDA_OCT_5DIZ', 'pseudo_OCT_5DIZ'] 
-PSEUDO_TREATMENTS = ['pseudo_CsCh', 'pseudo_Cs_5DIZ', 'pseudo_LDA_5DIZ', 'pseudo_OCT_5DIZ'] 
+## 
+# STATIC_CRITERIA=0
 
+TREATMENTS = ['CS_10D', 'CsCh', 'Cs_5DIZ', 'LDA_5DIZ', 'LDA_OCT_5DIZ', 'OCT_5DIZ']
+
+# PSEUDO_TREATMENTS = ['pseudo_CS_10D', 'pseudo_CsCh', 'pseudo_Cs_5DIZ', 'pseudo_LDA_5DIZ', 'pseudo_LDA_OCT_5DIZ', 'pseudo_OCT_5DIZ'] 
 # TREATMENTS = ['CS_10D', 'CsCh', 'Cs_5DIZ', 'LDA_5DIZ', 'LDA_OCT_5DIZ', 'OCT_5DIZ', 'pseudo_CS_10D', 'pseudo_CsCh', 'pseudo_Cs_5DIZ', 'pseudo_LDA_5DIZ', 'pseudo_LDA_OCT_5DIZ', 'pseudo_OCT_5DIZ']
->>>>>>> drosophila-isolation
 
 # number of pseudo random groups
 N_RANDOM_GROUPS = 10000
-<<<<<<< HEAD
 # number of samples for pseudo random group
 N_OF_SAMPLES = 12
-=======
 
-
-## this is part fo the plots
+## this is part for the plots
 COLORS = ["black", "white"]
->>>>>>> drosophila-isolation
