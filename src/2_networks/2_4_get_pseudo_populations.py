@@ -78,7 +78,7 @@ TREATMENT = os.environ["TREATMENT"]
 
 main_config = fileio.get_config(settings.CONFIG_NAME)
 
-INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "1_0_preproc_data", TREATMENT)
+INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "1_1_preproc_data", TREATMENT)
 treatment = fileio.load_multiple_folders(INPUT_DIR)
 
 treatment_all = {}

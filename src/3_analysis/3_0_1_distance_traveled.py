@@ -9,7 +9,7 @@ from src.utils import fileio
 
 TREATMENT = os.environ["TREATMENT"]
 
-INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "1_0_preproc_data", TREATMENT)
+INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "1_1_preproc_data", TREATMENT)
 trials = fileio.load_multiple_folders(INPUT_DIR)
 SCRIPT_OUTPUT = os.path.join(settings.RESULTS_DIR, "distances_traveled", TREATMENT)
 
