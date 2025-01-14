@@ -34,8 +34,8 @@ for group_name, group_path in groups.items():
             'pos x': x,
             'pos y': y,
             'ori': theta,
-            'a':a,
-            'b':b
+            'a': a,
+            'b': b
         },
             columns=['pos x', 'pos y', 'ori', 'a', 'b'])
         df.to_csv(SAVE_PATH + group_name + "/fly" + str(i+1) + ".csv")

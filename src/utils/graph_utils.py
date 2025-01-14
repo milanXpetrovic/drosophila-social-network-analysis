@@ -253,38 +253,20 @@ def local_measures_functions():
         ('Eigenvector centrality', lambda g: nx.eigenvector_centrality(g)),
         ('Closeness centrality', lambda g: nx.closeness_centrality(g)),
         ('In-Strength distribution, w=count', lambda g: calculate_weighted_in_degree(g, 'count')),
-        (
-            'Out-Strength distribution, w=count',
-            lambda g: calculate_weighted_out_degree(g, 'count'),
-        ),
-        (
-            'In-Strength distribution, w=duration',
-            lambda g: calculate_weighted_in_degree(g, 'total_interaction_times'),
-        ),
-        (
-            'Out-Strength distribution, w=duration',
-            lambda g: calculate_weighted_out_degree(g, 'total_interaction_times'),
-        ),
+        ('Out-Strength distribution, w=count', lambda g: calculate_weighted_out_degree(g, 'count'),),
+        ('In-Strength distribution, w=duration', lambda g: calculate_weighted_in_degree(g, 'total_interaction_times'),),
+        ('Out-Strength distribution, w=duration', lambda g: calculate_weighted_out_degree(g, 'total_interaction_times'),),
         ('Weighted Degree (count)', lambda g: dict(nx.degree(g, weight='count'))),
-        (
-            'Weighted Degree (duration(seconds))',
-            lambda g: dict(nx.degree(g, weight='total_interaction_times')),
-        ),
+        ('Weighted Degree (duration(seconds))', lambda g: dict(nx.degree(g, weight='total_interaction_times')),),
         ('In-degree', lambda g: dict(g.in_degree())),
         ('Out-degree', lambda g: dict(g.out_degree())),
         ('Selectivity', lambda g: get_selectivity(g)),
         ('Betweenness centrality w=None', lambda g: nx.betweenness_centrality(g, weight=None)),
         ('Betweenness centrality w=count', lambda g: nx.betweenness_centrality(g, weight='count')),
-        (
-            'Betweenness centrality w=duration(seconds)',
-            lambda g: nx.betweenness_centrality(g, weight='total_interaction_times'),
-        ),
+        ('Betweenness centrality w=duration(seconds)', lambda g: nx.betweenness_centrality(g, weight='total_interaction_times'),),
         ('Clustering coefficient w=None', lambda g: nx.clustering(g, weight=None)),
         ('Clustering coefficient w=count', lambda g: nx.clustering(g, weight='count')),
-        (
-            'Clustering coefficient w=duration(seconds)',
-            lambda g: nx.clustering(g, weight='total_interaction_times'),
-        ),
+        ('Clustering coefficient w=duration(seconds)', lambda g: nx.clustering(g, weight='total_interaction_times'),),
         ('PageRank centrality', lambda g: nx.pagerank(g)),
     ]
 
