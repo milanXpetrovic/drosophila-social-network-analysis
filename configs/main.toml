@@ -4,7 +4,7 @@ END_TIME = 20
 # experiment duration time must be in seconds
 EXPERIMENT_DURATION = 1200
 # timewindow size in seconds for snapshot creation
-TIME_WINDOW = 60
+TIME_WINDOW = 45
 # arena diameter in mm
 ARENA_DIAMETER = 61 
 #video FPS
@@ -12,6 +12,7 @@ FPS = 24
 
 ## 
 # STATIC_CRITERIA=0
+
 
 TREATMENTS = ['CS_10D', 'CsCh', 'Cs_5DIZ', 'LDA_5DIZ', 'LDA_OCT_5DIZ', 'OCT_5DIZ']
 

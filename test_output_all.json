@@ -1,0 +1,30 @@
+{
+  "parameters": [-5.676, 0.0849, -0.1109],
+  "standardErrors": [0.04, 0.0046, 0.0209],
+  "logLikelihood": [-12745.1063],
+  "finalScore": [-5.4026e-06, -0, 1.6102e-06],
+  "finalInformationMatrix": [
+    [2122, 14742, -1529.5862],
+    [14742, 150735.0578, -11894.6551],
+    [-1529.5862, -11894.6551, 3431.0498]
+  ],
+  "convergence": {
+    "isConverged": [true],
+    "maxAbsScore": [0]
+  },
+  "nIterations": [11],
+  "nEvents": [28989],
+  "formula": ["~", "dependent", "1 + indeg(interaction_network, weighted = TRUE, window = 864) + ego(nodesAttr$influence_neg)"],
+  "model": ["DyNAM"],
+  "subModel": ["rate"],
+  "rightCensored": [true],
+  "nParams": [3],
+  "call": ["estimate", "dependent ~ 1 + indeg(interaction_network, weighted = TRUE, window = 864) + ego(nodesAttr$influence_neg)", "DyNAM", "rate"],
+  "coefMat": [
+    [-5.676, 0.04, -142.0576, 0],
+    [0.0849, 0.0046, 18.5289, 0],
+    [-0.1109, 0.0209, -5.3151, 1.0661e-07]
+  ],
+  "AIC": [25496.2125],
+  "BIC": [25521.0365]
+}

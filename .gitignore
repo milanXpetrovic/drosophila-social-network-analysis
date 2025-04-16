@@ -1,13 +1,11 @@
 data/*
 data/trackings/*
-<<<<<<< HEAD
-notebooks/*
-=======
 reports/*
 configs/*
 docs/*
 src/settings.py
->>>>>>> drosophila-isolation
+/r-scripts/data/*
+/r-scripts/res/*
 
 .env/
 .vscode/

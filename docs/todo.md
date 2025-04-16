@@ -4,8 +4,17 @@
 
 **MAIN**
 
-- [ ] `feature` ERGM in R
 - [ ] `feature` triads
+
+## Important
+- [ ] `feature` DyNAM in R and SOAM for snapshots 
+
+ - [ ] Snapshot networks
+    - [ ] Enable network creation for given time window and time step size
+    - [ ] Enable fixed density network creation
+        - [ ] Weighted directed
+        - [ ] Binary, undirected
+
 
 ## New features
 
@@ -25,6 +34,8 @@
 
 - create discretization spatial method
 - social distance and angle plot script
+
+
 
 ### Done
 

@@ -1,0 +1,43 @@
+import os
+import sys
+import time
+from concurrent.futures import ProcessPoolExecutor
+
+import matplotlib.pyplot as plt
+import networkx as nx
+import numpy as np
+import pandas as pd
+import toml
+
+from src import settings
+from src.utils import fileio
+
+TREATMENTS = ['CS_10D', 'Cs_5DIZ', 'CsCh']
+
+
+time_window = 30 * 24
+time_increment = 1
+
+in_degree
+out_degree
+
+high_high
+high_low
+low_high
+low_low
+
+average
+
+
+for TREATMENT in TREATMENTS:
+    TREATMENT_CONFIG = os.path.join(settings.CONFIG_DIR, "interaction_criteria", f"{TREATMENT}.toml")
+    with open(TREATMENT_CONFIG) as f: treatment_config = toml.load(f)
+
+    INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "2_0_find_interactions", TREATMENT)
+    treatment = fileio.load_files_from_folder(INPUT_DIR)
+
+    rec_times = []
+    for group_name, group_path in treatment.items():
+        df_interactions = pd.read_csv(group_path, index_col=0)
+        df_interactions = df_interactions.head(100)
+        df_interactions = df_interactions.sort_values("start_of_interaction")
