@@ -16,9 +16,7 @@ os.makedirs(ANGLES_OUTPUT, exist_ok=True)
 
 for group_name, group_path in treatment.items():
     fly_dict = fileio.load_files_from_folder(group_path)
-    
     distances = data_utils.distances_between_all_flies(fly_dict)
     distances.to_csv(os.path.join(DISTANCES_OUTPUT, f"{group_name}.csv"))
-
     angles = data_utils.angles_between_all_flies(fly_dict)
     angles.to_csv(os.path.join(ANGLES_OUTPUT, f"{group_name}.csv"))

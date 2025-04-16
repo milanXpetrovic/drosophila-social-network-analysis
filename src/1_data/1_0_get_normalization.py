@@ -17,6 +17,8 @@ treatment = fileio.load_multiple_folders(INPUT_DIR)
 SCRIPT_OUTPUT = os.path.join(settings.NORMALIZATION_DIR, TREATMENT)
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
 
+## TODO: make this a function
+
 for group_name, group_path in treatment.items():
     fly_dict = fileio.load_files_from_folder(group_path)
     min_x, min_y, max_x, max_y = (

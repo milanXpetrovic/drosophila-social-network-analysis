@@ -29,15 +29,14 @@ scripts = [
     # "3_analysis/3_6_global_measures_shuffled.py",
     # # # # # ##  "2_analysis/2_1_community_measures.py",
     # # "2_analysis/2_0_population_retention_heatmap.py",
+    "temporal_analysis/1_create_snapshots.py",
 ]
 
 temporal_networks_scripts = [
-    # "2_networks/2_1_create_snapshots.py",
-    # "3_analysis/3_0_global_measures_snapshots.py",
-    # "3_analysis/3_3_local_measures_snapshots.py",
-    # # "2_analysis/2_4_count_triads_snapshots.py",
+    # "temporal_analysis/3_0_global_measures_snapshots.py",
+    # "temporal_analysis/3_3_local_measures_snapshots.py",
+    # # "temporal_analysis/2_4_count_triads_snapshots.py",
 ]
-
 
 CONFIG_PATH = os.path.join(settings.CONFIG_DIR, "main.toml")
 with open(CONFIG_PATH, "r") as file: config = toml.load(file)
@@ -55,7 +54,7 @@ for TREATMENT_NAME in config["TREATMENTS"]:
             subprocess.run(["python", script_path])
             print(f"DONE with: {script}")
             time.sleep(1)
-            
+
         except BaseException: sys.exit()
 
     print("-" * 15, f" DONE: {TREATMENT} ", "-" * 25)

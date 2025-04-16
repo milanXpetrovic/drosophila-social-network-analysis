@@ -1,4 +1,6 @@
 # %%
+
+## TODO: fix this script
 import os
 
 import networkx as nx

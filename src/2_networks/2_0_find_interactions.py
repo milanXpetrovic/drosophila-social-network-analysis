@@ -46,7 +46,8 @@ for angles_tuple, distances_tuple in zip(angles.items(), distances.items()):
             "end_of_interaction",
             "duration",
             "distance",
-            "angle"])
+            "angle"
+        ])
 
     for angles_col, distances_col in zip(df_angles.columns, df_distances.columns):
         if angles_col != distances_col: sys.exit()

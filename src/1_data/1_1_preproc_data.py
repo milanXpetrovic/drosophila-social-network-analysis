@@ -19,8 +19,6 @@ END = config["END_TIME"] * 60 * config["FPS"]
 
 SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, "1_1_preproc_data", TREATMENT)
 
-
-#%%
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
 
 for group_name, group_path in treatment.items():
