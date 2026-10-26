@@ -1,0 +1,1249 @@
+================================================================================
+PROJECT: 4_drosophila_social_interaction_criteria
+================================================================================
+
+DIRECTORY STRUCTURE:
+----------------------------------------
+4_drosophila_social_interaction_criteria/
+├── 1_find_interactions.py
+├── 2_create_total_graph.py
+├── 3_create_adj_matrix.py
+├── 4_create_snapshots.py
+├── 5_1_pseudo_populations_new.py
+├── 5_get_pseudo_populations.py
+├── 6_get_shuffled_networks.py
+├── __init__.py
+└── drosophila-data
+    ├── PseudoCS_10D
+    │   ├── pseudo_group_1.csv
+    │   ├── pseudo_group_10.csv
+    │   ├── pseudo_group_100.csv
+    │   ├── pseudo_group_101.csv
+    │   ├── pseudo_group_102.csv
+    │   ├── pseudo_group_103.csv
+    │   ├── pseudo_group_104.csv
+    │   ├── pseudo_group_105.csv
+    │   ├── pseudo_group_106.csv
+    │   ├── pseudo_group_107.csv
+    │   ├── pseudo_group_108.csv
+    │   ├── pseudo_group_109.csv
+    │   ├── pseudo_group_11.csv
+    │   ├── pseudo_group_110.csv
+    │   ├── pseudo_group_111.csv
+    │   ├── pseudo_group_112.csv
+    │   ├── pseudo_group_113.csv
+    │   ├── pseudo_group_114.csv
+    │   ├── pseudo_group_115.csv
+    │   ├── pseudo_group_116.csv
+    │   ├── pseudo_group_117.csv
+    │   ├── pseudo_group_118.csv
+    │   ├── pseudo_group_119.csv
+    │   ├── pseudo_group_12.csv
+    │   ├── pseudo_group_120.csv
+    │   ├── pseudo_group_121.csv
+    │   ├── pseudo_group_122.csv
+    │   ├── pseudo_group_123.csv
+    │   ├── pseudo_group_124.csv
+    │   ├── pseudo_group_125.csv
+    │   ├── pseudo_group_126.csv
+    │   ├── pseudo_group_127.csv
+    │   ├── pseudo_group_128.csv
+    │   ├── pseudo_group_129.csv
+    │   ├── pseudo_group_13.csv
+    │   ├── pseudo_group_130.csv
+    │   ├── pseudo_group_131.csv
+    │   ├── pseudo_group_132.csv
+    │   ├── pseudo_group_133.csv
+    │   ├── pseudo_group_134.csv
+    │   ├── pseudo_group_135.csv
+    │   ├── pseudo_group_136.csv
+    │   ├── pseudo_group_137.csv
+    │   ├── pseudo_group_138.csv
+    │   ├── pseudo_group_139.csv
+    │   ├── pseudo_group_14.csv
+    │   ├── pseudo_group_140.csv
+    │   ├── pseudo_group_141.csv
+    │   ├── pseudo_group_142.csv
+    │   ├── pseudo_group_143.csv
+    │   ├── pseudo_group_144.csv
+    │   ├── pseudo_group_145.csv
+    │   ├── pseudo_group_146.csv
+    │   ├── pseudo_group_147.csv
+    │   ├── pseudo_group_148.csv
+    │   ├── pseudo_group_149.csv
+    │   ├── pseudo_group_15.csv
+    │   ├── pseudo_group_150.csv
+    │   ├── pseudo_group_151.csv
+    │   ├── pseudo_group_152.csv
+    │   ├── pseudo_group_153.csv
+    │   ├── pseudo_group_154.csv
+    │   ├── pseudo_group_155.csv
+    │   ├── pseudo_group_156.csv
+    │   ├── pseudo_group_157.csv
+    │   ├── pseudo_group_158.csv
+    │   ├── pseudo_group_159.csv
+    │   ├── pseudo_group_16.csv
+    │   ├── pseudo_group_160.csv
+    │   ├── pseudo_group_161.csv
+    │   ├── pseudo_group_162.csv
+    │   ├── pseudo_group_163.csv
+    │   ├── pseudo_group_164.csv
+    │   ├── pseudo_group_165.csv
+    │   ├── pseudo_group_166.csv
+    │   ├── pseudo_group_167.csv
+    │   ├── pseudo_group_168.csv
+    │   ├── pseudo_group_169.csv
+    │   ├── pseudo_group_17.csv
+    │   ├── pseudo_group_170.csv
+    │   ├── pseudo_group_171.csv
+    │   ├── pseudo_group_172.csv
+    │   ├── pseudo_group_173.csv
+    │   ├── pseudo_group_174.csv
+    │   ├── pseudo_group_175.csv
+    │   ├── pseudo_group_176.csv
+    │   ├── pseudo_group_177.csv
+    │   ├── pseudo_group_178.csv
+    │   ├── pseudo_group_179.csv
+    │   ├── pseudo_group_18.csv
+    │   ├── pseudo_group_180.csv
+    │   ├── pseudo_group_181.csv
+    │   ├── pseudo_group_182.csv
+    │   ├── pseudo_group_183.csv
+    │   ├── pseudo_group_184.csv
+    │   ├── pseudo_group_185.csv
+    │   ├── pseudo_group_186.csv
+    │   ├── pseudo_group_187.csv
+    │   ├── pseudo_group_188.csv
+    │   ├── pseudo_group_189.csv
+    │   ├── pseudo_group_19.csv
+    │   ├── pseudo_group_190.csv
+    │   ├── pseudo_group_191.csv
+    │   ├── pseudo_group_192.csv
+    │   ├── pseudo_group_193.csv
+    │   ├── pseudo_group_194.csv
+    │   ├── pseudo_group_195.csv
+    │   ├── pseudo_group_196.csv
+    │   ├── pseudo_group_197.csv
+    │   ├── pseudo_group_198.csv
+    │   ├── pseudo_group_199.csv
+    │   ├── pseudo_group_2.csv
+    │   ├── pseudo_group_20.csv
+    │   ├── pseudo_group_200.csv
+    │   ├── pseudo_group_21.csv
+    │   ├── pseudo_group_22.csv
+    │   ├── pseudo_group_23.csv
+    │   ├── pseudo_group_24.csv
+    │   ├── pseudo_group_25.csv
+    │   ├── pseudo_group_26.csv
+    │   ├── pseudo_group_27.csv
+    │   ├── pseudo_group_28.csv
+    │   ├── pseudo_group_29.csv
+    │   ├── pseudo_group_3.csv
+    │   ├── pseudo_group_30.csv
+    │   ├── pseudo_group_31.csv
+    │   ├── pseudo_group_32.csv
+    │   ├── pseudo_group_33.csv
+    │   ├── pseudo_group_34.csv
+    │   ├── pseudo_group_35.csv
+    │   ├── pseudo_group_36.csv
+    │   ├── pseudo_group_37.csv
+    │   ├── pseudo_group_38.csv
+    │   ├── pseudo_group_39.csv
+    │   ├── pseudo_group_4.csv
+    │   ├── pseudo_group_40.csv
+    │   ├── pseudo_group_41.csv
+    │   ├── pseudo_group_42.csv
+    │   ├── pseudo_group_43.csv
+    │   ├── pseudo_group_44.csv
+    │   ├── pseudo_group_45.csv
+    │   ├── pseudo_group_46.csv
+    │   ├── pseudo_group_47.csv
+    │   ├── pseudo_group_48.csv
+    │   ├── pseudo_group_49.csv
+    │   ├── pseudo_group_5.csv
+    │   ├── pseudo_group_50.csv
+    │   ├── pseudo_group_51.csv
+    │   ├── pseudo_group_52.csv
+    │   ├── pseudo_group_53.csv
+    │   ├── pseudo_group_54.csv
+    │   ├── pseudo_group_55.csv
+    │   ├── pseudo_group_56.csv
+    │   ├── pseudo_group_57.csv
+    │   ├── pseudo_group_58.csv
+    │   ├── pseudo_group_59.csv
+    │   ├── pseudo_group_6.csv
+    │   ├── pseudo_group_60.csv
+    │   ├── pseudo_group_61.csv
+    │   ├── pseudo_group_62.csv
+    │   ├── pseudo_group_63.csv
+    │   ├── pseudo_group_64.csv
+    │   ├── pseudo_group_65.csv
+    │   ├── pseudo_group_66.csv
+    │   ├── pseudo_group_67.csv
+    │   ├── pseudo_group_68.csv
+    │   ├── pseudo_group_69.csv
+    │   ├── pseudo_group_7.csv
+    │   ├── pseudo_group_70.csv
+    │   ├── pseudo_group_71.csv
+    │   ├── pseudo_group_72.csv
+    │   ├── pseudo_group_73.csv
+    │   ├── pseudo_group_74.csv
+    │   ├── pseudo_group_75.csv
+    │   ├── pseudo_group_76.csv
+    │   ├── pseudo_group_77.csv
+    │   ├── pseudo_group_78.csv
+    │   ├── pseudo_group_79.csv
+    │   ├── pseudo_group_8.csv
+    │   ├── pseudo_group_80.csv
+    │   ├── pseudo_group_81.csv
+    │   ├── pseudo_group_82.csv
+    │   ├── pseudo_group_83.csv
+    │   ├── pseudo_group_84.csv
+    │   ├── pseudo_group_85.csv
+    │   ├── pseudo_group_86.csv
+    │   ├── pseudo_group_87.csv
+    │   ├── pseudo_group_88.csv
+    │   ├── pseudo_group_89.csv
+    │   ├── pseudo_group_9.csv
+    │   ├── pseudo_group_90.csv
+    │   ├── pseudo_group_91.csv
+    │   ├── pseudo_group_92.csv
+    │   ├── pseudo_group_93.csv
+    │   ├── pseudo_group_94.csv
+    │   ├── pseudo_group_95.csv
+    │   ├── pseudo_group_96.csv
+    │   ├── pseudo_group_97.csv
+    │   ├── pseudo_group_98.csv
+    │   └── pseudo_group_99.csv
+    ├── PseudoCsCh
+    │   ├── pseudo_group_1.csv
+    │   ├── pseudo_group_10.csv
+    │   ├── pseudo_group_100.csv
+    │   ├── pseudo_group_101.csv
+    │   ├── pseudo_group_102.csv
+    │   ├── pseudo_group_103.csv
+    │   ├── pseudo_group_104.csv
+    │   ├── pseudo_group_105.csv
+    │   ├── pseudo_group_106.csv
+    │   ├── pseudo_group_107.csv
+    │   ├── pseudo_group_108.csv
+    │   ├── pseudo_group_109.csv
+    │   ├── pseudo_group_11.csv
+    │   ├── pseudo_group_110.csv
+    │   ├── pseudo_group_111.csv
+    │   ├── pseudo_group_112.csv
+    │   ├── pseudo_group_113.csv
+    │   ├── pseudo_group_114.csv
+    │   ├── pseudo_group_115.csv
+    │   ├── pseudo_group_116.csv
+    │   ├── pseudo_group_117.csv
+    │   ├── pseudo_group_118.csv
+    │   ├── pseudo_group_119.csv
+    │   ├── pseudo_group_12.csv
+    │   ├── pseudo_group_120.csv
+    │   ├── pseudo_group_121.csv
+    │   ├── pseudo_group_122.csv
+    │   ├── pseudo_group_123.csv
+    │   ├── pseudo_group_124.csv
+    │   ├── pseudo_group_125.csv
+    │   ├── pseudo_group_126.csv
+    │   ├── pseudo_group_127.csv
+    │   ├── pseudo_group_128.csv
+    │   ├── pseudo_group_129.csv
+    │   ├── pseudo_group_13.csv
+    │   ├── pseudo_group_130.csv
+    │   ├── pseudo_group_131.csv
+    │   ├── pseudo_group_132.csv
+    │   ├── pseudo_group_133.csv
+    │   ├── pseudo_group_134.csv
+    │   ├── pseudo_group_135.csv
+    │   ├── pseudo_group_136.csv
+    │   ├── pseudo_group_137.csv
+    │   ├── pseudo_group_138.csv
+    │   ├── pseudo_group_139.csv
+    │   ├── pseudo_group_14.csv
+    │   ├── pseudo_group_140.csv
+    │   ├── pseudo_group_141.csv
+    │   ├── pseudo_group_142.csv
+    │   ├── pseudo_group_143.csv
+    │   ├── pseudo_group_144.csv
+    │   ├── pseudo_group_145.csv
+    │   ├── pseudo_group_146.csv
+    │   ├── pseudo_group_147.csv
+    │   ├── pseudo_group_148.csv
+    │   ├── pseudo_group_149.csv
+    │   ├── pseudo_group_15.csv
+    │   ├── pseudo_group_150.csv
+    │   ├── pseudo_group_151.csv
+    │   ├── pseudo_group_152.csv
+    │   ├── pseudo_group_153.csv
+    │   ├── pseudo_group_154.csv
+    │   ├── pseudo_group_155.csv
+    │   ├── pseudo_group_156.csv
+    │   ├── pseudo_group_157.csv
+    │   ├── pseudo_group_158.csv
+    │   ├── pseudo_group_159.csv
+    │   ├── pseudo_group_16.csv
+    │   ├── pseudo_group_160.csv
+    │   ├── pseudo_group_161.csv
+    │   ├── pseudo_group_162.csv
+    │   ├── pseudo_group_163.csv
+    │   ├── pseudo_group_164.csv
+    │   ├── pseudo_group_165.csv
+    │   ├── pseudo_group_166.csv
+    │   ├── pseudo_group_167.csv
+    │   ├── pseudo_group_168.csv
+    │   ├── pseudo_group_169.csv
+    │   ├── pseudo_group_17.csv
+    │   ├── pseudo_group_170.csv
+    │   ├── pseudo_group_171.csv
+    │   ├── pseudo_group_172.csv
+    │   ├── pseudo_group_173.csv
+    │   ├── pseudo_group_174.csv
+    │   ├── pseudo_group_175.csv
+    │   ├── pseudo_group_176.csv
+    │   ├── pseudo_group_177.csv
+    │   ├── pseudo_group_178.csv
+    │   ├── pseudo_group_179.csv
+    │   ├── pseudo_group_18.csv
+    │   ├── pseudo_group_180.csv
+    │   ├── pseudo_group_181.csv
+    │   ├── pseudo_group_182.csv
+    │   ├── pseudo_group_183.csv
+    │   ├── pseudo_group_184.csv
+    │   ├── pseudo_group_185.csv
+    │   ├── pseudo_group_186.csv
+    │   ├── pseudo_group_187.csv
+    │   ├── pseudo_group_188.csv
+    │   ├── pseudo_group_189.csv
+    │   ├── pseudo_group_19.csv
+    │   ├── pseudo_group_190.csv
+    │   ├── pseudo_group_191.csv
+    │   ├── pseudo_group_192.csv
+    │   ├── pseudo_group_193.csv
+    │   ├── pseudo_group_194.csv
+    │   ├── pseudo_group_195.csv
+    │   ├── pseudo_group_196.csv
+    │   ├── pseudo_group_197.csv
+    │   ├── pseudo_group_198.csv
+    │   ├── pseudo_group_199.csv
+    │   ├── pseudo_group_2.csv
+    │   ├── pseudo_group_20.csv
+    │   ├── pseudo_group_200.csv
+    │   ├── pseudo_group_21.csv
+    │   ├── pseudo_group_22.csv
+    │   ├── pseudo_group_23.csv
+    │   ├── pseudo_group_24.csv
+    │   ├── pseudo_group_25.csv
+    │   ├── pseudo_group_26.csv
+    │   ├── pseudo_group_27.csv
+    │   ├── pseudo_group_28.csv
+    │   ├── pseudo_group_29.csv
+    │   ├── pseudo_group_3.csv
+    │   ├── pseudo_group_30.csv
+    │   ├── pseudo_group_31.csv
+    │   ├── pseudo_group_32.csv
+    │   ├── pseudo_group_33.csv
+    │   ├── pseudo_group_34.csv
+    │   ├── pseudo_group_35.csv
+    │   ├── pseudo_group_36.csv
+    │   ├── pseudo_group_37.csv
+    │   ├── pseudo_group_38.csv
+    │   ├── pseudo_group_39.csv
+    │   ├── pseudo_group_4.csv
+    │   ├── pseudo_group_40.csv
+    │   ├── pseudo_group_41.csv
+    │   ├── pseudo_group_42.csv
+    │   ├── pseudo_group_43.csv
+    │   ├── pseudo_group_44.csv
+    │   ├── pseudo_group_45.csv
+    │   ├── pseudo_group_46.csv
+    │   ├── pseudo_group_47.csv
+    │   ├── pseudo_group_48.csv
+    │   ├── pseudo_group_49.csv
+    │   ├── pseudo_group_5.csv
+    │   ├── pseudo_group_50.csv
+    │   ├── pseudo_group_51.csv
+    │   ├── pseudo_group_52.csv
+    │   ├── pseudo_group_53.csv
+    │   ├── pseudo_group_54.csv
+    │   ├── pseudo_group_55.csv
+    │   ├── pseudo_group_56.csv
+    │   ├── pseudo_group_57.csv
+    │   ├── pseudo_group_58.csv
+    │   ├── pseudo_group_59.csv
+    │   ├── pseudo_group_6.csv
+    │   ├── pseudo_group_60.csv
+    │   ├── pseudo_group_61.csv
+    │   ├── pseudo_group_62.csv
+    │   ├── pseudo_group_63.csv
+    │   ├── pseudo_group_64.csv
+    │   ├── pseudo_group_65.csv
+    │   ├── pseudo_group_66.csv
+    │   ├── pseudo_group_67.csv
+    │   ├── pseudo_group_68.csv
+    │   ├── pseudo_group_69.csv
+    │   ├── pseudo_group_7.csv
+    │   ├── pseudo_group_70.csv
+    │   ├── pseudo_group_71.csv
+    │   ├── pseudo_group_72.csv
+    │   ├── pseudo_group_73.csv
+    │   ├── pseudo_group_74.csv
+    │   ├── pseudo_group_75.csv
+    │   ├── pseudo_group_76.csv
+    │   ├── pseudo_group_77.csv
+    │   ├── pseudo_group_78.csv
+    │   ├── pseudo_group_79.csv
+    │   ├── pseudo_group_8.csv
+    │   ├── pseudo_group_80.csv
+    │   ├── pseudo_group_81.csv
+    │   ├── pseudo_group_82.csv
+    │   ├── pseudo_group_83.csv
+    │   ├── pseudo_group_84.csv
+    │   ├── pseudo_group_85.csv
+    │   ├── pseudo_group_86.csv
+    │   ├── pseudo_group_87.csv
+    │   ├── pseudo_group_88.csv
+    │   ├── pseudo_group_89.csv
+    │   ├── pseudo_group_9.csv
+    │   ├── pseudo_group_90.csv
+    │   ├── pseudo_group_91.csv
+    │   ├── pseudo_group_92.csv
+    │   ├── pseudo_group_93.csv
+    │   ├── pseudo_group_94.csv
+    │   ├── pseudo_group_95.csv
+    │   ├── pseudo_group_96.csv
+    │   ├── pseudo_group_97.csv
+    │   ├── pseudo_group_98.csv
+    │   └── pseudo_group_99.csv
+    └── PseudoCs_5DIZ
+        ├── pseudo_group_1.csv
+        ├── pseudo_group_10.csv
+        ├── pseudo_group_100.csv
+        ├── pseudo_group_101.csv
+        ├── pseudo_group_102.csv
+        ├── pseudo_group_103.csv
+        ├── pseudo_group_104.csv
+        ├── pseudo_group_105.csv
+        ├── pseudo_group_106.csv
+        ├── pseudo_group_107.csv
+        ├── pseudo_group_108.csv
+        ├── pseudo_group_109.csv
+        ├── pseudo_group_11.csv
+        ├── pseudo_group_110.csv
+        ├── pseudo_group_111.csv
+        ├── pseudo_group_112.csv
+        ├── pseudo_group_113.csv
+        ├── pseudo_group_114.csv
+        ├── pseudo_group_115.csv
+        ├── pseudo_group_116.csv
+        ├── pseudo_group_117.csv
+        ├── pseudo_group_118.csv
+        ├── pseudo_group_119.csv
+        ├── pseudo_group_12.csv
+        ├── pseudo_group_120.csv
+        ├── pseudo_group_121.csv
+        ├── pseudo_group_122.csv
+        ├── pseudo_group_123.csv
+        ├── pseudo_group_124.csv
+        ├── pseudo_group_125.csv
+        ├── pseudo_group_126.csv
+        ├── pseudo_group_127.csv
+        ├── pseudo_group_128.csv
+        ├── pseudo_group_129.csv
+        ├── pseudo_group_13.csv
+        ├── pseudo_group_130.csv
+        ├── pseudo_group_131.csv
+        ├── pseudo_group_132.csv
+        ├── pseudo_group_133.csv
+        ├── pseudo_group_134.csv
+        ├── pseudo_group_135.csv
+        ├── pseudo_group_136.csv
+        ├── pseudo_group_137.csv
+        ├── pseudo_group_138.csv
+        ├── pseudo_group_139.csv
+        ├── pseudo_group_14.csv
+        ├── pseudo_group_140.csv
+        ├── pseudo_group_141.csv
+        ├── pseudo_group_142.csv
+        ├── pseudo_group_143.csv
+        ├── pseudo_group_144.csv
+        ├── pseudo_group_145.csv
+        ├── pseudo_group_146.csv
+        ├── pseudo_group_147.csv
+        ├── pseudo_group_148.csv
+        ├── pseudo_group_149.csv
+        ├── pseudo_group_15.csv
+        ├── pseudo_group_150.csv
+        ├── pseudo_group_151.csv
+        ├── pseudo_group_152.csv
+        ├── pseudo_group_153.csv
+        ├── pseudo_group_154.csv
+        ├── pseudo_group_155.csv
+        ├── pseudo_group_156.csv
+        ├── pseudo_group_157.csv
+        ├── pseudo_group_158.csv
+        ├── pseudo_group_159.csv
+        ├── pseudo_group_16.csv
+        ├── pseudo_group_160.csv
+        ├── pseudo_group_161.csv
+        ├── pseudo_group_162.csv
+        ├── pseudo_group_163.csv
+        ├── pseudo_group_164.csv
+        ├── pseudo_group_165.csv
+        ├── pseudo_group_166.csv
+        ├── pseudo_group_167.csv
+        ├── pseudo_group_168.csv
+        ├── pseudo_group_169.csv
+        ├── pseudo_group_17.csv
+        ├── pseudo_group_170.csv
+        ├── pseudo_group_171.csv
+        ├── pseudo_group_172.csv
+        ├── pseudo_group_173.csv
+        ├── pseudo_group_174.csv
+        ├── pseudo_group_175.csv
+        ├── pseudo_group_176.csv
+        ├── pseudo_group_177.csv
+        ├── pseudo_group_178.csv
+        ├── pseudo_group_179.csv
+        ├── pseudo_group_18.csv
+        ├── pseudo_group_180.csv
+        ├── pseudo_group_181.csv
+        ├── pseudo_group_182.csv
+        ├── pseudo_group_183.csv
+        ├── pseudo_group_184.csv
+        ├── pseudo_group_185.csv
+        ├── pseudo_group_186.csv
+        ├── pseudo_group_187.csv
+        ├── pseudo_group_188.csv
+        ├── pseudo_group_189.csv
+        ├── pseudo_group_19.csv
+        ├── pseudo_group_190.csv
+        ├── pseudo_group_191.csv
+        ├── pseudo_group_192.csv
+        ├── pseudo_group_193.csv
+        ├── pseudo_group_194.csv
+        ├── pseudo_group_195.csv
+        ├── pseudo_group_196.csv
+        ├── pseudo_group_197.csv
+        ├── pseudo_group_198.csv
+        ├── pseudo_group_199.csv
+        ├── pseudo_group_2.csv
+        ├── pseudo_group_20.csv
+        ├── pseudo_group_200.csv
+        ├── pseudo_group_21.csv
+        ├── pseudo_group_22.csv
+        ├── pseudo_group_23.csv
+        ├── pseudo_group_24.csv
+        ├── pseudo_group_25.csv
+        ├── pseudo_group_26.csv
+        ├── pseudo_group_27.csv
+        ├── pseudo_group_28.csv
+        ├── pseudo_group_29.csv
+        ├── pseudo_group_3.csv
+        ├── pseudo_group_30.csv
+        ├── pseudo_group_31.csv
+        ├── pseudo_group_32.csv
+        ├── pseudo_group_33.csv
+        ├── pseudo_group_34.csv
+        ├── pseudo_group_35.csv
+        ├── pseudo_group_36.csv
+        ├── pseudo_group_37.csv
+        ├── pseudo_group_38.csv
+        ├── pseudo_group_39.csv
+        ├── pseudo_group_4.csv
+        ├── pseudo_group_40.csv
+        ├── pseudo_group_41.csv
+        ├── pseudo_group_42.csv
+        ├── pseudo_group_43.csv
+        ├── pseudo_group_44.csv
+        ├── pseudo_group_45.csv
+        ├── pseudo_group_46.csv
+        ├── pseudo_group_47.csv
+        ├── pseudo_group_48.csv
+        ├── pseudo_group_49.csv
+        ├── pseudo_group_5.csv
+        ├── pseudo_group_50.csv
+        ├── pseudo_group_51.csv
+        ├── pseudo_group_52.csv
+        ├── pseudo_group_53.csv
+        ├── pseudo_group_54.csv
+        ├── pseudo_group_55.csv
+        ├── pseudo_group_56.csv
+        ├── pseudo_group_57.csv
+        ├── pseudo_group_58.csv
+        ├── pseudo_group_59.csv
+        ├── pseudo_group_6.csv
+        ├── pseudo_group_60.csv
+        ├── pseudo_group_61.csv
+        ├── pseudo_group_62.csv
+        ├── pseudo_group_63.csv
+        ├── pseudo_group_64.csv
+        ├── pseudo_group_65.csv
+        ├── pseudo_group_66.csv
+        ├── pseudo_group_67.csv
+        ├── pseudo_group_68.csv
+        ├── pseudo_group_69.csv
+        ├── pseudo_group_7.csv
+        ├── pseudo_group_70.csv
+        ├── pseudo_group_71.csv
+        ├── pseudo_group_72.csv
+        ├── pseudo_group_73.csv
+        ├── pseudo_group_74.csv
+        ├── pseudo_group_75.csv
+        ├── pseudo_group_76.csv
+        ├── pseudo_group_77.csv
+        ├── pseudo_group_78.csv
+        ├── pseudo_group_79.csv
+        ├── pseudo_group_8.csv
+        ├── pseudo_group_80.csv
+        ├── pseudo_group_81.csv
+        ├── pseudo_group_82.csv
+        ├── pseudo_group_83.csv
+        ├── pseudo_group_84.csv
+        ├── pseudo_group_85.csv
+        ├── pseudo_group_86.csv
+        ├── pseudo_group_87.csv
+        ├── pseudo_group_88.csv
+        ├── pseudo_group_89.csv
+        ├── pseudo_group_9.csv
+        ├── pseudo_group_90.csv
+        ├── pseudo_group_91.csv
+        ├── pseudo_group_92.csv
+        ├── pseudo_group_93.csv
+        ├── pseudo_group_94.csv
+        ├── pseudo_group_95.csv
+        ├── pseudo_group_96.csv
+        ├── pseudo_group_97.csv
+        ├── pseudo_group_98.csv
+        └── pseudo_group_99.csv
+
+
+================================================================================
+FILE CONTENTS:
+================================================================================
+
+--------------------------------------------------------------------------------
+FILE: 1_find_interactions.py
+--------------------------------------------------------------------------------
+# %%
+import os
+import sys
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+# 1. Define the Analysis Root (2 levels up) to find 'src'
+#    (src/2_networks/ -> src/ -> 5_drosophila_social_network_analysis/)
+analysis_root = os.path.dirname(os.path.dirname(current_dir))
+
+# 2. Define the Project Root (3 levels up) to find 'settings'
+#    (5_drosophila.../ -> droso-pipe/)
+project_root = os.path.dirname(analysis_root)
+
+# Add both to sys.path to ensure Python finds 'src' AND 'settings'
+if analysis_root not in sys.path:
+    sys.path.append(analysis_root)
+
+if project_root not in sys.path:
+    sys.path.append(project_root)
+
+import numpy as np
+import pandas as pd
+import toml
+from src.utils import fileio
+
+from settings import main_settings
+from settings import social_network_analysis as settings
+
+# TREATMENT = main_settings.TREATMENT
+
+# TREATMENT = "CS_old8-10d_24group"
+# TREATMENT = "CS_isolated_24group"
+TREATMENT = "CS_old3-5d_24group"
+
+
+SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, "2_0_find_interactions", TREATMENT)
+os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
+
+ANGLES_DIR = os.path.join(settings.OUTPUT_DIR, "1_1_2_angles_matrix", TREATMENT)
+DISTANCES_DIR = os.path.join(settings.OUTPUT_DIR, "1_1_1_distances_matrix", TREATMENT)
+
+angles = fileio.load_files_from_folder(ANGLES_DIR)
+distances = fileio.load_files_from_folder(DISTANCES_DIR)
+
+TREATMENT_CONFIG = os.path.join(settings.CONFIG_DIR, "interaction_criteria", f"{TREATMENT}.toml")
+with open(TREATMENT_CONFIG) as f:
+    treatment_config = toml.load(f)
+
+ANGLE = treatment_config["ANGLE"]
+DISTANCE = treatment_config["DISTANCE"]
+TIME = treatment_config["TIME"]
+
+for angles_tuple, distances_tuple in zip(angles.items(), distances.items()):
+    angles_name, angles_path = angles_tuple
+    distances_name, distances_path = distances_tuple
+
+    if angles_name != distances_name:
+        sys.exit()
+
+    df_angles = pd.read_csv(angles_path, index_col=0)
+    df_distances = pd.read_csv(distances_path, index_col=0)
+
+    edgelist = pd.DataFrame(
+        columns=[
+            "node_1",
+            "node_2",
+            "start_of_interaction",
+            "end_of_interaction",
+            "duration"
+        ])
+
+    for angles_col, distances_col in zip(df_angles.columns, df_distances.columns):
+        if angles_col != distances_col:
+            sys.exit()
+
+        df = pd.concat([df_angles[angles_col], df_distances[distances_col]], axis=1)
+        df.columns = ["angle", "distance"]
+
+        distance_mask = df["distance"] <= DISTANCE
+        angle_mask = (df["angle"] >= ANGLE[0]) & (df["angle"] <= ANGLE[1])
+        df = df[distance_mask & angle_mask]
+
+        timecut_frames = int(TIME * main_settings.VIDEO_FPS)
+        clear_list_of_df = [d for _, d in df.groupby(df.index - np.arange(len(df))) if len(d) >= timecut_frames]
+
+        node_1, node_2 = angles_col.split(" ")
+        node_1, node_2 = node_1.replace(".csv", ""), node_2.replace(".csv", "")
+
+        for interaction in clear_list_of_df:
+            data = {
+                "node_1": node_1,
+                "node_2": node_2,
+                "start_of_interaction": int(interaction.index[0]),
+                "end_of_interaction": int(interaction.index[-1]),
+                "duration": int(len(interaction))
+            }
+
+            row = pd.DataFrame.from_dict(data, orient="index").T
+            edgelist = pd.concat([edgelist, row], ignore_index=True)
+
+    edgelist = edgelist.sort_values("start_of_interaction")
+    edgelist.to_csv(os.path.join(SCRIPT_OUTPUT, angles_name))
+
+--------------------------------------------------------------------------------
+FILE: 2_create_total_graph.py
+--------------------------------------------------------------------------------
+# %%
+import os
+
+import networkx as nx
+import pandas as pd
+
+from src.utils import fileio
+
+from settings import main_settings
+from settings import social_network_analysis as settings
+
+TREATMENT = main_settings.TREATMENT
+
+INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "2_0_find_interactions", TREATMENT)
+SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, "2_2_create_total_graph", TREATMENT)
+os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
+
+treatment = fileio.load_files_from_folder(INPUT_DIR)
+for group_name, group_path in treatment.items():
+    df_interactions = pd.read_csv(group_path, index_col=0)
+    df_interactions = df_interactions.sort_values("start_of_interaction")
+    G = nx.DiGraph()
+
+    for _, row in df_interactions.iterrows():
+        node_1, node_2 = row["node_1"], row["node_2"]
+        duration = row["duration"] / main_settings.VIDEO_FPS
+
+        if G.has_edge(node_1, node_2):
+            G[node_1][node_2]["count"] += 1
+            G[node_1][node_2]["interaction_times_list"].append(duration)
+            G[node_1][node_2]["total_interaction_times"] += duration
+
+        else:
+            G.add_edge(
+                node_1,
+                node_2,
+                count=1,
+                total_interaction_times=duration,
+                interaction_times_list=[duration],
+            )
+
+    nx.write_gml(G, os.path.join(SCRIPT_OUTPUT, f"{group_name.replace('.csv', '')}.gml"))
+    print(SCRIPT_OUTPUT)
+
+--------------------------------------------------------------------------------
+FILE: 3_create_adj_matrix.py
+--------------------------------------------------------------------------------
+#%%
+import os
+
+import networkx as nx
+import pandas as pd
+
+from src import settings
+from src.utils import fileio
+
+TREATMENT = os.environ["TREATMENT"]
+
+INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "2_2_create_total_graph", TREATMENT)
+SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, "2_3_create_adj_matrix", TREATMENT)
+os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
+
+graphs = fileio.load_files_from_folder(INPUT_DIR, file_format=".gml")
+
+for group_name, group_path in graphs.items():
+    G = nx.read_gml(group_path)
+
+    adj_matrix_count = nx.to_numpy_array(G, weight="count", dtype=int)
+    adj_matrix_time = nx.to_numpy_array(G, weight="total_interaction_times", dtype=int)
+
+    SAVE_PATH = os.path.join(SCRIPT_OUTPUT, 'count')
+    os.makedirs(SAVE_PATH, exist_ok=True)
+    pd.DataFrame(adj_matrix_count).to_csv(os.path.join(SAVE_PATH, f"{group_name}.csv"), index=False, header=False)
+
+    SAVE_PATH = os.path.join(SCRIPT_OUTPUT, 'total_time')
+    os.makedirs(SAVE_PATH, exist_ok=True)
+    pd.DataFrame(adj_matrix_time).to_csv(os.path.join(SAVE_PATH, f"{group_name}.csv"), index=False, header=False)
+
+--------------------------------------------------------------------------------
+FILE: 4_create_snapshots.py
+--------------------------------------------------------------------------------
+# %%
+
+import os
+from pathlib import Path
+
+import networkx as nx
+import pandas as pd
+from src.utils import fileio
+
+from settings import main_settings
+
+
+def create_graph(df_slice, all_nodes):
+    G = nx.DiGraph()
+    G.add_nodes_from(all_nodes)
+    if df_slice.empty:
+        return G
+
+    edge_attrs = df_slice.groupby(['node_1', 'node_2'])['duration'].agg(
+        ['count', 'sum']).rename(columns={'sum': 'total_interaction_times'})
+    for (node_1, node_2), attrs in edge_attrs.iterrows():
+        G.add_edge(node_1, node_2, **attrs.to_dict())
+    return G
+
+
+def generate_snapshots(df, all_nodes, window_size, step_size, max_val, output_dir, by_index=False):
+    output_dir.mkdir(parents=True, exist_ok=True)
+    start, snapshot_idx = 0, 1
+    while start < max_val:
+        end = start + window_size
+        df_slice = df.iloc[int(start):int(end)] if by_index else df[(
+            df['start_of_interaction'] >= start) & (df['start_of_interaction'] < end)]
+
+        if not df_slice.empty:
+            G = create_graph(df_slice, all_nodes)
+            nx.write_gml(G, output_dir / f"{snapshot_idx}.gml")
+            snapshot_idx += 1
+
+        start += step_size
+        if step_size == 0:
+            break
+
+
+FPS = main_settings.VIDEO_FPS
+TREATMENT = main_settings.TREATMENT
+
+TIME_WINDOWS_SEC = [15, 30, 60, 120]
+DENSITY_WINDOWS_PERCENT = [0.10, 0.25, 0.33, 0.5]
+OVERLAP_PERCENTAGE = 0
+
+INPUT_DIR = Path(main_settings.SAVE_DATA_LOCATION) / \
+    "5_social_network_analysis/data/processed" / "2_0_find_interactions" / TREATMENT
+
+BASE_OUTPUT_DIR = Path(main_settings.SAVE_DATA_LOCATION) / "5_social_network_analysis" / "snapshots"
+treatment_files = fileio.load_files_from_folder(INPUT_DIR)
+
+for group_name, group_path in treatment_files.items():
+    df = pd.read_csv(group_path, index_col=0).sort_values("start_of_interaction").reset_index(drop=True)
+    all_nodes = pd.unique(df[['node_1', 'node_2']].values.ravel('K'))
+    overlap_str = f"overlap_{int(OVERLAP_PERCENTAGE*100)}p"
+
+    for window_sec in TIME_WINDOWS_SEC:
+        output_dir = BASE_OUTPUT_DIR / overlap_str / \
+            f"time_{window_sec}s" / TREATMENT / group_name.replace('.csv', '')
+        window = window_sec * FPS
+        step = max(1, window * (1 - OVERLAP_PERCENTAGE))
+        generate_snapshots(df, all_nodes, window, step, df['start_of_interaction'].max(), output_dir)
+
+    for density_percent in DENSITY_WINDOWS_PERCENT:
+        output_dir = BASE_OUTPUT_DIR / overlap_str /\
+            f"density_{int(density_percent*100)}p" / TREATMENT / group_name.replace('.csv', '')
+        window = int(len(df) * density_percent)
+        step = max(1, int(window * (1 - OVERLAP_PERCENTAGE)))
+        generate_snapshots(df, all_nodes, window, step, len(df), output_dir, by_index=True)
+
+--------------------------------------------------------------------------------
+FILE: 5_1_pseudo_populations_new.py
+--------------------------------------------------------------------------------
+# %%
+
+import multiprocessing
+import os
+import random
+import shutil
+import sys
+
+import numpy as np
+import pandas as pd
+import toml
+# from settings import main_settings
+# --- IMPORTS ---
+from src import settings
+from src.utils import data_utils, fileio
+
+# ==========================================
+# CONFIGURATION
+# ==========================================
+SOURCE_TREATMENT = "Cs_5DIZ"  # Use Control flies to build the null model
+NEW_PIPELINE_OUTPUT = f'./drosophila-data/Pseudo{SOURCE_TREATMENT}'
+NUM_PSEUDO_GROUPS = 200      # 200 Files for strong statistics
+FLIES_PER_GROUP = 12
+
+# CSV COLUMN NAMES (CHECK THIS!)
+X_COL = "pos x"
+Y_COL = "pos y"
+
+# Temp folder for rotated trajectories
+TEMP_DIR = os.path.join(settings.OUTPUT_DIR, "temp_rotated_trajectories")
+
+
+def rotate_trajectory(df):
+    """
+    Rotates x,y coordinates by a random angle theta around (0,0).
+    Preserves distance from center (Thigmotaxis) but randomizes wall position.
+    """
+    theta = random.uniform(0, 2 * np.pi)
+    c, s = np.cos(theta), np.sin(theta)
+
+    # Assuming data is centered at 0,0.
+    # If arena center is (W/2, H/2), subtract center first, rotate, then add back.
+    # Here we assume pre-processed data is centered.
+
+    x = df[X_COL].values
+    y = df[Y_COL].values
+
+    # Rotation Matrix
+    x_new = x * c - y * s
+    y_new = x * s + y * c
+
+    df_new = df.copy()
+    df_new[X_COL] = x_new
+    df_new[Y_COL] = y_new
+
+    return df_new
+
+
+def process_iteration(iteration_data):
+    i, treatment_all, treatment_config, output_dir = iteration_data
+
+    # Create specific temp subfolder for this worker process to avoid collisions
+    worker_temp_dir = os.path.join(TEMP_DIR, f"worker_{i}")
+    os.makedirs(worker_temp_dir, exist_ok=True)
+
+    # 1. Flatten and Sample
+    all_available_flies = []
+    for group_name, files_dict in treatment_all.items():
+        for fly_name, file_path in files_dict.items():
+            all_available_flies.append((fly_name, group_name, file_path))
+
+    selected_flies = random.sample(all_available_flies, FLIES_PER_GROUP)
+
+    pseudo_fly_dict = {}
+
+    # 2. Rotate and Save Temp Files
+    for fly_name, group_name, file_path in selected_flies:
+        try:
+            df = pd.read_csv(file_path)
+
+            df_rotated = rotate_trajectory(df)
+
+            unique_name = f"{fly_name}_{group_name}.csv"
+            temp_path = os.path.join(worker_temp_dir, unique_name)
+            df_rotated.to_csv(temp_path, index=False)
+
+            unique_key = f"{fly_name}_{group_name}"
+            pseudo_fly_dict[unique_key] = temp_path
+
+        except Exception as e:
+            print(f"Skipping corrupt file {file_path}: {e}")
+
+    try:
+        distances = data_utils.distances_between_all_flies(pseudo_fly_dict)
+        angles = data_utils.angles_between_all_flies(pseudo_fly_dict)
+
+        edgelist_df = find_interactions2(angles, distances, treatment_config)
+
+        output_filename = f"pseudo_group_{i}.csv"
+        edgelist_df.to_csv(os.path.join(output_dir, output_filename), index=False)
+
+    except Exception as e:
+        print(f"Error in iteration {i}: {e}")
+
+    shutil.rmtree(worker_temp_dir, ignore_errors=True)
+
+
+def find_interactions2(df_angles, df_distances, treatment_config):
+    ANGLE = treatment_config["ANGLE"]
+    DISTANCE = treatment_config["DISTANCE"]
+    max_soc_duration = 1
+
+    edgelist = []
+    columns = ["node_1", "node_2", "start_of_interaction", "end_of_interaction", "duration"]
+
+    for angles_col, distances_col in zip(df_angles.columns, df_distances.columns):
+        if angles_col != distances_col:
+            continue
+
+        dist_vals = df_distances[distances_col].values
+        angle_vals = df_angles[angles_col].values
+
+        mask = (dist_vals <= DISTANCE) & (angle_vals >= ANGLE[0]) & (angle_vals <= ANGLE[1])
+
+        if not np.any(mask):
+            continue
+
+        padded = np.concatenate(([0], mask.astype(int), [0]))
+        diffs = np.diff(padded)
+        starts = np.where(diffs == 1)[0]
+        ends = np.where(diffs == -1)[0]
+
+        durations = ends - starts
+        valid = durations >= max_soc_duration
+
+        starts = starts[valid]
+        ends = ends[valid]
+        durations = durations[valid]
+
+        if len(starts) == 0:
+            continue
+
+        node_1, node_2 = angles_col.split(" ")
+        node_1 = node_1.replace(".csv", "")
+        node_2 = node_2.replace(".csv", "")
+
+        rows = [[node_1, node_2, int(s), int(e), int(d)] for s, e, d in zip(starts, ends-1, durations)]
+        edgelist.extend(rows)
+
+    return pd.DataFrame(edgelist, columns=columns)
+
+
+print("--- Generating Rotated Pseudo-Populations ---")
+
+main_config = fileio.get_config(settings.CONFIG_NAME)
+config_path = os.path.join(settings.CONFIG_DIR, "interaction_criteria", f"{SOURCE_TREATMENT}.toml")
+
+if not os.path.exists(config_path):
+    print(f"Error: Config not found {config_path}")
+
+
+with open(config_path) as f:
+    treatment_config = toml.load(f)
+
+input_dir = os.path.join(settings.OUTPUT_DIR, "1_1_preproc_data", SOURCE_TREATMENT)
+treatment_dict = fileio.load_multiple_folders(input_dir)
+
+print(treatment_dict)
+
+treatment_all = {}
+for group_name, group_path in treatment_dict.items():
+    treatment_all.update({group_name: fileio.load_files_from_folder(group_path, file_format=".csv")})
+
+os.makedirs(NEW_PIPELINE_OUTPUT, exist_ok=True)
+
+if os.path.exists(TEMP_DIR):
+    shutil.rmtree(TEMP_DIR)
+os.makedirs(TEMP_DIR, exist_ok=True)
+
+num_processes = max(1, multiprocessing.cpu_count() // 2)
+pool = multiprocessing.Pool(processes=num_processes)
+
+iteration_data = [(i, treatment_all, treatment_config, NEW_PIPELINE_OUTPUT)
+                  for i in range(1, NUM_PSEUDO_GROUPS + 1)]
+
+pool.map(process_iteration, iteration_data)
+pool.close()
+pool.join()
+
+if os.path.exists(TEMP_DIR):
+    shutil.rmtree(TEMP_DIR)
+print("\nGeneration Complete.")
+
+--------------------------------------------------------------------------------
+FILE: 5_get_pseudo_populations.py
+--------------------------------------------------------------------------------
+# %%
+import multiprocessing
+import os
+import random
+import sys
+
+import numpy as np
+import pandas as pd
+import toml
+
+from settings import main_settings
+from src.utils import data_utils, fileio
+
+
+def process_iteration(iteration_data):
+    i, treatment_all, main_config, treatment_config, SCRIPT_OUTPUT = iteration_data
+
+    temp_ind = random.sample(range(len(treatment_all)), main_config['N_OF_SAMPLES'])
+    pick_random_groups = {list(treatment_all.keys())[i]: list(treatment_all.values())[i] for i in temp_ind}
+
+    pseudo_fly_dict = {}
+    for group_name, _ in pick_random_groups.items():
+        group = treatment_all[group_name]
+
+        random_ind = random.randint(0, len(group) - 1)
+
+        pick_fly_name = list(group.keys())[random_ind]
+        pick_fly_path = list(group.values())[random_ind]
+
+        pseudo_fly_dict[f"{pick_fly_name}_{group_name}"] = pick_fly_path
+
+    distances = data_utils.distances_between_all_flies(pseudo_fly_dict)
+    angles = data_utils.angles_between_all_flies(pseudo_fly_dict)
+    edgelist2 = find_interactions2(angles, distances, main_config, treatment_config)
+    edgelist2.to_csv(os.path.join(SCRIPT_OUTPUT, f"{i}.csv"))
+
+
+def find_interactions2(df_angles, df_distances, main_config, treatment_config):
+    ANGLE = treatment_config["ANGLE"]
+    DISTANCE = treatment_config["DISTANCE"]
+    TIME = treatment_config["TIME"]
+    max_soc_duration = 1
+
+    edgelist = []
+    columns = ["node_1", "node_2", "start_of_interaction", "end_of_interaction", "duration"]
+
+    for angles_col, distances_col in zip(df_angles.columns, df_distances.columns):
+        if angles_col != distances_col:
+            sys.exit()
+
+        df = pd.concat([df_angles[angles_col], df_distances[distances_col]], axis=1)
+        df.columns = ["angle", "distance"]
+
+        distance_mask = df["distance"] <= DISTANCE
+        angle_mask = (df["angle"] >= ANGLE[0]) & (df["angle"] <= ANGLE[1])
+        df = df[distance_mask & angle_mask]
+
+        clear_list_of_df = [
+            d
+            for _, d in df.groupby(df.index - np.arange(len(df)))
+            if len(d) >= max_soc_duration
+        ]
+
+        node_1, node_2 = angles_col.split(" ")
+        node_1, node_2 = node_1.replace(".csv", ""), node_2.replace(".csv", "")
+
+        for interaction in clear_list_of_df:
+            duration = len(interaction)
+            start_of_interaction = interaction.index[0]
+            end_of_interaction = interaction.index[-1]
+
+            edgelist.append([node_1, node_2, int(start_of_interaction), int(end_of_interaction), int(duration)])
+
+    return pd.DataFrame(edgelist, columns=columns)
+
+
+TREATMENT = main_settings.TREATMENT
+
+main_config = fileio.get_config(main_settings.CONFIG_NAME)
+
+INPUT_DIR = os.path.join(main_settings.OUTPUT_DIR, "1_1_preproc_data", TREATMENT)
+treatment = fileio.load_multiple_folders(INPUT_DIR)
+
+treatment_all = {}
+for group_name, group_path in treatment.items():
+    group = fileio.load_files_from_folder(group_path, file_format=".csv")
+    treatment_all.update({group_name: group})
+
+TREATMENT_CONFIG = os.path.join(main_settings.CONFIG_DIR, "interaction_criteria", f"{TREATMENT}.toml")
+with open(TREATMENT_CONFIG) as f:
+    treatment_config = toml.load(f)
+
+SCRIPT_OUTPUT = os.path.join(main_settings.OUTPUT_DIR, "2_0_find_interactions", f"pseudo_{TREATMENT}")
+os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
+
+existing_files = [f for f in os.listdir(SCRIPT_OUTPUT) if os.path.isfile(os.path.join(SCRIPT_OUTPUT, f))]
+existing_files_count = len(existing_files)
+start_iteration = existing_files_count + 1 if existing_files else 1
+
+num_processes = multiprocessing.cpu_count()//2
+pool = multiprocessing.Pool(processes=num_processes)
+iteration_data = [(i, treatment_all, main_config, treatment_config, SCRIPT_OUTPUT)
+                  for i in range(start_iteration, main_config['N_RANDOM_GROUPS'] + 1)]
+
+pool.map(process_iteration, iteration_data)
+pool.close()
+pool.join()
+
+--------------------------------------------------------------------------------
+FILE: 6_get_shuffled_networks.py
+--------------------------------------------------------------------------------
+# %%
+import os
+import random
+
+import networkx as nx
+from src import settings
+from src.utils import fileio
+
+TREATMENT = os.environ["TREATMENT"]
+
+INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "2_2_create_total_graph", TREATMENT)
+os.makedirs(os.path.join(settings.OUTPUT_DIR, "2_5_get_shuffled_networks"), exist_ok=True)
+
+SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, "2_5_get_shuffled_networks", f"{TREATMENT}")
+os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
+
+graphs = fileio.load_files_from_folder(INPUT_DIR, file_format=".gml")
+for group_name, group_path in graphs.items():
+    GRAPHS_OUTPUT = os.path.join(SCRIPT_OUTPUT, group_name.replace('.gml', ''))
+    os.makedirs(GRAPHS_OUTPUT, exist_ok=True)
+
+    G = nx.read_gml(group_path)
+    A_count = nx.to_numpy_array(G, weight="count", dtype=int)
+    A_time = nx.to_numpy_array(G, weight="total_interaction_times", dtype=float)
+    num_nodes = len(G.nodes())
+
+    for g_i in range(1000):
+        G_shuffled = nx.DiGraph()
+        G_shuffled.add_nodes_from([x for x in range(num_nodes)])
+        weights_counts = A_count[A_count != 0].tolist()
+        weights_time = A_time[A_time != 0].tolist()
+        random.shuffle(weights_counts)
+        random.shuffle(weights_time)
+
+        for i in range(num_nodes):
+            for j in range(num_nodes):
+                if i == j:
+                    continue
+                elif len(weights_counts) and len(weights_time):
+                    G_shuffled.add_edge(i, j, count=weights_counts.pop(), total_interaction_times=weights_time.pop())
+
+        nx.write_gml(G_shuffled, f"{GRAPHS_OUTPUT}/{g_i}.gml")
+
+--------------------------------------------------------------------------------
+FILE: __init__.py
+--------------------------------------------------------------------------------
+
+

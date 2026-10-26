@@ -1,17 +1,18 @@
 # %%
 import os
+from pathlib import Path
 
 import networkx as nx
 import pandas as pd
 
-from src import settings
+from settings import main_settings
 from src.utils import fileio, graph_utils
 
-TREATMENT = os.environ["TREATMENT"]
-INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "2_2_create_total_graph", TREATMENT)
+TREATMENT = main_settings.TREATMENT
+INPUT_DIR = Path(main_settings.SAVE_DATA_LOCATION) / "5_social_network_analysis" / "data" / "processed" / "2_2_create_total_graph" /TREATMENT
 treatment = fileio.load_files_from_folder(INPUT_DIR, file_format=".gml")
 
-SCRIPT_OUTPUT = os.path.join(settings.RESULTS_DIR, "local_measures", TREATMENT)
+SCRIPT_OUTPUT = Path(main_settings.RESULTS_DIR) / "local_measures" / TREATMENT
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
 
 graph_functions = graph_utils.local_measures_functions()

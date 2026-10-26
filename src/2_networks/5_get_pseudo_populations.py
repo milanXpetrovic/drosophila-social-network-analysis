@@ -1,4 +1,4 @@
-#%%
+# %%
 import multiprocessing
 import os
 import random
@@ -8,13 +8,13 @@ import numpy as np
 import pandas as pd
 import toml
 
-from src import settings
+from settings import main_settings
 from src.utils import data_utils, fileio
 
 
 def process_iteration(iteration_data):
     i, treatment_all, main_config, treatment_config, SCRIPT_OUTPUT = iteration_data
-    
+
     temp_ind = random.sample(range(len(treatment_all)), main_config['N_OF_SAMPLES'])
     pick_random_groups = {list(treatment_all.keys())[i]: list(treatment_all.values())[i] for i in temp_ind}
 
@@ -74,11 +74,11 @@ def find_interactions2(df_angles, df_distances, main_config, treatment_config):
     return pd.DataFrame(edgelist, columns=columns)
 
 
-TREATMENT = os.environ["TREATMENT"]
+TREATMENT = main_settings.TREATMENT
 
-main_config = fileio.get_config(settings.CONFIG_NAME)
+main_config = fileio.get_config(main_settings.CONFIG_NAME)
 
-INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "1_1_preproc_data", TREATMENT)
+INPUT_DIR = os.path.join(main_settings.OUTPUT_DIR, "1_1_preproc_data", TREATMENT)
 treatment = fileio.load_multiple_folders(INPUT_DIR)
 
 treatment_all = {}
@@ -86,11 +86,11 @@ for group_name, group_path in treatment.items():
     group = fileio.load_files_from_folder(group_path, file_format=".csv")
     treatment_all.update({group_name: group})
 
-TREATMENT_CONFIG = os.path.join(settings.CONFIG_DIR, "interaction_criteria", f"{TREATMENT}.toml")
+TREATMENT_CONFIG = os.path.join(main_settings.CONFIG_DIR, "interaction_criteria", f"{TREATMENT}.toml")
 with open(TREATMENT_CONFIG) as f:
     treatment_config = toml.load(f)
 
-SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, "2_0_find_interactions", f"pseudo_{TREATMENT}")
+SCRIPT_OUTPUT = os.path.join(main_settings.OUTPUT_DIR, "2_0_find_interactions", f"pseudo_{TREATMENT}")
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
 
 existing_files = [f for f in os.listdir(SCRIPT_OUTPUT) if os.path.isfile(os.path.join(SCRIPT_OUTPUT, f))]
@@ -99,7 +99,8 @@ start_iteration = existing_files_count + 1 if existing_files else 1
 
 num_processes = multiprocessing.cpu_count()//2
 pool = multiprocessing.Pool(processes=num_processes)
-iteration_data = [(i, treatment_all, main_config, treatment_config, SCRIPT_OUTPUT) for i in range(start_iteration, main_config['N_RANDOM_GROUPS'] + 1)]
+iteration_data = [(i, treatment_all, main_config, treatment_config, SCRIPT_OUTPUT)
+                  for i in range(start_iteration, main_config['N_RANDOM_GROUPS'] + 1)]
 
 pool.map(process_iteration, iteration_data)
 pool.close()

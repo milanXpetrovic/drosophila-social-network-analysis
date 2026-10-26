@@ -4,16 +4,16 @@ import os
 import networkx as nx
 import pandas as pd
 
-from src import settings
 from src.utils import fileio
 
-TREATMENT = os.environ["TREATMENT"]
+from settings import main_settings
+from settings import social_network_analysis as settings
+
+TREATMENT = main_settings.TREATMENT
 
 INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "2_0_find_interactions", TREATMENT)
 SCRIPT_OUTPUT = os.path.join(settings.OUTPUT_DIR, "2_2_create_total_graph", TREATMENT)
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
-
-config = fileio.get_config(settings.CONFIG_NAME)
 
 treatment = fileio.load_files_from_folder(INPUT_DIR)
 for group_name, group_path in treatment.items():
@@ -23,7 +23,7 @@ for group_name, group_path in treatment.items():
 
     for _, row in df_interactions.iterrows():
         node_1, node_2 = row["node_1"], row["node_2"]
-        duration = row["duration"] / config["FPS"]
+        duration = row["duration"] / main_settings.VIDEO_FPS
 
         if G.has_edge(node_1, node_2):
             G[node_1][node_2]["count"] += 1
@@ -40,3 +40,4 @@ for group_name, group_path in treatment.items():
             )
 
     nx.write_gml(G, os.path.join(SCRIPT_OUTPUT, f"{group_name.replace('.csv', '')}.gml"))
+    print(SCRIPT_OUTPUT)

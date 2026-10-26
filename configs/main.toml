@@ -13,7 +13,7 @@ FPS = 24
 ## 
 # STATIC_CRITERIA=0
 
-TREATMENTS = ['CS_10D', 'CsCh', 'Cs_5DIZ', 'LDA_5DIZ', 'LDA_OCT_5DIZ', 'OCT_5DIZ']
+TREATMENTS = ['CS_old3-5d_24group']
 
 # PSEUDO_TREATMENTS = ['pseudo_CS_10D', 'pseudo_CsCh', 'pseudo_Cs_5DIZ', 'pseudo_LDA_5DIZ', 'pseudo_LDA_OCT_5DIZ', 'pseudo_OCT_5DIZ'] 
 # TREATMENTS = ['CS_10D', 'CsCh', 'Cs_5DIZ', 'LDA_5DIZ', 'LDA_OCT_5DIZ', 'OCT_5DIZ', 'pseudo_CS_10D', 'pseudo_CsCh', 'pseudo_Cs_5DIZ', 'pseudo_LDA_5DIZ', 'pseudo_LDA_OCT_5DIZ', 'pseudo_OCT_5DIZ']

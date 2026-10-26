@@ -1,14 +1,12 @@
 import itertools
-from docutils import SettingsSpec
+import warnings
 
+import networkx as nx
 import numpy as np
 import pandas as pd
-import networkx as nx
 
-from src import settings
-from src.utils import fileio
-
-import warnings
+from settings import main_settings as settings
+from utils import fileio
 
 warnings.filterwarnings("ignore", message="DataFrame is highly fragmented")
 
@@ -48,7 +46,7 @@ def prepproc(df, min_x, min_y):
     - df (pd.DataFrame): The preprocessed DataFrame with filled NaN values and subtracted minimum
       x and y coordinates.
     """
-    ## TODO: THIS FUNCIONT IS NO LONGER USED
+    # TODO: THIS FUNCIONT IS NO LONGER USED
     df = df.fillna(method="ffill")
 
     df["pos x"] = df["pos x"].subtract(min_x)

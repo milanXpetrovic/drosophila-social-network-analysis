@@ -1,21 +1,23 @@
 # %%
 import os
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
 
-from src import settings
 from src.utils import fileio
 
-TREATMENT = os.environ["TREATMENT"]
+from settings import main_settings
 
-INPUT_DIR = os.path.join(settings.OUTPUT_DIR, "1_1_preproc_data", TREATMENT)
-trials = fileio.load_multiple_folders(INPUT_DIR)
-SCRIPT_OUTPUT = os.path.join(settings.RESULTS_DIR, "distances_traveled", TREATMENT)
+TREATMENT = main_settings.TREATMENT
+INPUT_DIR = Path(main_settings.SAVE_DATA_LOCATION) / "3_preproc-trajectories" / "normalize_trajectories" / TREATMENT
+treatment = fileio.load_multiple_folders(INPUT_DIR)
 
+SCRIPT_OUTPUT = Path(main_settings.RESULTS_DIR) / "distances_traveled" / TREATMENT 
 os.makedirs(SCRIPT_OUTPUT, exist_ok=True)
 
-for group_name, group_path in trials.items():
+#%%
+for group_name, group_path in treatment.items():
     group_distances = {}
     fly_dict = fileio.load_files_from_folder(group_path)
 

@@ -3,7 +3,6 @@ import os
 import random
 
 import networkx as nx
-
 from src import settings
 from src.utils import fileio
 

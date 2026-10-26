@@ -6,14 +6,15 @@ import time
 
 import toml
 
-from src import settings
-
-# os.environ['OPENBLAS_NUM_THREADS'] = '1'
+# # flake8: noqa: E402
+# current_path = os.path.abspath(os.path.dirname(__file__))
+# # flake8: noqa: E402
+# sys.path.append(os.path.join(os.path.abspath(os.path.join(current_path, '..', '..')), 'src'))
+# # flake8: noqa: E402
+from settings import main_settings
+from settings import social_network_analysis as settings
 
 scripts = [
-    # "1_data/1_0_0_get_csv_from_xlsx.py",
-    # "1_data/1_0_get_normalization.py",
-    # "1_data/1_1_preproc_data.py",
     # "1_data/1_2_distances_angles_matrix.py",
     # "1_data/1_3_find_closest_neighbour.py",
 
@@ -27,8 +28,8 @@ scripts = [
     # "3_analysis/3_0_global_measures.py",
     # "3_analysis/3_2_local_measures.py",
     # "3_analysis/3_6_global_measures_shuffled.py",
-    # # # # # ##  "2_analysis/2_1_community_measures.py",
-    # # "2_analysis/2_0_population_retention_heatmap.py",
+    # # # # ##  "2_analysis/2_1_community_measures.py",
+    # "2_analysis/2_0_population_retention_heatmap.py",
 ]
 
 temporal_networks_scripts = [
@@ -39,13 +40,8 @@ temporal_networks_scripts = [
 ]
 
 
-CONFIG_PATH = os.path.join(settings.CONFIG_DIR, "main.toml")
-with open(CONFIG_PATH, "r") as file: config = toml.load(file)
-
-for TREATMENT_NAME in config["TREATMENTS"]:
-    os.environ["TREATMENT"] = TREATMENT_NAME
-    TREATMENT = os.environ["TREATMENT"]
-    TREATMENT_CONFIG = os.path.join(settings.CONFIG_DIR, "interaction_criteria", f"{TREATMENT}.toml")
+def main():
+    TREATMENT = main_settings.TREATMENT
 
     print("-" * 15, f" START: {TREATMENT} ", "-" * 25)
     for script in scripts:
@@ -55,7 +51,12 @@ for TREATMENT_NAME in config["TREATMENTS"]:
             subprocess.run(["python", script_path])
             print(f"DONE with: {script}")
             time.sleep(1)
-            
-        except BaseException: sys.exit()
 
-    print("-" * 15, f" DONE: {TREATMENT} ", "-" * 25)
+        except BaseException:
+            sys.exit()
+
+        print("-" * 15, f" DONE: {TREATMENT} ", "-" * 25)
+
+
+if __name__ == '__main__':
+    main()
